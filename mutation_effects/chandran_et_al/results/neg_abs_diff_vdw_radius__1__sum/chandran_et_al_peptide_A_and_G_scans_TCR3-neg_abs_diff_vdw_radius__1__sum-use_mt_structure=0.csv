@@ -1,0 +1,17 @@
+mutant,TFN_alpha_mt/TFN_alpha_wt,wt_pdb,mt_pdb,mutant_chain,TCR,scan_type,substitution_matrix_score
+L2A,83.84244537353516,7rrg-fixed,,C,TCR3,alanine,-3.0
+H3A,78.02202606201172,7rrg-fixed,,C,TCR3,alanine,-3.66
+G4A,79.56969451904297,7rrg-fixed,,C,TCR3,alanine,-1.0
+G5A,1.1681632995605469,7rrg-fixed,,C,TCR3,alanine,-1.0
+W6A,0.8836153149604797,7rrg-fixed,,C,TCR3,alanine,-7.08
+T7A,1.772588133811951,7rrg-fixed,,C,TCR3,alanine,-1.6
+T8A,25.29791259765625,7rrg-fixed,,C,TCR3,alanine,-1.6
+K9A,2.6456754207611084,7rrg-fixed,,C,TCR3,alanine,-3.7699999999999996
+L2H,1.8015726666666667,7rrg-fixed,,C,TCR3,PIK3CA,-0.6600000000000001
+A1G,93.28244018554688,7rrg-fixed,,C,TCR3,glycine,-1.0
+L2G,35.97690963745117,7rrg-fixed,,C,TCR3,glycine,-4.0
+H3G,1.28056001663208,7rrg-fixed,,C,TCR3,glycine,-4.66
+W6G,0.9683626294136048,7rrg-fixed,,C,TCR3,glycine,-8.08
+T7G,1.2110592126846311,7rrg-fixed,,C,TCR3,glycine,-2.6
+T8G,99.99056243896484,7rrg-fixed,,C,TCR3,glycine,-2.6
+K9G,1.4158624410629272,7rrg-fixed,,C,TCR3,glycine,-4.77
