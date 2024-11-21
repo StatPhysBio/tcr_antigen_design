@@ -1,0 +1,2 @@
+
+WT_SEQ = 'HPVGQADYFEY'

@@ -1,0 +1,19 @@
+
+
+
+cp ../nyeso_old_folder/hcnn/tcrdock_output_w_pae.tsv tcrdock_output_w_pae.tsv
+
+cp ../nyeso_old_folder/hcnn/nyeso_peptide_kd.csv nyeso_peptide_kd.csv
+
+cp /gscratch/spe/gvisan01/TCRdock-copy/scoring_outputs/tcrdock_targets_with_hcnn_peptides__multiplicative/hcnn_peptides_w_pae.tsv hcnn_pyrosetta_annealing/hcnn_peptides_w_pae.tsv
+
+cp /gscratch/spe/gvisan01/TCRdock-copy/scoring_outputs/sample_sequences_from_mhc_pwm/mhc_decoys_w_pae.tsv mhc_pwm/mhc_motif_peptides_w_pae.tsv
+
+cp /gscratch/spe/gvisan01/TCRdock-copy/scoring_outputs/proteinmpnn_peptides_v_48_002_0p7/proteinmpnn_peptides_w_pae.tsv proteinmpnn_v_48_002_0.7/proteinmpnn_samples_v_48_002_0.7_w_pae.tsv
+cp /gscratch/spe/gvisan01/TCRdock-copy/scoring_outputs/proteinmpnn_peptides_v_48_020_0p7/proteinmpnn_peptides_w_pae.tsv proteinmpnn_v_48_020_0.7/proteinmpnn_samples_v_48_020_0.7_w_pae.tsv
+
+cp /gscratch/spe/gvisan01/TCRdock-copy/scoring_outputs/hcnn_peptides_from_fixed_structure_so3_convnet_base_ensemble/hcnn_peptides_w_pae.tsv hcnn_fixed_structure/hcnn_peptides_from_fixed_structure_so3_convnet_base_ensemble_w_pae.tsv
+cp /gscratch/spe/gvisan01/TCRdock-copy/scoring_outputs/hcnn_peptides_from_fixed_structure_so3_convnet_noise=0p5/hcnn_peptides_w_pae.tsv hcnn_fixed_structure/hcnn_peptides_from_fixed_structure_so3_convnet_noise=0p5_w_pae.tsv
+
+cp /gscratch/spe/gvisan01/TCRdock-copy/scoring_outputs/blosum62_sample_sequences_temperature=1/sample_peptides_from_blosum62__temperature=1.0_w_pae.tsv blosum62/sample_peptides_from_blosum62__temperature=1.0_w_pae.tsv
+cp /gscratch/spe/gvisan01/TCRdock-copy/scoring_outputs/blosum62_sample_sequences_temperature=2/sample_peptides_from_blosum62__temperature=2.0_w_pae.tsv blosum62/sample_peptides_from_blosum62__temperature=2.0_w_pae.tsv

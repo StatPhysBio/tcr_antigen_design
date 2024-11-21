@@ -1,0 +1,402 @@
+>4prp.pdb.human.MH1.B-35.A.C.DE, score=1.6499, global_score=1.5649, fixed_chains=['A', 'C', 'D'], designed_chains=['B'], model_name=v_48_020, git_hash=12e1e793b34a2fee218b3e739dfcbfccc9101c21, seed=37
+HPVGQADYFEY
+>T=0.4, sample=1, score=1.0415, global_score=1.5244, seq_recovery=0.4545
+MPMGMGDYSEI
+>T=0.4, sample=2, score=0.8250, global_score=1.5326, seq_recovery=0.5455
+MPMGQPDYTEF
+>T=0.4, sample=3, score=0.8997, global_score=1.5408, seq_recovery=0.4545
+MPMGEPDYTEF
+>T=0.4, sample=4, score=0.8308, global_score=1.5445, seq_recovery=0.4545
+MPLGLPDYSEF
+>T=0.4, sample=5, score=0.8168, global_score=1.5316, seq_recovery=0.4545
+MPMGSPDYSEF
+>T=0.4, sample=6, score=0.8865, global_score=1.5410, seq_recovery=0.5455
+MPMGMPDYTEY
+>T=0.4, sample=7, score=1.0512, global_score=1.5647, seq_recovery=0.4545
+MPMGNPDYSQY
+>T=0.4, sample=8, score=0.9979, global_score=1.5518, seq_recovery=0.4545
+MPMGDGDYSEF
+>T=0.4, sample=9, score=0.9524, global_score=1.5382, seq_recovery=0.4545
+SPMGAPDYSEF
+>T=0.4, sample=10, score=0.9083, global_score=1.5541, seq_recovery=0.6364
+MPMGQGDYSEY
+>T=0.4, sample=11, score=0.8751, global_score=1.5552, seq_recovery=0.4545
+MPIGRPDYSEF
+>T=0.4, sample=12, score=0.9160, global_score=1.5599, seq_recovery=0.4545
+MPMGLPDYTEF
+>T=0.4, sample=13, score=1.1609, global_score=1.5494, seq_recovery=0.4545
+GPLGEPDYSEF
+>T=0.4, sample=14, score=0.9331, global_score=1.5441, seq_recovery=0.5455
+MPMGQGDYREF
+>T=0.4, sample=15, score=0.9766, global_score=1.5233, seq_recovery=0.5455
+MPMGMGDYSEY
+>T=0.4, sample=16, score=1.0049, global_score=1.5528, seq_recovery=0.4545
+MPMGPPDYTEF
+>T=0.4, sample=17, score=0.9487, global_score=1.5392, seq_recovery=0.4545
+MPRGEPDYTEF
+>T=0.4, sample=18, score=0.8704, global_score=1.5344, seq_recovery=0.5455
+MPMGQPDYSEL
+>T=0.4, sample=19, score=0.9806, global_score=1.5595, seq_recovery=0.5455
+MPIGMADYTEF
+>T=0.4, sample=20, score=1.0863, global_score=1.5158, seq_recovery=0.5455
+MPMGEADYQEF
+>T=0.4, sample=21, score=0.8929, global_score=1.5438, seq_recovery=0.5455
+MPMGMPDYSEY
+>T=0.4, sample=22, score=1.0420, global_score=1.5422, seq_recovery=0.4545
+SPMGMPDYSEL
+>T=0.4, sample=23, score=0.9510, global_score=1.5353, seq_recovery=0.4545
+MPMGSGDYREF
+>T=0.4, sample=24, score=0.8509, global_score=1.5565, seq_recovery=0.3636
+MPMGLPDYSQF
+>T=0.4, sample=25, score=0.9372, global_score=1.5228, seq_recovery=0.4545
+MPLGSPDYSEF
+>T=0.4, sample=26, score=0.7552, global_score=1.5390, seq_recovery=0.5455
+MPMGQPDYSEF
+>T=0.4, sample=27, score=0.7844, global_score=1.5422, seq_recovery=0.5455
+MPMGQPDYTEF
+>T=0.4, sample=28, score=0.8519, global_score=1.5581, seq_recovery=0.5455
+MPMGLPDYTEY
+>T=0.4, sample=29, score=0.8168, global_score=1.5342, seq_recovery=0.4545
+MPMGSPDYSEF
+>T=0.4, sample=30, score=0.8314, global_score=1.5179, seq_recovery=0.4545
+MPMGEPDYSEF
+>T=0.4, sample=31, score=0.9583, global_score=1.5335, seq_recovery=0.5455
+MPMGQPDYTQY
+>T=0.4, sample=32, score=0.8352, global_score=1.5532, seq_recovery=0.4545
+MPMGLGDYSEF
+>T=0.4, sample=33, score=0.9719, global_score=1.5296, seq_recovery=0.5455
+MPRGQGDYSEF
+>T=0.4, sample=34, score=0.9429, global_score=1.5625, seq_recovery=0.4545
+MPMGMPDYWEF
+>T=0.4, sample=35, score=0.9538, global_score=1.5508, seq_recovery=0.4545
+MPMGLPDYTEL
+>T=0.4, sample=36, score=0.9280, global_score=1.5545, seq_recovery=0.5455
+MPRGEPDYSEY
+>T=0.4, sample=37, score=1.0198, global_score=1.5463, seq_recovery=0.4545
+MPMGTADYTGF
+>T=0.4, sample=38, score=0.8160, global_score=1.5281, seq_recovery=0.4545
+MPMGAGDYTEF
+>T=0.4, sample=39, score=0.9600, global_score=1.5130, seq_recovery=0.4545
+MPLGRGDYSEF
+>T=0.4, sample=40, score=1.0681, global_score=1.5473, seq_recovery=0.5455
+MPRGAADYTEW
+>T=0.4, sample=41, score=0.8407, global_score=1.5517, seq_recovery=0.4545
+MPMGSPDYSEF
+>T=0.4, sample=42, score=0.9405, global_score=1.5421, seq_recovery=0.4545
+MPMGPPDYSEF
+>T=0.4, sample=43, score=0.9121, global_score=1.5370, seq_recovery=0.5455
+MPRGQGDYSEF
+>T=0.4, sample=44, score=0.8850, global_score=1.5280, seq_recovery=0.4545
+MPMGMGDYSEF
+>T=0.4, sample=45, score=0.9570, global_score=1.5572, seq_recovery=0.3636
+MPMGRPDYTQF
+>T=0.4, sample=46, score=0.9713, global_score=1.5623, seq_recovery=0.5455
+MPMGQADYTQF
+>T=0.4, sample=47, score=1.0016, global_score=1.5417, seq_recovery=0.4545
+MPRGAGDYTEF
+>T=0.4, sample=48, score=0.9334, global_score=1.5455, seq_recovery=0.3636
+MPMGMPDYTQF
+>T=0.4, sample=49, score=0.8929, global_score=1.5533, seq_recovery=0.4545
+MPMGTPDYTEF
+>T=0.4, sample=50, score=0.8718, global_score=1.5373, seq_recovery=0.4545
+MPMGMGDYSEF
+>T=0.4, sample=51, score=1.0711, global_score=1.5407, seq_recovery=0.3636
+MPMGKPDYTQL
+>T=0.4, sample=52, score=0.8884, global_score=1.5781, seq_recovery=0.5455
+MPRGQPDYSEF
+>T=0.4, sample=53, score=0.8337, global_score=1.5401, seq_recovery=0.4545
+MPLGRPDYSEF
+>T=0.4, sample=54, score=0.7522, global_score=1.5239, seq_recovery=0.5455
+MPMGQPDYSEF
+>T=0.4, sample=55, score=0.8526, global_score=1.5599, seq_recovery=0.4545
+MPMGRGDYSEF
+>T=0.4, sample=56, score=0.9513, global_score=1.5587, seq_recovery=0.4545
+MPIGRGDYTEF
+>T=0.4, sample=57, score=0.8539, global_score=1.5794, seq_recovery=0.4545
+MPMGAPDYTEF
+>T=0.4, sample=58, score=0.9489, global_score=1.5471, seq_recovery=0.3636
+MPMGLPDYTGF
+>T=0.4, sample=59, score=0.9249, global_score=1.5385, seq_recovery=0.6364
+MPMGMADYTEY
+>T=0.4, sample=60, score=0.9055, global_score=1.5395, seq_recovery=0.4545
+MPMGEPDYTEF
+>T=0.4, sample=61, score=1.0827, global_score=1.5315, seq_recovery=0.4545
+MPMGLGDYTGY
+>T=0.4, sample=62, score=0.8083, global_score=1.5451, seq_recovery=0.4545
+MPIGRPDYSEF
+>T=0.4, sample=63, score=0.8998, global_score=1.5265, seq_recovery=0.6364
+MPMGQPDYSEY
+>T=0.4, sample=64, score=1.0324, global_score=1.5566, seq_recovery=0.5455
+MPMGAPDYWEY
+>T=0.4, sample=65, score=1.0669, global_score=1.5213, seq_recovery=0.5455
+MPMGKGDYFEL
+>T=0.4, sample=66, score=0.9039, global_score=1.5418, seq_recovery=0.5455
+MPMGKPDYSEY
+>T=0.4, sample=67, score=1.0164, global_score=1.5528, seq_recovery=0.5455
+MPMGMGDYSEY
+>T=0.4, sample=68, score=0.9927, global_score=1.5647, seq_recovery=0.6364
+MPPGQPDYSEY
+>T=0.4, sample=69, score=0.9787, global_score=1.5394, seq_recovery=0.5455
+MPRGEPDYTEY
+>T=0.4, sample=70, score=0.9518, global_score=1.5250, seq_recovery=0.6364
+MPLGQPDYSEY
+>T=0.4, sample=71, score=0.7624, global_score=1.5534, seq_recovery=0.4545
+MPMGLPDYSEF
+>T=0.4, sample=72, score=0.8735, global_score=1.5346, seq_recovery=0.4545
+MPRGEPDYSEF
+>T=0.4, sample=73, score=0.8495, global_score=1.5471, seq_recovery=0.4545
+MPMGNPDYSEF
+>T=0.4, sample=74, score=1.1934, global_score=1.5396, seq_recovery=0.3636
+MPMGDGDYTGL
+>T=0.4, sample=75, score=1.0195, global_score=1.5502, seq_recovery=0.4545
+MPIGEPDYSEL
+>T=0.4, sample=76, score=0.8789, global_score=1.5505, seq_recovery=0.4545
+MPMGAGDYTEF
+>T=0.4, sample=77, score=0.7587, global_score=1.5180, seq_recovery=0.4545
+MPMGKPDYSEF
+>T=0.4, sample=78, score=0.9476, global_score=1.5643, seq_recovery=0.5455
+MPMGQPDYAEF
+>T=0.4, sample=79, score=0.7747, global_score=1.5412, seq_recovery=0.4545
+MPMGLPDYSEF
+>T=0.4, sample=80, score=0.8921, global_score=1.5501, seq_recovery=0.4545
+MPIGKPDYTEF
+>T=0.4, sample=81, score=0.9416, global_score=1.5634, seq_recovery=0.5455
+MPLGRPDYSEY
+>T=0.4, sample=82, score=0.8135, global_score=1.5346, seq_recovery=0.5455
+MPMGQPDYSEF
+>T=0.4, sample=83, score=0.9077, global_score=1.5441, seq_recovery=0.4545
+MPMGKGDYTEF
+>T=0.4, sample=84, score=1.0250, global_score=1.5548, seq_recovery=0.6364
+MPIGQADYSEF
+>T=0.4, sample=85, score=0.9173, global_score=1.5212, seq_recovery=0.5455
+MPLGLADYTEF
+>T=0.4, sample=86, score=0.9653, global_score=1.5373, seq_recovery=0.4545
+MPMGTPDYTEL
+>T=0.4, sample=87, score=0.9168, global_score=1.5355, seq_recovery=0.4545
+MPMGNPDYTEF
+>T=0.4, sample=88, score=0.8093, global_score=1.5438, seq_recovery=0.4545
+MPMGKPDYSEF
+>T=0.4, sample=89, score=0.7983, global_score=1.5301, seq_recovery=0.4545
+MPMGLPDYSEF
+>T=0.4, sample=90, score=0.8707, global_score=1.5290, seq_recovery=0.4545
+MPLGKPDYSEF
+>T=0.4, sample=91, score=0.8109, global_score=1.5435, seq_recovery=0.4545
+MPLGLPDYSEF
+>T=0.4, sample=92, score=0.9471, global_score=1.5533, seq_recovery=0.3636
+MPMGMGDYSQF
+>T=0.4, sample=93, score=0.9818, global_score=1.5678, seq_recovery=0.3636
+MPMGRGDYTQF
+>T=0.4, sample=94, score=0.8753, global_score=1.5294, seq_recovery=0.4545
+MPMGMPDYTEF
+>T=0.4, sample=95, score=0.8501, global_score=1.5421, seq_recovery=0.4545
+MPMGQPDYSQF
+>T=0.4, sample=96, score=0.9525, global_score=1.5627, seq_recovery=0.4545
+MPIGAGDYTEF
+>T=0.4, sample=97, score=0.8309, global_score=1.5476, seq_recovery=0.4545
+MPMGMPDYSEF
+>T=0.4, sample=98, score=0.9382, global_score=1.5321, seq_recovery=0.4545
+MPMGAGDYSEL
+>T=0.4, sample=99, score=0.7928, global_score=1.5534, seq_recovery=0.4545
+MPMGRPDYSEF
+>T=0.4, sample=100, score=0.9355, global_score=1.5704, seq_recovery=0.4545
+MPIGAPDYTEF
+>T=0.4, sample=101, score=0.8407, global_score=1.5359, seq_recovery=0.4545
+MPMGRGDYTEF
+>T=0.4, sample=102, score=1.0148, global_score=1.5615, seq_recovery=0.3636
+MPMGAGDYSDF
+>T=0.4, sample=103, score=1.2717, global_score=1.5370, seq_recovery=0.3636
+MAMGQPDYRGF
+>T=0.4, sample=104, score=0.8109, global_score=1.5494, seq_recovery=0.4545
+MPMGAGDYTEF
+>T=0.4, sample=105, score=0.9522, global_score=1.5568, seq_recovery=0.3636
+MPMGAPDYTGF
+>T=0.4, sample=106, score=0.8628, global_score=1.5479, seq_recovery=0.4545
+MPMGRPDYTEF
+>T=0.4, sample=107, score=0.8755, global_score=1.5305, seq_recovery=0.4545
+MPLGLPDYSEL
+>T=0.4, sample=108, score=0.9228, global_score=1.5443, seq_recovery=0.5455
+MPLGQGDYSEF
+>T=0.4, sample=109, score=0.9323, global_score=1.5338, seq_recovery=0.3636
+MPMGEPDYTQF
+>T=0.4, sample=110, score=1.0417, global_score=1.5381, seq_recovery=0.3636
+MPMGLPDYSAF
+>T=0.4, sample=111, score=1.0768, global_score=1.5162, seq_recovery=0.5455
+MPMGQPDYQEL
+>T=0.4, sample=112, score=1.1465, global_score=1.5267, seq_recovery=0.6364
+APLGQPDYTEY
+>T=0.4, sample=113, score=0.7740, global_score=1.5530, seq_recovery=0.5455
+MPMGQPDYSEF
+>T=0.4, sample=114, score=0.8069, global_score=1.5286, seq_recovery=0.4545
+MPMGMPDYSEF
+>T=0.4, sample=115, score=1.0034, global_score=1.5458, seq_recovery=0.3636
+MPRGSPDYTQF
+>T=0.4, sample=116, score=1.1708, global_score=1.5624, seq_recovery=0.4545
+APMGPGDYTEF
+>T=0.4, sample=117, score=0.7839, global_score=1.5260, seq_recovery=0.4545
+MPMGMPDYSEF
+>T=0.4, sample=118, score=0.8456, global_score=1.5386, seq_recovery=0.4545
+MPLGKPDYSEF
+>T=0.4, sample=119, score=1.0138, global_score=1.5477, seq_recovery=0.4545
+SPMGRGDYSEF
+>T=0.4, sample=120, score=1.0247, global_score=1.5456, seq_recovery=0.3636
+MAMGSPDYTEF
+>T=0.4, sample=121, score=1.2501, global_score=1.5637, seq_recovery=0.4545
+MTMGPADYTEF
+>T=0.4, sample=122, score=0.8455, global_score=1.5515, seq_recovery=0.5455
+MPLGQPDYSEF
+>T=0.4, sample=123, score=0.9504, global_score=1.5398, seq_recovery=0.4545
+MPLGEPDYSEF
+>T=0.4, sample=124, score=0.8093, global_score=1.5422, seq_recovery=0.5455
+MPRGQPDYSEF
+>T=0.4, sample=125, score=0.9252, global_score=1.5440, seq_recovery=0.4545
+MPMGNGDYTEF
+>T=0.4, sample=126, score=0.8779, global_score=1.5434, seq_recovery=0.4545
+MPIGKPDYSEF
+>T=0.4, sample=127, score=0.9778, global_score=1.5625, seq_recovery=0.3636
+MPMGAGDYSQF
+>T=0.4, sample=128, score=0.8439, global_score=1.5315, seq_recovery=0.4545
+MPMGSPDYTEF
+>T=0.4, sample=129, score=0.8476, global_score=1.5656, seq_recovery=0.4545
+MPMGSPDYSEF
+>T=0.4, sample=130, score=0.9265, global_score=1.5497, seq_recovery=0.4545
+MPIGSPDYSEF
+>T=0.4, sample=131, score=0.8603, global_score=1.5212, seq_recovery=0.4545
+MPMGLGDYSEF
+>T=0.4, sample=132, score=0.9030, global_score=1.5169, seq_recovery=0.6364
+MPMGQPDYSEY
+>T=0.4, sample=133, score=0.8561, global_score=1.5399, seq_recovery=0.3636
+MPMGAPDYSQF
+>T=0.4, sample=134, score=0.8703, global_score=1.5471, seq_recovery=0.5455
+MPMGAADYTEF
+>T=0.4, sample=135, score=0.9161, global_score=1.5420, seq_recovery=0.4545
+MPRGEPDYSEF
+>T=0.4, sample=136, score=0.9568, global_score=1.5648, seq_recovery=0.4545
+MPRGAPDYTEF
+>T=0.4, sample=137, score=0.9164, global_score=1.5220, seq_recovery=0.4545
+MPMGRGDYTEF
+>T=0.4, sample=138, score=0.8007, global_score=1.5389, seq_recovery=0.4545
+MPMGLPDYTEF
+>T=0.4, sample=139, score=0.8498, global_score=1.5418, seq_recovery=0.5455
+MPMGRPDYSEY
+>T=0.4, sample=140, score=1.1611, global_score=1.5324, seq_recovery=0.4545
+MPRGEPDYQEF
+>T=0.4, sample=141, score=0.8310, global_score=1.5336, seq_recovery=0.4545
+MPMGMGDYTEF
+>T=0.4, sample=142, score=0.9197, global_score=1.5344, seq_recovery=0.4545
+MPMGMPDYSEW
+>T=0.4, sample=143, score=0.9845, global_score=1.5507, seq_recovery=0.4545
+MPMGAPDYAEF
+>T=0.4, sample=144, score=0.9016, global_score=1.5388, seq_recovery=0.4545
+MPLGLPDYTEF
+>T=0.4, sample=145, score=0.8096, global_score=1.5367, seq_recovery=0.5455
+MPMGQPDYTEF
+>T=0.4, sample=146, score=0.7821, global_score=1.5388, seq_recovery=0.4545
+MPMGMPDYSEF
+>T=0.4, sample=147, score=1.1219, global_score=1.5422, seq_recovery=0.3636
+MPLGTPDYSGL
+>T=0.4, sample=148, score=0.8409, global_score=1.5492, seq_recovery=0.4545
+MPMGRGDYTEF
+>T=0.4, sample=149, score=0.9038, global_score=1.5388, seq_recovery=0.4545
+MPMGLPDYSEW
+>T=0.4, sample=150, score=0.9157, global_score=1.5266, seq_recovery=0.5455
+MPRGAADYTEF
+>T=0.4, sample=151, score=0.9279, global_score=1.5450, seq_recovery=0.3636
+MPMGLPDYSGF
+>T=0.4, sample=152, score=0.9277, global_score=1.5229, seq_recovery=0.5455
+MPMGSGDYTEY
+>T=0.4, sample=153, score=0.8612, global_score=1.5529, seq_recovery=0.4545
+MPMGLGDYSEF
+>T=0.4, sample=154, score=0.8787, global_score=1.5428, seq_recovery=0.4545
+MPLGLPDYSEL
+>T=0.4, sample=155, score=0.8237, global_score=1.5525, seq_recovery=0.5455
+MPMGLPDYSEY
+>T=0.4, sample=156, score=0.8692, global_score=1.5564, seq_recovery=0.6364
+MPMGQPDYSEY
+>T=0.4, sample=157, score=0.8221, global_score=1.5488, seq_recovery=0.4545
+MPMGRPDYSEF
+>T=0.4, sample=158, score=0.7722, global_score=1.5214, seq_recovery=0.4545
+MPMGLPDYSEF
+>T=0.4, sample=159, score=0.9788, global_score=1.5415, seq_recovery=0.4545
+MPIGLPDYTEL
+>T=0.4, sample=160, score=0.7563, global_score=1.5359, seq_recovery=0.4545
+MPMGLPDYSEF
+>T=0.4, sample=161, score=0.9127, global_score=1.5327, seq_recovery=0.4545
+MPLGTPDYSEF
+>T=0.4, sample=162, score=0.8044, global_score=1.5474, seq_recovery=0.5455
+MPMGQPDYTEF
+>T=0.4, sample=163, score=0.9089, global_score=1.5530, seq_recovery=0.3636
+MPMGLPDYSGF
+>T=0.4, sample=164, score=0.8077, global_score=1.5287, seq_recovery=0.5455
+MPMGQPDYSEF
+>T=0.4, sample=165, score=1.0136, global_score=1.5326, seq_recovery=0.4545
+MPLGHPDYSEF
+>T=0.4, sample=166, score=0.8538, global_score=1.5238, seq_recovery=0.4545
+MPLGLPDYSEF
+>T=0.4, sample=167, score=0.8413, global_score=1.5515, seq_recovery=0.4545
+MPMGTPDYTEF
+>T=0.4, sample=168, score=0.8580, global_score=1.5392, seq_recovery=0.5455
+MPMGQGDYTEF
+>T=0.4, sample=169, score=0.9617, global_score=1.5479, seq_recovery=0.3636
+MPLGLPDYSQL
+>T=0.4, sample=170, score=0.8816, global_score=1.5605, seq_recovery=0.4545
+MPIGMPDYSEF
+>T=0.4, sample=171, score=0.7980, global_score=1.5096, seq_recovery=0.5455
+MPMGQPDYSEF
+>T=0.4, sample=172, score=0.8143, global_score=1.5654, seq_recovery=0.5455
+MPMGQPDYTEF
+>T=0.4, sample=173, score=0.9603, global_score=1.5344, seq_recovery=0.4545
+MPLGLPDYTEL
+>T=0.4, sample=174, score=0.7888, global_score=1.5130, seq_recovery=0.4545
+MPMGMPDYSEF
+>T=0.4, sample=175, score=0.9423, global_score=1.5541, seq_recovery=0.4545
+MPMGNGDYSEF
+>T=0.4, sample=176, score=0.9505, global_score=1.5477, seq_recovery=0.3636
+MPMGSPDYSQF
+>T=0.4, sample=177, score=1.0253, global_score=1.5502, seq_recovery=0.4545
+MPLGRGDYTEL
+>T=0.4, sample=178, score=0.8998, global_score=1.5599, seq_recovery=0.6364
+MPMGQGDYSEY
+>T=0.4, sample=179, score=0.7998, global_score=1.5293, seq_recovery=0.4545
+MPMGMPDYSEF
+>T=0.4, sample=180, score=0.9963, global_score=1.5200, seq_recovery=0.3636
+MPRGSGDYTQF
+>T=0.4, sample=181, score=0.9802, global_score=1.5617, seq_recovery=0.4545
+MPMGLGDYQEF
+>T=0.4, sample=182, score=0.7613, global_score=1.5296, seq_recovery=0.4545
+MPMGLPDYSEF
+>T=0.4, sample=183, score=0.9177, global_score=1.5589, seq_recovery=0.4545
+MPLGMGDYTEF
+>T=0.4, sample=184, score=0.7864, global_score=1.5083, seq_recovery=0.4545
+MPMGRPDYSEF
+>T=0.4, sample=185, score=0.9455, global_score=1.5609, seq_recovery=0.4545
+MPMGASDYTEF
+>T=0.4, sample=186, score=0.8810, global_score=1.5209, seq_recovery=0.5455
+MPLGQPDYSEF
+>T=0.4, sample=187, score=0.9430, global_score=1.5374, seq_recovery=0.5455
+MPMGSADYSEF
+>T=0.4, sample=188, score=0.9421, global_score=1.5600, seq_recovery=0.4545
+MPMGTGDYREF
+>T=0.4, sample=189, score=0.9492, global_score=1.5559, seq_recovery=0.4545
+MPMGLPDYTEL
+>T=0.4, sample=190, score=1.0028, global_score=1.5446, seq_recovery=0.4545
+MPRGMPDYTEF
+>T=0.4, sample=191, score=0.8982, global_score=1.5460, seq_recovery=0.4545
+MPMGSGDYSEF
+>T=0.4, sample=192, score=0.8808, global_score=1.5446, seq_recovery=0.4545
+MPMGMPDYTEF
+>T=0.4, sample=193, score=0.7785, global_score=1.5256, seq_recovery=0.4545
+MPMGLPDYSEF
+>T=0.4, sample=194, score=0.9618, global_score=1.5328, seq_recovery=0.6364
+MPLGQPDYTEY
+>T=0.4, sample=195, score=1.2173, global_score=1.5368, seq_recovery=0.4545
+MRMGLADYTEF
+>T=0.4, sample=196, score=0.9302, global_score=1.5286, seq_recovery=0.4545
+MPRGEGDYTEF
+>T=0.4, sample=197, score=1.0345, global_score=1.5251, seq_recovery=0.5455
+MPIGTADYTEF
+>T=0.4, sample=198, score=0.9016, global_score=1.5639, seq_recovery=0.4545
+MPMGTPDYSEL
+>T=0.4, sample=199, score=0.8861, global_score=1.5401, seq_recovery=0.6364
+MPMGQPDYSEY
+>T=0.4, sample=200, score=0.7606, global_score=1.5343, seq_recovery=0.4545
+MPMGKPDYSEF
