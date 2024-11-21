@@ -1,0 +1,15 @@
+__pycache__/
+mutation_effects/__old_*/
+all_pdbs/
+peptide_designs/nyeso_old_folder/
+peptide_designs/all_structures/
+mutation_effects/magea3_binders/
+peptide_designs/as42/
+peptide_designs/mart/
+tcrdock_output/
+tcrdock_output_base/
+tcrdock_output_noise=0p5/
+tcrdock_output_T=1/
+tcrdock_output_T=2/
+annealing_runs/
+*.key
