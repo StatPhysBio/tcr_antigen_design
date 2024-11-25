@@ -1,0 +1,46 @@
+account: spe
+partition: ckpt
+nodes: 1
+cores: 1
+walltime: '2:00:00'
+mem: 4G
+jobname: '{pdb}_{sequence}_{job}_get_score'
+logdir: /gscratch/scrubbed/gvisan01/slurm_logs
+
+parameters:
+  # pdb: [1ao7]
+  # sequence: [LLFGYPVYV, LLFGFPVYV, LLFGYPTYV, LLFGWPVYV, MLFGYPVYV, ALFGYPVYV, VLFGYPVYV, LLFGYVVYV, LLFGYPRYV, LLFGHPVYV, LLFGYPVFV, LLFGYPHYV, LLFAYPVYV, LLFGYPVAV, LLFAYPVAV, LLFGHPVAV, LLFGYAVYV]
+
+  # pdb: [1qrn]
+  # sequence: [LLFGYPVYV, LLFGFPVYV, LLFGYPTYV, LLFGWPVYV, MLFGYPVYV, ALFGYPVYV, VLFGYPVYV, LLFGYVVYV, LLFGYPRYV, LLFGHPVYV, LLFGYPVFV, LLFGYPHYV, LLFAYPVYV, LLFGYPVAV, LLFAYPVAV, LLFGHPVAV, LLFGYAVYV]
+
+  # pdb: [1qsf, 1qse]
+  # sequence: [LLFGYPVYV, LLFGFPVYV, LLFGYPTYV, LLFGWPVYV, MLFGYPVYV, ALFGYPVYV, VLFGYPVYV, LLFGYVVYV, LLFGYPRYV, LLFGHPVYV, LLFGYPVFV, LLFGYPHYV, LLFAYPVYV, LLFGYPVAV, LLFAYPVAV, LLFGHPVAV, LLFGYAVYV]
+
+  pdb: [1ao7, 1qrn, 1qsf, 1qse]
+  sequence: [LLFGYPVYV, LLFGFPVYV, LLFGYPTYV, LLFGWPVYV, MLFGYPVYV, ALFGYPVYV, VLFGYPVYV, LLFGYVVYV, LLFGYPRYV, LLFGHPVYV, LLFGYPVFV, LLFGYPHYV, LLFAYPVYV, LLFGYPVAV, LLFAYPVAV, LLFGHPVAV, LLFGYAVYV]
+
+  pdbdir: [/gscratch/spe/gvisan01/mutation_effect_predictions/full_pep/tax/pdbs]
+  chain: ['C']
+
+  # model_config: [/gscratch/spe/gvisan01/protein_holography-pytorch/runtime/tcr_pmhc_experiments/config/so3_convnet_base_ensemble.json, /gscratch/spe/gvisan01/protein_holography-pytorch/runtime/tcr_pmhc_experiments/config/so3_convnet_noise=0p5.json]
+  model_config: [/gscratch/spe/gvisan01/protein_holography-pytorch/runtime/tcr_pmhc_experiments/config/cgnet_noise=0p5.json, /gscratch/spe/gvisan01/protein_holography-pytorch/runtime/tcr_pmhc_experiments/config/cgnet_base_ensemble.json]
+
+  job: [0,1,2,3,4] #[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99]
+  output_dir: [/gscratch/spe/gvisan01/mutation_effect_predictions/full_pep/tax/hcnn/inference/peptide_scores_with_relaxation] # [/gscratch/scrubbed/gvisan01/peptide_pnEs]
+  num_repeats: [20]
+  
+command: |
+  cd /gscratch/spe/gvisan01/protein_holography-pytorch/runtime/tcr_pmhc_experiments/score_peptides
+  python -u get_score_of_requested_peptide_in_pdb_of_tcr_pmhc_with_relaxation.py \
+                        --model_config {model_config} \
+                        --pdb {pdb} \
+                        --pdbdir {pdbdir} \
+                        --sequence {sequence} \
+                        --chain {chain} \
+                        --output_dir {output_dir} \
+                        --num_repeats {num_repeats} \
+                        --job {job} \
+                        --pyrosetta_logging "ERROR" \
+                        --rosetta_logging "ERROR" \
+                        --logging "INFO"

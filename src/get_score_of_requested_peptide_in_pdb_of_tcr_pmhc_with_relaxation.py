@@ -120,6 +120,8 @@ class PeptideMutator(object):
         make_mutations(mutations, self.pose, verbose=verbose)
         logging.info("relaxing structure")
         logging.debug(f"Backbone relax sites are {self.peptide_resnums * self.relax_peptide_backbone}")
+        print(self.peptide_resnums * self.relax_peptide_backbone)
+        print(self.complex_resnums)
         fastrelax_positions(
             self.scorefxn_cartesian,
             self.peptide_resnums * self.relax_peptide_backbone,
@@ -283,7 +285,7 @@ if __name__ == '__main__':
     # get pdb and sequence I wanna put into the peptide (which is always at chain C
 
     parser = argparse.ArgumentParser()
-    parser.add_argument('--hermes_path', type=str, required=True)
+    parser.add_argument('--hermes_path', type=str, default='/gscratch/spe/gvisan01/hermes/')
     parser.add_argument('--model_version', type=str, required=True)
     
     parser.add_argument('--pdb', type=str, required=True)
@@ -308,11 +310,11 @@ if __name__ == '__main__':
 
     parser.add_argument('--job', type=str, default=0)
 
-    parser.add_argument('--divisor_for_name', type=str, default='_')
+    parser.add_argument('--divisor_for_name', type=str, default='$')
 
     parser.add_argument('--verbose', type=int, default=0, choices=[0, 1])
 
-    parser.add_argument('--logging', dest='logging', default='INFO', type=str)
+    parser.add_argument('--logging', dest='logging', default='DEBUG', type=str)
     parser.add_argument('--pyrosetta_logging', dest='pyrosetta_logging', default=None)
     parser.add_argument('--rosetta_logging', dest='rosetta_logging', default=None)
     args = parser.parse_args()
@@ -368,6 +370,7 @@ if __name__ == '__main__':
     DIV = args.divisor_for_name
     
     # save results
+    os.makedirs(args.output_dir, exist_ok=True)
     np.save(os.path.join(args.output_dir, f'{args.model_version}{DIV}{args.pdb}{DIV}{args.sequence}{DIV}{args.job}{DIV}{args.num_repeats}{DIV}pnE.npy'), pnE_ensemble)
     np.save(os.path.join(args.output_dir, f'{args.model_version}{DIV}{args.pdb}{DIV}{args.sequence}{DIV}{args.job}{DIV}{args.num_repeats}{DIV}pnlogp.npy'), pnlogp_ensemble)
     np.save(os.path.join(args.output_dir, f'{args.model_version}{DIV}{args.pdb}{DIV}{args.sequence}{DIV}{args.job}{DIV}{args.num_repeats}{DIV}pes.npy'), pes_ensemble)

@@ -5,7 +5,7 @@ pdbs='2bnr 2bnq'
 
 matrix_list='blosum62 neg_abs_diff_vdw_radius'
 subtract_wt_value_list='0 1'
-combine_fn_list='sum'
+combine_fn_list='mean'
 
 base_dir='./'
 output_dir=$base_dir'results/'
