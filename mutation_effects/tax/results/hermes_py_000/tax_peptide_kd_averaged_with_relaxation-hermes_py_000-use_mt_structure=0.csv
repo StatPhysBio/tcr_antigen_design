@@ -1,0 +1,17 @@
+Kd,system,name,sequence,3d affinity,2d affinity,-log10(Kd),study,pdbs,chains,is_wt_to_show,pnE,pnlogp
+1.66,Tax,Tax WT,LLFGYPVYV,,,-0.220108088040055,pettmann_et_al,1ao7|1qrn|1qse|1qsf,C|C|C|C,1,45.63519,-9.347863
+2.67,Tax,Tax 5F,LLFGFPVYV,,,-0.4265112613645752,pettmann_et_al,1ao7|1qrn|1qse|1qsf,C|C|C|C,0,44.46364,-9.982972
+2.8,Tax,Tax 7T,LLFGYPTYV,,,-0.4471580313422192,pettmann_et_al,1ao7|1qrn|1qse|1qsf,C|C|C|C,0,44.74617,-10.473288
+5.0,Tax,Tax 5W,LLFGWPVYV,,,-0.6989700043360189,pettmann_et_al,1ao7|1qrn|1qse|1qsf,C|C|C|C,0,44.485443,-10.682796
+6.1,Tax,Tax 1M,MLFGYPVYV,,,-0.785329835010767,pettmann_et_al,1ao7|1qrn|1qse|1qsf,C|C|C|C,0,46.740734,-8.908611
+6.5,Tax,Tax 1A,ALFGYPVYV,,,-0.8129133566428556,pettmann_et_al,1ao7|1qrn|1qse|1qsf,C|C|C|C,0,49.343605,-7.600343
+7.97,Tax,Tax 1V,VLFGYPVYV,,,-0.9014583213961124,pettmann_et_al,1ao7|1qrn|1qse|1qsf,C|C|C|C,0,47.47418,-8.855427
+21.1,Tax,Tax 6V,LLFGYVVYV,,,-1.3242824552976926,pettmann_et_al,1ao7|1qrn|1qse|1qsf,C|C|C|C,0,44.779823,-8.774771
+21.4,Tax,Tax 7R,LLFGYPRYV,,,-1.3304137733491908,pettmann_et_al,1ao7|1qrn|1qse|1qsf,C|C|C|C,1,46.341816,-9.092633
+56.1,Tax,Tax 5H,LLFGHPVYV,,,-1.7489628612561614,pettmann_et_al,1ao7|1qrn|1qse|1qsf,C|C|C|C,0,43.718582,-10.351959
+60.0,Tax,Tax 8F,LLFGYPVFV,,,-1.7781512503836436,pettmann_et_al,1ao7|1qrn|1qse|1qsf,C|C|C|C,0,45.202785,-9.864666
+67.8,Tax,Tax 7H,LLFGYPHYV,,,-1.831229693867064,pettmann_et_al,1ao7|1qrn|1qse|1qsf,C|C|C|C,0,46.167824,-7.987513
+118.0,Tax,Tax 4A,LLFAYPVYV,,,-2.071882007306125,pettmann_et_al,1ao7|1qrn|1qse|1qsf,C|C|C|C,0,38.872826,-11.113087
+565.0,Tax,Tax 8A,LLFGYPVAV,,,-2.7520484478194387,pettmann_et_al,1ao7|1qrn|1qse|1qsf,C|C|C|C,1,46.40165,-10.10203
+1869.0,Tax,Tax 4A8A,LLFAYPVAV,,,-3.271609301378832,pettmann_et_al,1ao7|1qrn|1qse|1qsf,C|C|C|C,0,37.673126,-13.030033
+2321.0,Tax,Tax 5H8A,LLFGHPVAV,,,-3.365675140455917,pettmann_et_al,1ao7|1qrn|1qse|1qsf,C|C|C|C,0,43.38918,-11.521735

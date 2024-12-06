@@ -1,4 +1,5 @@
 __pycache__/
+__slurm_logs/
 mutation_effects/__old_*/
 all_pdbs/
 peptide_designs/nyeso_old_folder/

@@ -11,38 +11,53 @@ use_mt_structure='0'
 base_dir='./'
 output_dir=$base_dir'results/'
 
-for pdb in $pdbs
+# for pdb in $pdbs
+#     do
+
+#     echo $pdb
+
+#     for model_version in $model_version_list
+#         do
+
+#         echo $model_version
+
+#         python -u $hermes_dir'mutation_effect_prediction_with_hermes.py' \
+#                             --model_version $model_version \
+#                             --csv_file $base_dir'tax_peptide_kd_'$pdb'.csv' \
+#                             --folder_with_pdbs ./pdbs \
+#                             --output_dir $output_dir \
+#                             --wt_pdb_column pdb \
+#                             --mutant_column mutants \
+#                             --mutant_chain_column chain \
+#                             --mutant_split_symbol '|' \
+#                             --use_mt_structure $use_mt_structure
+
+#         python -u pretty_plots.py \
+#                     --system tax \
+#                     --system_name_in_csv_file 'tax_peptide_kd_'$pdb \
+#                     --target_column'=neg_delta_log10_Kd' \
+#                     --model hermes \
+#                     --model_instance $model_version \
+#                     --use_mt_structure $use_mt_structure \
+#                     --show_wt_lines both \
+#                     --wt_value_target 0.0 \
+#                     --wt_value_pred 0.0
+    
+#     done
+
+# done
+
+for model_version in $model_version_list
     do
 
-    echo $pdb
+    python -u pretty_plots.py \
+                --system tax \
+                --system_name_in_csv_file tax_peptide_kd_averaged \
+                --target_column'=-log10(Kd)' \
+                --model hermes \
+                --model_instance $model_version \
+                --use_mt_structure $use_mt_structure \
+                --show_wt_lines both_from_df
 
-    for model_version in $model_version_list
-        do
-
-        echo $model_version
-
-        python -u $hermes_dir'mutation_effect_prediction_with_hermes.py' \
-                            --model_version $model_version \
-                            --csv_file $base_dir'tax_peptide_kd_'$pdb'.csv' \
-                            --folder_with_pdbs ./pdbs \
-                            --output_dir $output_dir \
-                            --wt_pdb_column pdb \
-                            --mutant_column mutants \
-                            --mutant_chain_column chain \
-                            --mutant_split_symbol '|' \
-                            --use_mt_structure $use_mt_structure
-
-        python -u pretty_plots.py \
-                    --system tax \
-                    --system_name_in_csv_file 'tax_peptide_kd_'$pdb \
-                    --target_column'=neg_delta_log10_Kd' \
-                    --model hermes \
-                    --model_instance $model_version \
-                    --use_mt_structure $use_mt_structure \
-                    --show_wt_lines both \
-                    --wt_value_target 0.0 \
-                    --wt_value_pred 0.0
-    
-    done
 done
 

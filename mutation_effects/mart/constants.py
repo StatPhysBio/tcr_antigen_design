@@ -12,3 +12,8 @@ PDB_TO_PEP_CHAIN = {
 }
 
 PDBS = list(PDB_TO_WT_SEQ.keys())
+
+MOTIF_TO_MARKER = {
+    'GIG': 'd',
+    'DRG': 'x'
+}

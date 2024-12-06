@@ -89,6 +89,7 @@ def fastrelax_positions(
     # For non-Cartesian scorefunctions, use "dfpmin_armijo_nonmonotone"
     fr.min_type("lbfgs_armijo_nonmonotone")
     fr.apply(pose)
+    
 
 def find_calpha_neighbors(
     core_positions,

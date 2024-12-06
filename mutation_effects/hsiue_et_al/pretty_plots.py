@@ -17,11 +17,12 @@ if __name__ == '__main__':
     parser.add_argument('--system', type=str, required=True)
     parser.add_argument('--system_name_in_csv_file', type=str, default=None)
     parser.add_argument('--target_column', type=str, required=True)
+    parser.add_argument('--prediction_column', type=str, default=None)
     parser.add_argument('--model', type=str, required=True, choices=['hermes', 'proteinmpnn', 'neg_abs_diff_vdw_radius', 'blosum62'])
     parser.add_argument('--use_mt_structure', type=int, default=0, choices=[0, 1])
     parser.add_argument('--model_instance', type=str, default=None, help='Only used if model is hermes')
     parser.add_argument('--num_seq_per_target', type=int, default=None, help='Only used if model is proteinmpnn')
-    parser.add_argument('--show_wt_lines', type=str, default='both', choices=['both', 'pred', 'target', 'none'])
+    parser.add_argument('--show_wt_lines', type=str, default='none', choices=['both', 'pred', 'target', 'none', 'both_from_df'])
     parser.add_argument('--wt_value_target', type=float, default=0.0)
     parser.add_argument('--wt_value_pred', type=float, default=0.0)
     args = parser.parse_args()
@@ -45,7 +46,13 @@ if __name__ == '__main__':
         df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}-{model_instance}-use_mt_structure={use_mt_structure}.csv'))
         out_file = f'pretty_scatterplot-{system_name_in_csv_file}-{model}-{model_instance}-use_mt_structure={use_mt_structure}.png'
         title = f'{system_name_in_csv_file}\n{model} - {model_instance}\nuse_mt_structure={use_mt_structure}'
-        prediction_column = 'log_proba_mt__minus__log_proba_wt'
+        if args.prediction_column is None:
+            prediction_column = 'log_proba_mt__minus__log_proba_wt'
+            ylabel = r'HERMES predictions, $\Delta logP$'
+        else:
+            prediction_column = args.prediction_column
+            ylabel = r'HERMES predictions, ' + prediction_column
+            out_file = out_file.replace('pretty_scatterplot', f'pretty_scatterplot-{prediction_column}')
         ylabel = r'HERMES predictions, $\Delta logP$'
         color = 'tab:purple'
     elif model == 'proteinmpnn':
@@ -108,6 +115,15 @@ if __name__ == '__main__':
 
     if args.show_wt_lines in {'both', 'pred'}:
         plt.axhline(y=args.wt_value_pred, c='k', alpha=1.0, ls='--')
+    
+    if args.show_wt_lines == 'both_from_df':
+        wt_values = df_full[df_full['is_wt'].astype(bool)][[target_column, prediction_column]].values
+        print(wt_values)
+        for wt_value_target, wt_value_pred in wt_values:
+            plt.axvline(x=wt_value_target, c='k', alpha=1.0, ls='--')
+            plt.axhline(y=wt_value_pred, c='k', alpha=1.0, ls='--')
+
+    print(predictions.shape, targets.shape)
 
     plt.scatter(targets[is_bad_value_mask], predictions[is_bad_value_mask], c='tab:grey', alpha=0.2)
     plt.scatter(targets[~is_bad_value_mask], predictions[~is_bad_value_mask], c=color, alpha=0.5)

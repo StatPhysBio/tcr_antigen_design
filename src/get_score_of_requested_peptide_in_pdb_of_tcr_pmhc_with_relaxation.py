@@ -105,6 +105,10 @@ class PeptideMutator(object):
                 self.pose, self.mutation_inds, self.chain))
         self.pocket_size = len(self.pocket_resnums)
 
+        self.peptide_resnums = list(self.peptide_resnums)
+        self.complex_resnums = list(self.complex_resnums)
+        self.pocket_resnums = list(self.pocket_resnums)
+
         self.regions = get_pockets(self.pdb, None, self.peptide_resnums, self.pose) # None -> self.pocket_resnums
     
     def init_score_fxns(self):
@@ -126,9 +130,9 @@ class PeptideMutator(object):
             self.scorefxn_cartesian,
             self.peptide_resnums * self.relax_peptide_backbone,
             self.complex_resnums, # <-- complex_resnums is the full pocket within 10. AA of the peptide
-            self.pose
+            self.pose,
+            nrepeats = 1
         )
-
 
 
 def collect_pnEs_for_sequences(pne_dir, sequences):
@@ -343,9 +347,25 @@ if __name__ == '__main__':
 
         requested_regions = {'peptide': mutator.regions['peptide']} # only keep peptide region to make it quicker
         print(requested_regions['peptide'])
-        ensemble_predictions_dict = predict_from_pdbfile(os.path.join(args.pdbdir, f'{args.pdb}.pdb'), models, hparams, 64, finetuning_hparams=finetuning_hparams, regions=requested_regions)
+
+        # wrie temp pdbfile with current relaxation (easiest way with current code, not fastest way)
+        import tempfile
+        with tempfile.NamedTemporaryFile(delete=True, suffix='.pdb') as f:
+            mutator.pose.dump_pdb(f.name)
+            ensemble_predictions_dict = predict_from_pdbfile(f.name, models, hparams, 64, finetuning_hparams=finetuning_hparams, regions=requested_regions)
+        
+        # tempfile_name = 'tempfile.pdb'
+        # mutator.pose.dump_pdb(tempfile_name)
+        # ensemble_predictions_dict = predict_from_pdbfile(tempfile_name, models, hparams, 64, finetuning_hparams=finetuning_hparams, regions=requested_regions)
         
         ensemble_predictions_dict = ensemble_predictions_dict['peptide']
+
+        # print(ensemble_predictions_dict['logits'])
+        # print(ensemble_predictions_dict['logits'].shape)
+
+        # print(args.sequence)
+        # print(len(args.sequence))
+
         ensembled_peptide_pes = np.mean(ensemble_predictions_dict['logits'], axis=0)
         if args.ensemble_at_logits_level:
             ensembled_peptide_logps = log_softmax(ensembled_peptide_pes, axis=1)
@@ -373,6 +393,6 @@ if __name__ == '__main__':
     os.makedirs(args.output_dir, exist_ok=True)
     np.save(os.path.join(args.output_dir, f'{args.model_version}{DIV}{args.pdb}{DIV}{args.sequence}{DIV}{args.job}{DIV}{args.num_repeats}{DIV}pnE.npy'), pnE_ensemble)
     np.save(os.path.join(args.output_dir, f'{args.model_version}{DIV}{args.pdb}{DIV}{args.sequence}{DIV}{args.job}{DIV}{args.num_repeats}{DIV}pnlogp.npy'), pnlogp_ensemble)
-    np.save(os.path.join(args.output_dir, f'{args.model_version}{DIV}{args.pdb}{DIV}{args.sequence}{DIV}{args.job}{DIV}{args.num_repeats}{DIV}pes.npy'), pes_ensemble)
-    np.save(os.path.join(args.output_dir, f'{args.model_version}{DIV}{args.pdb}{DIV}{args.sequence}{DIV}{args.job}{DIV}{args.num_repeats}{DIV}logps.npy'), logps_ensemble)
+    # np.save(os.path.join(args.output_dir, f'{args.model_version}{DIV}{args.pdb}{DIV}{args.sequence}{DIV}{args.job}{DIV}{args.num_repeats}{DIV}pes.npy'), pes_ensemble)
+    # np.save(os.path.join(args.output_dir, f'{args.model_version}{DIV}{args.pdb}{DIV}{args.sequence}{DIV}{args.job}{DIV}{args.num_repeats}{DIV}logps.npy'), logps_ensemble)
 

@@ -2,7 +2,7 @@
 
 hermes_dir='/gscratch/spe/gvisan01/hermes/'
 
-model_version_list='hermes_py_000 hermes_py_050 hermes_py_000_ft_skempi_ddg_bi hermes_py_050_ft_skempi_ddg_bi'
+model_version_list='hermes_py_000_ft_skempi_no_tcrpmhc_ddg_bi hermes_py_050_ft_skempi_no_tcrpmhc_ddg_bi' # hermes_py_000 hermes_py_050
 
 use_mt_structure='0'
 
