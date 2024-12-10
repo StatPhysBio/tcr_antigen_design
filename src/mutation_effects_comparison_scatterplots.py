@@ -65,24 +65,34 @@ def get_long_prediction_column_name(model_instance, prediction_column_short, sys
             return 'pnE', system_name_in_csv_file + '_with_relaxation'
         else:
             raise ValueError(f'Unknown prediction_column_short: {prediction_column_short}')
+        
     elif 'proteinmpnn' in model_instance:
         if prediction_column_short == 'delta_log_p':
             return 'log_p_mt__minus__log_p_wt', system_name_in_csv_file
         else:
             raise ValueError(f'Unknown prediction_column_short: {prediction_column_short}')
+        
     elif 'tcrdock' in model_instance:
         system_name_in_csv_file = system_name_in_csv_file.replace('_averaged', '')
         if prediction_column_short == 'neg_pae':
             return 'neg pmhc_tcr_pae', system_name_in_csv_file
         else:
             raise ValueError(f'Unknown prediction_column_short: {prediction_column_short}')
+    
+    elif 'blosum62' in model_instance:
+        if prediction_column_short == 'sub_score':
+            return 'substitution_matrix_score', system_name_in_csv_file
+        else:
+            raise ValueError(f'Unknown prediction_column_short: {prediction_column_short}')
+    
     else:
         raise ValueError(f'Unknown model_instance: {model_instance}')
 
 SHORT_PREDICTION_NAME_TO_PRETTY_NAME = {
     'delta_log_p': r'$\Delta logP$',
     'pE': '$pE$',
-    'neg_pae': '-PAE'
+    'neg_pae': '-PAE',
+    'sub_score': 'Substitution Matrix Score'
 }
 
 def short_prediction_name_to_pretty_name(short_prediction_name):
@@ -96,10 +106,13 @@ def short_prediction_name_to_pretty_name(short_prediction_name):
 MODEL_INSTANCE_TO_PRETTY_NAME = {
     'hermes_py_000': 'HERMES 0.00',
     'hermes_py_050': 'HERMES 0.50',
+    'hermes_py_000_ft_skempi_no_tcrpmhc_ddg_bi': 'HERMES 0.00 + Skempi FT',
+    'hermes_py_050_ft_skempi_no_tcrpmhc_ddg_bi': 'HERMES 0.50 + Skempi FT',
     'proteinmpnn_v_48_002': 'ProteinMPNN 0.02',
     'proteinmpnn_v_48_030': 'ProteinMPNN 0.30',
     'tcrdock': 'TCRdock',
-    'tcrdock_no_nearby_templates': 'TCRdock benchmark'
+    'tcrdock_no_nearby_templates': 'TCRdock benchmark',
+    'blosum62__1__mean': 'BLOSUM62'
 }
 
 
@@ -183,16 +196,22 @@ def get_model_specific_parameters(model_instance, prediction_column_short, args)
     #     ylabel = r'Substitution Matrix Score'
     #     color = 'tab:red'
 
-    # elif model == 'blosum62':
-    #     print('Note: "use_mt_structure" is irrelevant with neg_abs_diff_vdw_radius substitution matrix.', file=sys.stderr)
-    #     base_dir = os.path.join(args.base_dir, f'{system}/results/{model_instance}/')
-    #     df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}-{model_instance}-use_mt_structure=0.csv'))
-    #     out_file = f'pretty_scatterplot-{system_name_in_csv_file}-{model_instance}.png'
-    #     title = f'{system_name_in_csv_file}\n{model_instance}'
-    #     prediction_column = 'substitution_matrix_score'
-    #     ylabel = r'Substitution Matrix Score'
-    #     color = 'tab:pink'
+    elif 'blosum62' in model_instance:
+        # print('Note: "use_mt_structure" is irrelevant with neg_abs_diff_vdw_radius substitution matrix.', file=sys.stderr)
+        base_dir = f'../mutation_effects/{system}/results/{model_instance}/'
 
+        if 'average' in system_name_in_csv_file:
+            df_list = [pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file.replace("averaged", pdb)}-{model_instance}-use_mt_structure={use_mt_structure}.csv')) for pdb in SYSTEM_TO_PDBS[system]]
+            # df_full is same as df_list but prediction column is the average of all predictions
+            df_full = df_list[0].copy()
+            for df in df_list[1:]:
+                df_full[prediction_column] += df[prediction_column]
+            df_full[prediction_column] /= len(df_list)
+        else:
+            df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}-{model_instance}-use_mt_structure=0.csv'))
+
+        color = 'tab:pink'
+    
     else:
         raise ValueError(f'Unknown model_instance: {model_instance}')
     
@@ -221,14 +240,14 @@ if __name__ == '__main__':
 
     # make the list of models and the figure shape based on the system
     if args.system == 'hsiue_et_al':
-        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_030']
-        prediction_columns = ['delta_log_p', 'delta_log_p', 'pE', 'pE', 'delta_log_p', 'delta_log_p']
-        num_rows = 3
+        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000_ft_skempi_no_tcrpmhc_ddg_bi', 'hermes_py_050_ft_skempi_no_tcrpmhc_ddg_bi', 'hermes_py_000', 'hermes_py_050', 'hermes_py_000_ft_skempi_no_tcrpmhc_ddg_bi', 'hermes_py_050_ft_skempi_no_tcrpmhc_ddg_bi', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_030', 'blosum62__1__mean']
+        prediction_columns = ['delta_log_p', 'delta_log_p', 'delta_log_p', 'delta_log_p', 'pE', 'pE', 'pE', 'pE', 'delta_log_p', 'delta_log_p', 'sub_score']
+        num_rows = 6
         num_cols = 2
     else:
-        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_030', 'tcrdock', 'tcrdock_no_nearby_templates']
-        prediction_columns = ['delta_log_p', 'delta_log_p', 'pE', 'pE', 'delta_log_p', 'delta_log_p', 'neg_pae', 'neg_pae']
-        num_rows = 4
+        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000_ft_skempi_no_tcrpmhc_ddg_bi', 'hermes_py_050_ft_skempi_no_tcrpmhc_ddg_bi', 'hermes_py_000', 'hermes_py_050', 'hermes_py_000_ft_skempi_no_tcrpmhc_ddg_bi', 'hermes_py_050_ft_skempi_no_tcrpmhc_ddg_bi', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_030', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62__1__mean']
+        prediction_columns = ['delta_log_p', 'delta_log_p', 'delta_log_p', 'delta_log_p', 'pE', 'pE', 'pE', 'pE', 'delta_log_p', 'delta_log_p', 'neg_pae', 'neg_pae', 'sub_score']
+        num_rows = 7
         num_cols = 2
     
     target_column = SYSTEM_TO_TARGET_COLUMN[args.system]
@@ -244,7 +263,12 @@ if __name__ == '__main__':
         col = i % num_cols
         ax = axs[row, col]
 
-        df_full, title, prediction_column, color = get_model_specific_parameters(model_instance, prediction_column_short, args)
+        try:
+            df_full, title, prediction_column, color = get_model_specific_parameters(model_instance, prediction_column_short, args)
+        except Exception as e:
+            print(f'Warning: Could not find {model_instance} for {args.system} system and prediction value {prediction_column_short}.', file=sys.stderr)
+            # raise e # uncomment when debugging
+            continue
 
         # get pretty prediction column
         if prediction_column_short == 'delta_log_p':
@@ -253,6 +277,8 @@ if __name__ == '__main__':
             prediction_column_pretty = '$pE$'
         elif prediction_column_short == 'neg_pae':
             prediction_column_pretty = '-PAE'
+        elif prediction_column_short == 'sub_score':
+            prediction_column_pretty = 'Substitution Matrix Score'
         else:
             raise ValueError(f'Unknown prediction_column_short: {prediction_column_short}')
 

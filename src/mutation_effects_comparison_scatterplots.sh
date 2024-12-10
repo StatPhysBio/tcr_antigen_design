@@ -9,5 +9,15 @@ python mutation_effects_comparison_scatterplots.py --system hsiue_et_al --system
 
 python mutation_effects_comparison_scatterplots.py --system mskcc --system_name_in_csv_file mskcc_tcr1_ec50_sat_mut
 
+python mutation_effects_comparison_scatterplots.py --system mskcc --system_name_in_csv_file mskcc_tcr2_ec50_sat_mut
 
+python mutation_effects_comparison_scatterplots.py --system mskcc --system_name_in_csv_file mskcc_tcr3_ec50_sat_mut
+
+python mutation_effects_comparison_scatterplots.py --system mskcc --system_name_in_csv_file mskcc_tcr4_ec50_sat_mut
+
+python mutation_effects_comparison_scatterplots.py --system mskcc --system_name_in_csv_file mskcc_tcr5_ec50_sat_mut
+
+python mutation_effects_comparison_scatterplots.py --system mskcc --system_name_in_csv_file mskcc_tcr6_ec50_sat_mut
+
+python mutation_effects_comparison_scatterplots.py --system mskcc --system_name_in_csv_file mskcc_tcr7_ec50_sat_mut
 
