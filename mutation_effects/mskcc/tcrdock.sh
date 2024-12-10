@@ -11,6 +11,7 @@ for tcr in $tcrs
         do
 
         python -u pretty_plots.py \
+                        --base_dir ../ \
                         --system mskcc \
                         --system_name_in_csv_file 'mskcc_tcr'$tcr'_ec50_sat_mut' \
                         --target_column'=- delta log_ec50_M' \
@@ -18,9 +19,7 @@ for tcr in $tcrs
                         --model_instance $model_version \
                         --num_seq_per_target 10 \
                         --use_mt_structure $use_mt_structure \
-                        --show_wt_lines target \
-                        --wt_value_pred 0.0
-                        
+                        --show_wt_lines both_from_df                        
 
     done
 done

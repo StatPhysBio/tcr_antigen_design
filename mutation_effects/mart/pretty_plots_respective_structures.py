@@ -54,15 +54,20 @@ if __name__ == '__main__':
             df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file.format(pdb=PDBS[0])}-{model_instance}-use_mt_structure={use_mt_structure}.csv'))
 
         predictions = []
+        is_wt_to_show = []
         for i, row in df_full.iterrows():
             motif_pdbs = row['motif_pdbs'].split('|')
             temp_predictions = []
+            temp_is_wt_to_show = 0
             for pdb in motif_pdbs:
                 curr_df = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file.format(pdb=pdb)}-{model_instance}-use_mt_structure={use_mt_structure}.csv'))
                 temp_predictions.append(curr_df[prediction_column].values[i])
+                temp_is_wt_to_show += curr_df['is_wt_to_show'].values[i]
             predictions.append(np.mean(temp_predictions))
+            is_wt_to_show.append(temp_is_wt_to_show)
         
         df_full[prediction_column] = predictions
+        df_full['is_wt_to_show'] = is_wt_to_show
 
         out_file = f'pretty_scatterplot-{system_name_in_csv_file.format(pdb="resp_struc")}-{model}-{model_instance}-use_mt_structure={use_mt_structure}.png'
 
@@ -90,15 +95,20 @@ if __name__ == '__main__':
         df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file.format(pdb=PDBS[0])}-num_seq_per_target={num_seq_per_target}-use_mt_structure={use_mt_structure}.csv'))
 
         predictions = []
+        is_wt_to_show = []
         for i, row in df_full.iterrows():
             motif_pdbs = row['motif_pdbs'].split('|')
             temp_predictions = []
+            temp_is_wt_to_show = 0
             for pdb in motif_pdbs:
                 curr_df = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file.format(pdb=pdb)}-num_seq_per_target={num_seq_per_target}-use_mt_structure={use_mt_structure}.csv'))
                 temp_predictions.append(curr_df[prediction_column].values[i])
+                temp_is_wt_to_show += curr_df['is_wt_to_show'].values[i]
             predictions.append(np.mean(temp_predictions))
+            is_wt_to_show.append(temp_is_wt_to_show)
         
         df_full[prediction_column] = predictions
+        df_full['is_wt_to_show'] = is_wt_to_show
 
     else:
         raise NotImplementedError()

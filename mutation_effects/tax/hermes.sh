@@ -51,6 +51,7 @@ for model_version in $model_version_list
     do
 
     python -u pretty_plots.py \
+                --base_dir ../ \
                 --system tax \
                 --system_name_in_csv_file tax_peptide_kd_averaged \
                 --target_column'=-log10(Kd)' \

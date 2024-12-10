@@ -49,6 +49,7 @@ for model_version in $model_version_list
     do
 
     python -u pretty_plots.py \
+                --base_dir ../ \
                 --system nyeso \
                 --system_name_in_csv_file nyeso_peptide_kd_averaged \
                 --target_column'=-log10(Kd)' \
@@ -56,7 +57,8 @@ for model_version in $model_version_list
                 --model_instance 'proteinmpnn_'$model_version \
                 --num_seq_per_target 10 \
                 --use_mt_structure $use_mt_structure \
-                --show_wt_lines none
+                --show_wt_lines both_from_df
 
 done
 
+``
