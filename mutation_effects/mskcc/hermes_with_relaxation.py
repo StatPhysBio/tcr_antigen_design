@@ -6,7 +6,7 @@ import argparse
 
 from constants import TCR_TO_PDB, PDB_TO_PEP_INFO
 
-# done (in progress) TCRS: 1, 3, 4, (2)
+# done (in progress) TCRS: 1, 3, 4, (2, 5)
 
 TCRS = ['5']
 
@@ -33,8 +33,8 @@ if __name__ == '__main__':
     parser.add_argument('-P',  '--partition', type=str, default='compute')
     parser.add_argument('-G',  '--use_gpu', type=int, default=0, choices=[0, 1])
     parser.add_argument('-C',  '--num_cores', type=int, default=1)
-    parser.add_argument('-W',  '--walltime', type=str, default='02:00:00')
-    parser.add_argument('-M',  '--memory', type=str, default='6G')
+    parser.add_argument('-W',  '--walltime', type=str, default='02:30:00')
+    parser.add_argument('-M',  '--memory', type=str, default='5G')
     parser.add_argument('-E',  '--send_emails', type=int, default=0, choices=[0, 1])
     parser.add_argument('-EA', '--email_address', type=str, default='gvisan01@uw.edu')
 
