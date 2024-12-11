@@ -4,8 +4,8 @@ scoring_functions_dir='/gscratch/spe/gvisan01/hermes/baselines/'
 tcrs='1 2 3 4 5 6 7'
 
 matrix_list='blosum62 neg_abs_diff_vdw_radius'
-subtract_wt_value_list='1'
-combine_fn_list='sum'
+subtract_wt_value_list='0 1'
+combine_fn_list='mean sum'
 
 base_dir='./'
 output_dir=$base_dir'results/'
