@@ -32,9 +32,9 @@ SYSTEM_TO_PRETTY_TARGET = {
 }
 
 SYSTEM_TO_MARKER_SIZE = {
-    'nyeso': 50,
-    'tax': 50,
-    'mart': 50,
+    'nyeso': 60,
+    'tax': 60,
+    'mart': 60,
     'hsiue_et_al': 30,
     'mskcc': 30
 }
@@ -148,14 +148,14 @@ if __name__ == '__main__':
         mask = markers == marker
         plt.scatter(targets[mask], predictions[mask], c=color, marker=marker, alpha=alpha, s=s)
 
-    plt.xlabel(xlabel, fontsize=12)
-    plt.ylabel(ylabel, fontsize=12)
+    plt.xlabel(xlabel, fontsize=14)
+    plt.ylabel(ylabel, fontsize=14)
 
-    plt.title(title, fontsize=12)
+    plt.title(title, fontsize=15)
     # plt.title(title+'\n'+f'Spearman r = {sr:.2f} (pv {sr_pval:.1e})', fontsize=12)
 
     # put text of correlation coefficient
-    plt.text(0.03, 0.03, f'Spearman r = {sr:.2f} (pv {sr_pval:.1e})', transform=plt.gca().transAxes, fontsize=10, verticalalignment='bottom', horizontalalignment='left')
+    plt.text(0.03, 0.03, f'Spearman r = {sr:.2f}\np-val = {sr_pval:.1e}', transform=plt.gca().transAxes, fontsize=12, verticalalignment='bottom', horizontalalignment='left')
 
     # plt.legend(loc='upper left')
 
