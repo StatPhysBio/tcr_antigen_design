@@ -16,7 +16,7 @@ metrics='pnE pnlogp'
 for model_version in $model_version_list
     do
 
-    for tcr in $(seq 4 4)
+    for tcr in $(seq 2 2)
         do
 
         pdbid=${pdbid_list[$tcr-1]}

@@ -7,6 +7,9 @@ from scipy.stats import pearsonr, spearmanr
 
 import argparse
 
+IND_TO_AA = 'CSTAGPDEQNHRKMILVWYF'
+AA_TO_IND = {aa: i for i, aa in enumerate(IND_TO_AA)}
+
 SYSTEM_TO_WT_TO_SHOW_COLUMNS = {
     'nyeso': None,
     'tax': None,
@@ -22,6 +25,14 @@ SYSTEM_TO_TARGET_COLUMN = {
     'hsiue_et_al': 'IFN_gamma (pg/ml)',
     'mskcc': '- delta log_ec50_M'
 }
+
+# SYSTEM_TO_PRETTY_TARGET = {
+#     'nyeso': '$-\\text{log}_{10}(K_d)$',
+#     'tax': '$-\\text{log}_{10}(K_d)$',
+#     'mart': '$-\\text{log}_{10}(K_d)$',
+#     'hsiue_et_al': 'IFN_gamma (pg/ml)',
+#     'mskcc': '$- \Delta \\text{log(EC50)}$'
+# }
 
 SYSTEM_TO_PRETTY_TARGET = {
     'nyeso': '$-\\text{log}_{10}(K_d)$',
@@ -181,5 +192,14 @@ if __name__ == '__main__':
         plt.savefig(outfile, dpi=300)
         plt.savefig(outfile.replace('.png', '.pdf'), dpi=300)
         plt.close()
+    
+    # now also make two heatmaps! one with the predictions, one with the targets
+    plt.figure(figsize=(3.5, 3.5))
+
+    sequences = df['sequence']
+    predictions = df[prediction_column]
+    targets = df[target_column]
+
+    heatmap = np.full((len(sequences[0]), 20), np.nan)
     
 
