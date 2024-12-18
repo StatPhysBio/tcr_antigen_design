@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy.stats import pearsonr, spearmanr
+import json
 
 import logging
 logging.basicConfig(level=logging.ERROR)
@@ -35,45 +36,28 @@ SYSTEM_TO_TARGET_COLUMN = {
     'mskcc': '- delta log_ec50_M'
 }
 
-SYSTEM_TO_TARGET_COLUMN_PRETTY = {
-    'nyeso': r'$-\text{log}_{10}(K_d)$',
-    'tax': r'$-\text{log}_{10}(K_d)$',
-    'mart': r'$-\text{log}_{10}(K_d)$',
-    'hsiue_et_al': 'IFN_gamma (pg/ml)',
-    'mskcc': r'$-\Delta log(EC50)$'
-}
-
-def system_to_target_column_pretty(system):
-    if system == 'nyeso':
-        return r'$-\text{log}_{10}(K_d)$'
-    elif system == 'tax':
-        return r'$-\text{log}_{10}(K_d)$'
-    elif system == 'mart':
-        return r'$-\text{log}_{10}(K_d)$'
-    elif system == 'hsiue_et_al':
-        return 'IFN_gamma (pg/ml)'
-    elif system == 'mskcc':
-        return r'$-\Delta log_{EC50}$'
-    else:
-        raise ValueError(f'Unknown system: {system}')
-
 def get_long_prediction_column_name(model_instance, prediction_column_short, system_name_in_csv_file):
     if 'hermes' in model_instance:
         if prediction_column_short == 'delta_log_p':
             return 'log_proba_mt__minus__log_proba_wt', system_name_in_csv_file
-        elif prediction_column_short == 'pE':
+        elif prediction_column_short == 'pE-relaxed':
             return 'pnE', system_name_in_csv_file + '_with_relaxation'
+        elif prediction_column_short == 'pE-fixed':
+            return 'pnE', system_name_in_csv_file
         else:
             raise ValueError(f'Unknown prediction_column_short: {prediction_column_short}')
         
     elif 'proteinmpnn' in model_instance:
         if prediction_column_short == 'delta_log_p':
             return 'log_p_mt__minus__log_p_wt', system_name_in_csv_file
+        elif prediction_column_short == 'pnlogp-fixed':
+            return 'pnlogp', system_name_in_csv_file
         else:
             raise ValueError(f'Unknown prediction_column_short: {prediction_column_short}')
         
     elif 'tcrdock' in model_instance:
         system_name_in_csv_file = system_name_in_csv_file.replace('_averaged', '')
+        system_name_in_csv_file = system_name_in_csv_file.replace('_closest', '')
         if prediction_column_short == 'neg_pae':
             return 'neg pmhc_tcr_pae', system_name_in_csv_file
         else:
@@ -88,20 +72,29 @@ def get_long_prediction_column_name(model_instance, prediction_column_short, sys
     else:
         raise ValueError(f'Unknown model_instance: {model_instance}')
 
+
 SHORT_PREDICTION_NAME_TO_PRETTY_NAME = {
-    'delta_log_p': r'$\Delta logP$',
-    'pE': '$pE$',
+    'pE-fixed': '$pE$ on fixed structure',
+    'pE-relaxed': 'avg. $pE$ on mutated+relaxed structures',
     'neg_pae': '-PAE',
-    'sub_score': 'Substitution Matrix Score'
+    'sub_score': 'Substitution Matrix Score',
+    'pnlogp-fixed': 'log P on fixed structure',
+    'delta_log_p': '$pE$ on fixed structure'
 }
 
 def short_prediction_name_to_pretty_name(short_prediction_name):
-    if short_prediction_name == 'delta_log_p':
-        return r'$\Delta logP$'
-    elif short_prediction_name == 'pE':
-        return '$pE$'
+    if short_prediction_name == 'pE-fixed':
+        return '$pE$ on fixed structure'
+    elif short_prediction_name == 'pE-relaxed':
+        return 'avg. $pE$ on\nmutated+relaxed structures'
     elif short_prediction_name == 'neg_pae':
         return '-PAE'
+    elif short_prediction_name == 'sub_score':
+        return 'Substitution Matrix Score'
+    elif short_prediction_name == 'pnlogp-fixed':
+        return 'log P on fixed structure'
+    elif short_prediction_name == 'delta_log_p':
+        return '$pE$ on fixed structure'
 
 MODEL_INSTANCE_TO_PRETTY_NAME = {
     'hermes_py_000': 'HERMES 0.00',
@@ -112,8 +105,30 @@ MODEL_INSTANCE_TO_PRETTY_NAME = {
     'proteinmpnn_v_48_030': 'ProteinMPNN 0.30',
     'tcrdock': 'TCRdock',
     'tcrdock_no_nearby_templates': 'TCRdock benchmark',
-    'blosum62__1__mean': 'BLOSUM62'
+    'blosum62': 'BLOSUM62'
 }
+
+def make_pretty_name(model, pred_col):
+    if model == 'hermes_py_000' and pred_col in {'delta_log_p', 'pE-fixed'}:
+        return 'HERMES-fixed 0.00'
+    elif model == 'hermes_py_050' and pred_col in {'delta_log_p', 'pE-fixed'}:
+        return 'HERMES-fixed 0.50'
+    elif model == 'hermes_py_000' and pred_col == 'pE-relaxed':
+        return 'HERMES-relaxed 0.00'
+    elif model == 'hermes_py_050' and pred_col == 'pE-relaxed':
+        return 'HERMES-relaxed 0.50'
+    elif model == 'proteinmpnn_v_48_002' and pred_col in {'delta_log_p', 'pnlogp-fixed'}:
+        return 'ProteinMPNN 0.02'
+    elif model == 'proteinmpnn_v_48_030' and pred_col in {'delta_log_p', 'pnlogp-fixed'}:
+        return 'ProteinMPNN 0.30'
+    elif model == 'tcrdock' and pred_col == 'neg_pae':
+        return 'TCRdock'
+    elif model == 'tcrdock_no_nearby_templates' and pred_col == 'neg_pae':
+        return 'TCRdock benchmark'
+    elif model == 'blosum62' and pred_col == 'sub_score':
+        return 'BLOSUM62'
+    else:
+        raise ValueError(f'Unknown model and pred_col: {model}, {pred_col}')
 
 
 def get_model_specific_parameters(model_instance, prediction_column_short, args):
@@ -124,47 +139,20 @@ def get_model_specific_parameters(model_instance, prediction_column_short, args)
     num_seq_per_target = 10 # always 10, there for legagy reasons
 
     prediction_column, system_name_in_csv_file = get_long_prediction_column_name(model_instance, prediction_column_short, system_name_in_csv_file)
-    title = MODEL_INSTANCE_TO_PRETTY_NAME[model_instance]
+    title = make_pretty_name(model_instance, prediction_column_short)
 
     if 'hermes' in model_instance:
         base_dir = f'../mutation_effects/{system}/results/{model_instance}/'
         color = 'tab:purple'
 
-        if 'averaged' in system_name_in_csv_file and prediction_column_short == 'delta_log_p':
-            df_list = [pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file.replace("averaged", pdb)}-{model_instance}-use_mt_structure={use_mt_structure}.csv')) for pdb in SYSTEM_TO_PDBS[system]]
-            # df_full is same as df_list but prediction column is the average of all predictions
-            df_full = df_list[0].copy()
-            for df in df_list[1:]:
-                df_full[prediction_column] += df[prediction_column]
-            df_full[prediction_column] /= len(df_list)
-
-            # also add together is_wt_to_show
-            df_full['is_wt_to_show'] = df_list[0]['is_wt_to_show']
-            for df in df_list[1:]:
-                df_full['is_wt_to_show'] += df['is_wt_to_show']
-        else:
-            df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}-{model_instance}-use_mt_structure={use_mt_structure}.csv'))
+        df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}-{model_instance}-use_mt_structure={use_mt_structure}.csv'))
 
     elif 'proteinmpnn' in model_instance:
         base_dir = f'../mutation_effects/{system}/results/{model_instance}/zero_shot_predictions/'
 
         color = 'tab:brown'
 
-        if 'averaged' in system_name_in_csv_file and prediction_column_short == 'delta_log_p':
-            df_list = [pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file.replace("averaged", pdb)}-num_seq_per_target={num_seq_per_target}-use_mt_structure={use_mt_structure}.csv')) for pdb in SYSTEM_TO_PDBS[system]]
-            # df_full is same as df_list but prediction column is the average of all predictions
-            df_full = df_list[0].copy()
-            for df in df_list[1:]:
-                df_full[prediction_column] += df[prediction_column]
-            df_full[prediction_column] /= len(df_list)
-
-            # also add together is_wt_to_show
-            df_full['is_wt_to_show'] = df_list[0]['is_wt_to_show']
-            for df in df_list[1:]:
-                df_full['is_wt_to_show'] += df['is_wt_to_show']
-
-        else:
-            df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}-num_seq_per_target={num_seq_per_target}-use_mt_structure={use_mt_structure}.csv'))
+        df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}-num_seq_per_target={num_seq_per_target}-use_mt_structure={use_mt_structure}.csv'))
 
     elif model_instance == 'tcrdock':
         # print('Note: "use_mt_structure" is irrelevant with tcrdock model.', file=sys.stderr)
@@ -239,20 +227,25 @@ if __name__ == '__main__':
         raise ValueError(f'Unknown system: {args.system}')
 
     # make the list of models and the figure shape based on the system
-    if args.system == 'hsiue_et_al':
-        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000_ft_skempi_no_tcrpmhc_ddg_bi', 'hermes_py_050_ft_skempi_no_tcrpmhc_ddg_bi', 'hermes_py_000', 'hermes_py_050', 'hermes_py_000_ft_skempi_no_tcrpmhc_ddg_bi', 'hermes_py_050_ft_skempi_no_tcrpmhc_ddg_bi', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_030', 'blosum62__1__mean']
-        prediction_columns = ['delta_log_p', 'delta_log_p', 'delta_log_p', 'delta_log_p', 'pE', 'pE', 'pE', 'pE', 'delta_log_p', 'delta_log_p', 'sub_score']
-        num_rows = 6
+    if 'hsiue' in args.system:
+        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_030', 'blosum62']
+        prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'sub_score']
+        num_rows = 4
+        num_cols = 2
+    elif 'mskcc' in args.system:
+        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_030', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62']
+        prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'neg_pae', 'neg_pae', 'sub_score']
+        num_rows = 5
         num_cols = 2
     else:
-        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000_ft_skempi_no_tcrpmhc_ddg_bi', 'hermes_py_050_ft_skempi_no_tcrpmhc_ddg_bi', 'hermes_py_000', 'hermes_py_050', 'hermes_py_000_ft_skempi_no_tcrpmhc_ddg_bi', 'hermes_py_050_ft_skempi_no_tcrpmhc_ddg_bi', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_030', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62__1__mean']
-        prediction_columns = ['delta_log_p', 'delta_log_p', 'delta_log_p', 'delta_log_p', 'pE', 'pE', 'pE', 'pE', 'delta_log_p', 'delta_log_p', 'neg_pae', 'neg_pae', 'sub_score']
-        num_rows = 7
+        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_030', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62']
+        prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'neg_pae', 'neg_pae', 'sub_score']
+        num_rows = 5
         num_cols = 2
     
     target_column = SYSTEM_TO_TARGET_COLUMN[args.system]
     # target_column_pretty = system_to_target_column_pretty(args.system)
-
+    
 
     ## scatterplots
     
@@ -308,7 +301,7 @@ if __name__ == '__main__':
         metrics['Pr_pval'].append(pr_pval)
         metrics['Sr_pval'].append(sr_pval)
         colors.append(color)
-        model_names_pretty.append(title + ' ' + prediction_column_pretty)
+        model_names_pretty.append(make_pretty_name(model_instance, prediction_column_short))
 
         ax.scatter(targets, predictions, color=color, s=80, alpha=0.5)
 
@@ -337,6 +330,10 @@ if __name__ == '__main__':
     x = np.arange(len(model_names_pretty))
     width = 0.50
 
+    data = {
+        'Pearson r': {},
+        'Spearman r': {}
+    }
 
     fig, axs = plt.subplots(figsize=(14, num_rows*0.8), nrows=1, ncols=2, sharey=True)
 
@@ -356,6 +353,8 @@ if __name__ == '__main__':
             
             ax.text(r+offset, i, f'{r:.2f}', va='center', fontsize=fontsize_base-2, color='black' if r_pval <= 0.05 else 'red', ha=ha)
 
+            data[metric_pretty_name][model_names_pretty[i]] = (r, r_pval)
+
         ax.set_yticks(x, model_names_pretty)
 
         ax.set_xlabel(metric_pretty_name, fontsize=fontsize_base)
@@ -366,11 +365,16 @@ if __name__ == '__main__':
 
         ax.tick_params(axis='both', which='major', labelsize=fontsize_base-2)
 
+
     os.makedirs(f'../mutation_effects/{args.system}/plots', exist_ok=True)
     plt.tight_layout()
     plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}_barplots.png')
     plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}_barplots.pdf')
     plt.close()
+
+    # save the data
+    with open(f'../mutation_effects/{args.system}/results/{args.system_name_in_csv_file}_metrics.json', 'w') as f:
+        json.dump(data, f, indent=4)
 
     
 

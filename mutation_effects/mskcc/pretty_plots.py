@@ -20,6 +20,14 @@ CUTOFF_BAD_VALUE = {
     'mskcc_tcr6_ec50_sat_mut': -8,
     'mskcc_tcr7_ec50_sat_mut': -6,
 
+    'mskcc_tcr1_ec50_sat_mut_af3': -6,
+    'mskcc_tcr2_ec50_sat_mut_af3': -6,
+    'mskcc_tcr3_ec50_sat_mut_af3': -6,
+    'mskcc_tcr4_ec50_sat_mut_af3': -8,
+    'mskcc_tcr5_ec50_sat_mut_af3': -8,
+    'mskcc_tcr6_ec50_sat_mut_af3': -8,
+    'mskcc_tcr7_ec50_sat_mut_af3': -6,
+
     'mskcc_tcr1_ec50_sat_mut_with_relaxation': -6,
     'mskcc_tcr2_ec50_sat_mut_with_relaxation': -6,
     'mskcc_tcr3_ec50_sat_mut_with_relaxation': -6,
@@ -27,6 +35,14 @@ CUTOFF_BAD_VALUE = {
     'mskcc_tcr5_ec50_sat_mut_with_relaxation': -8,
     'mskcc_tcr6_ec50_sat_mut_with_relaxation': -8,
     'mskcc_tcr7_ec50_sat_mut_with_relaxation': -6,
+
+    'mskcc_tcr1_ec50_sat_mut_af3_with_relaxation': -6,
+    'mskcc_tcr2_ec50_sat_mut_af3_with_relaxation': -6,
+    'mskcc_tcr3_ec50_sat_mut_af3_with_relaxation': -6,
+    'mskcc_tcr4_ec50_sat_mut_af3_with_relaxation': -8,
+    'mskcc_tcr5_ec50_sat_mut_af3_with_relaxation': -8,
+    'mskcc_tcr6_ec50_sat_mut_af3_with_relaxation': -8,
+    'mskcc_tcr7_ec50_sat_mut_af3_with_relaxation': -6,
 }
 print(f'Warning: using cutoff for bad values = {CUTOFF_BAD_VALUE}', file=sys.stderr)
 
@@ -79,8 +95,13 @@ if __name__ == '__main__':
         df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}-num_seq_per_target={num_seq_per_target}-use_mt_structure={use_mt_structure}.csv'))
         out_file = f'pretty_scatterplot-{system_name_in_csv_file}-{model_instance}-num_seq_per_target={num_seq_per_target}-use_mt_structure={use_mt_structure}.png'
         title = f'{system_name_in_csv_file}\n{model} - num_seq_per_target={num_seq_per_target}\nuse_mt_structure={use_mt_structure}'
-        prediction_column = 'log_p_mt__minus__log_p_wt'
-        ylabel = r'ProteinMPNN pred, $\Delta logP$'
+        if args.prediction_column is None:
+            prediction_column = 'log_p_mt__minus__log_p_wt'
+            ylabel = r'ProteinMPNN pred, $\Delta logP$'
+        else:
+            prediction_column = args.prediction_column
+            ylabel = r'ProteinMPNN pred, ' + prediction_column
+            out_file = out_file.replace('pretty_scatterplot', f'pretty_scatterplot-{prediction_column}')
         color = 'tab:brown'
     elif model == 'tcrdock':
         print('Note: "use_mt_structure" is irrelevant with tcrdock model.', file=sys.stderr)

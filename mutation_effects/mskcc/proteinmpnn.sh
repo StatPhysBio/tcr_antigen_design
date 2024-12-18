@@ -19,7 +19,7 @@ for tcr in $tcrs
         do
 
         python -u $proteinmpnn_dir'zero_shot_mutation_effect_prediction__faster.py' \
-                        --csv_file $base_dir'mskcc_tcr'$tcr'_ec50_sat_mut.csv' \
+                        --csv_file $base_dir'mskcc_tcr'$tcr'_ec50_sat_mut_af3.csv' \
                         --folder_with_pdbs $base_dir'pdbs/' \
                         --output_dir $base_dir'results/proteinmpnn_'$model_version \
                         --use_mt_structure $use_mt_structure \
@@ -32,7 +32,7 @@ for tcr in $tcrs
 
         python -u pretty_plots.py \
                         --system mskcc \
-                        --system_name_in_csv_file 'mskcc_tcr'$tcr'_ec50_sat_mut' \
+                        --system_name_in_csv_file 'mskcc_tcr'$tcr'_ec50_sat_mut_af3' \
                         --target_column'=- delta log_ec50_M' \
                         --model proteinmpnn \
                         --model_instance 'proteinmpnn_'$model_version \

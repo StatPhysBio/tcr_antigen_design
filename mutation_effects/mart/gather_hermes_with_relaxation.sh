@@ -32,28 +32,47 @@ for model_version in $model_version_list
             
         # done
 
-        # all pdbs
+        # # all pdbs
+        # python ../../src/gather_score_with_relaxation_results.py \
+        #                 --experiment_dir ./ \
+        #                 --csv_filename 'mart_peptide_kd_averaged.csv' \
+        #                 --pdbid all \
+        #                 --model_version $model_version
+        
+        # python -u pretty_plots.py \
+        #             --base_dir ../ \
+        #             --system mart \
+        #             --system_name_in_csv_file 'mart_peptide_kd_averaged_with_relaxation' \
+        #             --target_column'=-log10(Kd)' \
+        #             --prediction_column $metric \
+        #             --model hermes \
+        #             --model_instance $model_version \
+        #             --use_mt_structure 0 \
+        #             --show_wt_lines both_from_df
+
+        # python -u pretty_plots_respective_structures.py \
+        #             --base_dir ../ \
+        #             --system mart \
+        #             --system_name_in_csv_file 'mart_peptide_kd_{pdb}_with_relaxation' \
+        #             --target_column'=-log10(Kd)' \
+        #             --prediction_column $metric \
+        #             --model hermes \
+        #             --model_instance $model_version \
+        #             --use_mt_structure 0 \
+        #             --show_wt_lines both_from_df
+        
+        # closest pdbs
         python ../../src/gather_score_with_relaxation_results.py \
                         --experiment_dir ./ \
-                        --csv_filename 'mart_peptide_kd_averaged.csv' \
-                        --pdbid all \
-                        --model_version $model_version
+                        --csv_filename 'mart_peptide_kd_closest.csv' \
+                        --pdbid from_csv \
+                        --model_version $model_version \
+                        --pdb_column pdb
         
         python -u pretty_plots.py \
                     --base_dir ../ \
                     --system mart \
-                    --system_name_in_csv_file 'mart_peptide_kd_averaged_with_relaxation' \
-                    --target_column'=-log10(Kd)' \
-                    --prediction_column $metric \
-                    --model hermes \
-                    --model_instance $model_version \
-                    --use_mt_structure 0 \
-                    --show_wt_lines both_from_df
-
-        python -u pretty_plots_respective_structures.py \
-                    --base_dir ../ \
-                    --system mart \
-                    --system_name_in_csv_file 'mart_peptide_kd_{pdb}_with_relaxation' \
+                    --system_name_in_csv_file 'mart_peptide_kd_closest_with_relaxation' \
                     --target_column'=-log10(Kd)' \
                     --prediction_column $metric \
                     --model hermes \

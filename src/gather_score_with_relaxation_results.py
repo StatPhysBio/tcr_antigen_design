@@ -18,6 +18,7 @@ if __name__ == '__main__':
     parser.add_argument('--csv_filename', type=str, required=True)
     parser.add_argument('--pdbid', type=str, required=True)
     parser.add_argument('--model_version', type=str, required=True, help='hermes model version')
+    parser.add_argument('--pdb_column', type=str, default='pdb', help='Only if pdbid is from_csv')
     parser.add_argument('--seq_column', type=str, default='sequence', help='column name of the sequence in the csv file')
     args = parser.parse_args()
 
@@ -38,6 +39,9 @@ if __name__ == '__main__':
 
             if args.pdbid == 'all':
                 files = glob(os.path.join(results_dir, f'{args.model_version}{SEP}*{SEP}{seq}{SEP}*{SEP}{metric}.npy'))
+            elif args.pdbid == 'from_csv':
+                pdb = row[args.pdb_column]
+                files = glob(os.path.join(results_dir, f'{args.model_version}{SEP}{pdb}{SEP}{seq}{SEP}*{SEP}{metric}.npy'))
             else:
                 files = glob(os.path.join(results_dir, f'{args.model_version}{SEP}{args.pdbid}{SEP}{seq}{SEP}*{SEP}{metric}.npy'))
 

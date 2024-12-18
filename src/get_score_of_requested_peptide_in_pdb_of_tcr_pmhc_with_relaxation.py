@@ -50,7 +50,7 @@ class PeptideMutator(object):
         self.init_score_fxns()
     
         # prepare protein pose    
-        self.pdbpath = os.path.join(args.pdbdir, args.pdb+'.pdb')
+        self.pdbpath = pdbpath
         self.pose = pyrosetta.pose_from_pdb(self.pdbpath)
 
 
@@ -71,7 +71,7 @@ class PeptideMutator(object):
             sequences_int = np.random.randint(low=0,high=19,size=(N_mutants*peptide_L))
             sequences_ol = [ind_to_ol_size[x] for x in sequences_int]
         else:
-            sequences_ol = [x for x in args.sequence]
+            sequences_ol = [x for x in sequence]
         sequences_ol = np.reshape(sequences_ol,(N_mutants,peptide_L))
             
         # actual assignment of mutants
@@ -330,7 +330,7 @@ if __name__ == '__main__':
         logging.getLogger("rosetta").setLevel(args.rosetta_logging)
     
     # make mutator object
-    mutator = PeptideMutator(args.pdb, args.chain, args.sequence, relax_peptide_backbone=args.relax_peptide_backbone, peptide_resnum_start=args.peptide_resnum_start)
+    mutator = PeptideMutator(os.path.join(args.pdbdir, args.pdb+'.pdb'), args.chain, args.sequence, relax_peptide_backbone=args.relax_peptide_backbone, peptide_resnum_start=args.peptide_resnum_start)
 
     # load HERMES models
     trained_models_path = os.path.join(args.hermes_path, 'trained_models', args.model_version)

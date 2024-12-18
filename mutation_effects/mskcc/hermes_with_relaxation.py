@@ -6,9 +6,11 @@ import argparse
 
 from constants import TCR_TO_PDB, PDB_TO_PEP_INFO
 
-# done (in progress) TCRS: 1, 3, 4, (2, 5)
+# done (in progress) TCRS: 1, 2, 3, 4, 5, 6, (7) --> TCRdock structures
 
-TCRS = ['5']
+# done (in progress) TCRS: 1, (2, 3, 4, 5, 6, 7)  --> AF3 structures
+
+TCRS = ['6', '7']
 
 
 SLURM_SETUP = "#!/bin/bash\n\
@@ -30,7 +32,7 @@ if __name__ == '__main__':
     parser.add_argument('--total_relaxations', type=int, default=100)
 
     parser.add_argument('-A',  '--account', type=str, default='stf')
-    parser.add_argument('-P',  '--partition', type=str, default='compute')
+    parser.add_argument('-P',  '--partition', type=str, default='gpu-l40s')
     parser.add_argument('-G',  '--use_gpu', type=int, default=0, choices=[0, 1])
     parser.add_argument('-C',  '--num_cores', type=int, default=1)
     parser.add_argument('-W',  '--walltime', type=str, default='02:30:00')
@@ -58,7 +60,7 @@ if __name__ == '__main__':
     
         for tcr in TCRS:
             pdb = TCR_TO_PDB[tcr]
-            df = pd.read_csv(f'mskcc_tcr{tcr}_ec50_sat_mut.csv')
+            df = pd.read_csv(f'mskcc_tcr{tcr}_ec50_sat_mut_af3.csv')
             for i, row in df.iterrows():
                 sequence = row['sequence']
                 num_jobs = args.total_relaxations // args.num_repeats

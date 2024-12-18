@@ -1,7 +1,7 @@
 
 scoring_functions_dir='/gscratch/spe/gvisan01/hermes/baselines/'
 
-pdbs='3qdg 6am5 6amu'
+pdbs='3qdg 6am5 6amu closest'
 
 matrix_list='blosum62 neg_abs_diff_vdw_radius'
 subtract_wt_value_list='0 1'

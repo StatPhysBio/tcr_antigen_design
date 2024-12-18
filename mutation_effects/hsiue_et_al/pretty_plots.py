@@ -60,8 +60,13 @@ if __name__ == '__main__':
         df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}-num_seq_per_target={num_seq_per_target}-use_mt_structure={use_mt_structure}.csv'))
         out_file = f'pretty_scatterplot-{system_name_in_csv_file}-{model_instance}-num_seq_per_target={num_seq_per_target}-use_mt_structure={use_mt_structure}.png'
         title = f'{system_name_in_csv_file}\n{model} - num_seq_per_target={num_seq_per_target}\nuse_mt_structure={use_mt_structure}'
-        prediction_column = 'log_p_mt__minus__log_p_wt'
-        ylabel = r'ProteinMPNN pred, $\Delta logP$'
+        if args.prediction_column is None:
+            prediction_column = 'log_p_mt__minus__log_p_wt'
+            ylabel = r'ProteinMPNN pred, $\Delta logP$'
+        else:
+            prediction_column = args.prediction_column
+            ylabel = r'ProteinMPNN pred, ' + prediction_column
+            out_file = out_file.replace('pretty_scatterplot', f'pretty_scatterplot-{prediction_column}')
         color = 'tab:brown'
     elif model == 'neg_abs_diff_vdw_radius':
         print('Note: "use_mt_structure" is irrelevant with neg_abs_diff_vdw_radius substitution matrix.', file=sys.stderr)
