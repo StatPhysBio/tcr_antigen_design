@@ -56,9 +56,9 @@ SYSTEM_CSV_TO_TITLE = {
     'nyeso_peptide_kd_closest': 'NY-ESO-1',
     'tax_peptide_kd_closest': 'Tax',
     'mart_peptide_kd_closest': 'MART-1 (right motifs)',
-    'mart_peptide_kd_3qdg': 'MART-1 (3qdg - GIG motif)',
-    'mart_peptide_kd_6am5': 'MART-1 (6am5 - GIG motif)',
-    'mart_peptide_kd_6amu': 'MART-1 (6amu - DRG motif)',
+    'mart_peptide_kd_3qdg': 'MART-1 (3qdg, GIG motif)',
+    'mart_peptide_kd_6am5': 'MART-1 (6am5, GIG motif)',
+    'mart_peptide_kd_6amu': 'MART-1 (6amu, DRG motif)',
     'hsiue_et_al_H2_sat_mut': 'H2-scDb on p53$^\\text{R175H}$',
     'mskcc_tcr1_ec50_sat_mut_af3': 'TCR1 on NLVPMVATV',
     'mskcc_tcr2_ec50_sat_mut_af3': 'TCR2 on NLVPMVATV (AF3)',
@@ -147,6 +147,9 @@ if __name__ == '__main__':
     for marker in unique_markers:
         mask = markers == marker
         plt.scatter(targets[mask], predictions[mask], c=color, marker=marker, alpha=alpha, s=s)
+    
+    plt.xticks(fontsize=12)
+    plt.yticks(fontsize=12)
 
     plt.xlabel(xlabel, fontsize=14)
     plt.ylabel(ylabel, fontsize=14)
