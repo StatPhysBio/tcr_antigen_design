@@ -249,7 +249,11 @@ if __name__ == '__main__':
         ax2 = plt.gca()
         # ax2.set_visible(False)  # Hide the axis
         colorbar = cbar.ColorbarBase(ax2, cmap=cmap, norm=norm, orientation=orientation)
-        colorbar.set_label(label)
+        # colorbar.set_label(label)
+
+        # set fontsize
+        for t in colorbar.ax.yaxis.get_ticklabels():
+            t.set_fontsize(14)
 
         plt.tight_layout()
         plt.savefig(filename, dpi=300)
@@ -297,7 +301,7 @@ if __name__ == '__main__':
         plt.close()
 
         # make colorbar with values of heatmap, but don't know heatmap!
-        make_colorbar(heatmap, xlabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target.png', 'viridis', (4, 1.1))
+        make_colorbar(heatmap, xlabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target-vertical.png', 'viridis', (1.2, 4), 'vertical')
 
 
         plt.figure(figsize=figsize)
@@ -312,7 +316,7 @@ if __name__ == '__main__':
         plt.close()
 
         # make colorbar with values of heatmap, but don't know heatmap!
-        make_colorbar(heatmap, ylabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar.png', 'viridis', (4, 1))
+        make_colorbar(heatmap, ylabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar-vertical.png', 'viridis', (1, 4), 'vertical')
 
 
     else:
