@@ -234,7 +234,7 @@ if __name__ == '__main__':
                 mutants.append(f'{wt_seq[i]}{i+1}{mt_seq[i]}')
         return MUTANT_SPLIT_SYMBOL.join(mutants), len(mutants)
 
-    def make_colorbar(data, label, filename, cmap, figsize):
+    def make_colorbar(data, label, filename, cmap, figsize, orientation='horizontal'):
 
         import matplotlib.pyplot as plt
         import matplotlib.colors as mcolors
@@ -248,7 +248,7 @@ if __name__ == '__main__':
         plt.figure(figsize=figsize)
         ax2 = plt.gca()
         # ax2.set_visible(False)  # Hide the axis
-        colorbar = cbar.ColorbarBase(ax2, cmap=cmap, norm=norm, orientation='horizontal')
+        colorbar = cbar.ColorbarBase(ax2, cmap=cmap, norm=norm, orientation=orientation)
         colorbar.set_label(label)
 
         plt.tight_layout()
@@ -281,18 +281,19 @@ if __name__ == '__main__':
 
         # make the heatmap
 
-        figsize = (1.6, len(mutants)*0.45)
-        fontsize = 14
+        figsize = (len(mutants)*0.45, 2.0)
+        fontsize = 15
+        rotation = 65
 
         plt.figure(figsize=figsize)
-        heatmap = target_values[:, np.newaxis]
+        heatmap = target_values[:, np.newaxis].T
         plt.imshow(heatmap, aspect='auto', cmap='viridis')
-        plt.xticks([])
-        plt.yticks(range(len(mutants)), mutants, fontsize=14)
+        plt.yticks([])
+        plt.xticks(range(len(mutants)), mutants, fontsize=fontsize, rotation=rotation, ha='center', va='top')
         plt.title(xlabel, fontsize=fontsize)
         plt.tight_layout()
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.png', dpi=300)
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.pdf', dpi=300)
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target-horizontal.png', dpi=300)
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target-horizontal.pdf', dpi=300)
         plt.close()
 
         # make colorbar with values of heatmap, but don't know heatmap!
@@ -300,14 +301,14 @@ if __name__ == '__main__':
 
 
         plt.figure(figsize=figsize)
-        heatmap = predicted_values[:, np.newaxis]
+        heatmap = predicted_values[:, np.newaxis].T
         plt.imshow(heatmap, aspect='auto', cmap='viridis')
-        plt.xticks([])
-        plt.yticks(range(len(mutants)), mutants, fontsize=fontsize)
+        plt.yticks([])
+        plt.xticks(range(len(mutants)), mutants, fontsize=fontsize, rotation=rotation, ha='center', va='top')
         plt.title(ylabel, fontsize=fontsize)
         plt.tight_layout()
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.png', dpi=300)
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.pdf', dpi=300)
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-horizontal.png', dpi=300)
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-horizontal.pdf', dpi=300)
         plt.close()
 
         # make colorbar with values of heatmap, but don't know heatmap!
@@ -347,7 +348,7 @@ if __name__ == '__main__':
         
         # make the heatmaps
         figsize = (6, 6)
-        fontsize = 14
+        fontsize = 15
 
         heatmap_target = heatmap_target.T
         heatmap_predicted = heatmap_predicted.T
