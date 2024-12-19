@@ -251,6 +251,20 @@ if __name__ == '__main__':
         colorbar = cbar.ColorbarBase(ax2, cmap=cmap, norm=norm, orientation=orientation)
         # colorbar.set_label(label)
 
+        # linspaced = np.linspace(np.min(data), np.max(data), 6)[1:-1]
+        # int_rounded = np.round(linspaced).astype(int)
+        # colorbar.set_ticks(int_rounded)
+
+        # # get xtick values
+        # ticks = colorbar.get_ticks()
+        # new_ticks = []
+        # for tick in ticks:
+        #     if int(tick * 10) % 10 == 0:
+        #         print(tick)
+        #         new_ticks.append(int(tick))
+        # # set new ticks
+        # colorbar.set_ticks(new_ticks)
+
         # set fontsize
         for t in colorbar.ax.yaxis.get_ticklabels():
             t.set_fontsize(14)
@@ -301,7 +315,7 @@ if __name__ == '__main__':
         plt.close()
 
         # make colorbar with values of heatmap, but don't know heatmap!
-        make_colorbar(heatmap, xlabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target-vertical.png', 'viridis', (1.2, 4), 'vertical')
+        make_colorbar(heatmap, xlabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target-vertical.png', 'viridis', (1.1, 2), 'vertical')
 
 
         plt.figure(figsize=figsize)
@@ -316,7 +330,7 @@ if __name__ == '__main__':
         plt.close()
 
         # make colorbar with values of heatmap, but don't know heatmap!
-        make_colorbar(heatmap, ylabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar-vertical.png', 'viridis', (1, 4), 'vertical')
+        make_colorbar(heatmap, ylabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar-vertical.png', 'viridis', (0.9, 2), 'vertical')
 
 
     else:
