@@ -10,12 +10,12 @@ import h5py
 
 tcr_to_pdb_info = {
     '1': {'wt_pdb': '5d2n-filtered', 'mutant_chain': 'I', 'offset': 0},
-    '2': {'wt_pdb': 'TCR2_T00000_A0201_NLVPMVATV_0_model_1_model_2_ptm_ft4', 'mutant_chain': 'A', 'offset': 375},
-    '3': {'wt_pdb': 'TCR3_T00000_A0201_NLVPMVATV_0_model_1_model_2_ptm_ft4', 'mutant_chain': 'A', 'offset': 375},
-    '4': {'wt_pdb': 'TCR4_T00000_A0201_IMDQVPFSV_0_model_1_model_2_ptm_ft4', 'mutant_chain': 'A', 'offset': 375},
-    '5': {'wt_pdb': 'TCR5_T00000_A0201_IMDQVPFSV_0_model_1_model_2_ptm_ft4', 'mutant_chain': 'A', 'offset': 375},
-    '6': {'wt_pdb': 'TCR6_T00000_A0201_IMDQVPFSV_0_model_1_model_2_ptm_ft4', 'mutant_chain': 'A', 'offset': 375},
-    '7': {'wt_pdb': 'TCR7_T00000_B2705_GRLKALCQR_0_model_1_model_2_ptm_ft4', 'mutant_chain': 'A', 'offset': 375},
+    '2': {'wt_pdb': 'af3_tcr2', 'mutant_chain': 'B', 'offset': 0},
+    '3': {'wt_pdb': 'af3_tcr3', 'mutant_chain': 'B', 'offset': 0},
+    '4': {'wt_pdb': 'af3_tcr4', 'mutant_chain': 'B', 'offset': 0},
+    '5': {'wt_pdb': 'af3_tcr5', 'mutant_chain': 'B', 'offset': 0},
+    '6': {'wt_pdb': 'af3_tcr6', 'mutant_chain': 'B', 'offset': 0},
+    '7': {'wt_pdb': 'af3_tcr7', 'mutant_chain': 'B', 'offset': 0},
 }
 
 
@@ -76,9 +76,11 @@ if __name__ == '__main__':
 
             # shift the values by the WT value
             wt_value = ec50_values[location_of_WT]
-            ec50_values = ec50_values - wt_value
+            ec50_values_minus_wt = ec50_values - wt_value
 
             # invert the values so that higher is better
+            ec50_values_minus_wt = -ec50_values_minus_wt
+
             ec50_values = -ec50_values
 
 
@@ -86,11 +88,12 @@ if __name__ == '__main__':
             df = pd.DataFrame({
                 'mutant': curr_mutants,
                 'is_wt': [x == wt_mutant for x in curr_mutants],
-                '- delta ' + chosen_column_2: ec50_values,
+                '- delta ' + chosen_column_2: ec50_values_minus_wt,
+                '- ' + chosen_column_2: ec50_values,
                 'wt_pdb': tcr_info['wt_pdb'],
                 'mutant_chain': tcr_info['mutant_chain'],
             })
-            df.to_csv(f'mskcc_tcr{tcr_name}_ec50_sat_mut.csv')
+            df.to_csv(f'mskcc_tcr{tcr_name}_ec50_sat_mut_af3.csv')
 
 
 

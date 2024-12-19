@@ -2,7 +2,7 @@
 
 hermes_dir='/gscratch/spe/gvisan01/hermes/'
 
-tcrs='6 7' # 1 2 3 4 5 6 7
+tcrs='7' # 1 2 3 4 5 6 7
 
 model_version_list='hermes_py_000 hermes_py_050'
 

@@ -10,6 +10,25 @@ import argparse
 IND_TO_AA = 'CSTAGPDEQNHRKMILVWYF'
 AA_TO_IND = {aa: i for i, aa in enumerate(IND_TO_AA)}
 
+def system_name_to_wt_seq(system_name_in_csv_file):
+    if 'nyeso' in system_name_in_csv_file:
+        return 'SLLMWITQC'
+    elif 'tax' in system_name_in_csv_file:
+        return 'LLFGYPVYV'
+    elif 'hsiue' in system_name_in_csv_file:
+        return 'HMTEVVRHC'
+    elif 'mskcc' in system_name_in_csv_file:
+        if 'tcr1' in system_name_in_csv_file or 'tcr2' in system_name_in_csv_file or 'tcr3' in system_name_in_csv_file:
+            return 'NLVPMVATV'
+        elif 'tcr4' in system_name_in_csv_file or 'tcr5' in system_name_in_csv_file or 'tcr6' in system_name_in_csv_file:
+            return 'IMDQVPFSV'
+        elif 'tcr7' in system_name_in_csv_file:
+            return 'GRLKALCQR'
+    else:
+        raise ValueError(f'Unknown system: {system_name_in_csv_file}')
+
+
+
 SYSTEM_TO_WT_TO_SHOW_COLUMNS = {
     'nyeso': None,
     'tax': None,
@@ -23,7 +42,7 @@ SYSTEM_TO_TARGET_COLUMN = {
     'tax': '-log10(Kd)',
     'mart': '-log10(Kd)',
     'hsiue_et_al': 'IFN_gamma (pg/ml)',
-    'mskcc': '- delta log_ec50_M'
+    'mskcc': '- log_ec50_M'
 }
 
 # SYSTEM_TO_PRETTY_TARGET = {
@@ -39,7 +58,7 @@ SYSTEM_TO_PRETTY_TARGET = {
     'tax': '$-\\text{log}_{10}(K_d)$',
     'mart': '$-\\text{log}_{10}(K_d)$',
     'hsiue_et_al': 'IFN_gamma (pg/ml)',
-    'mskcc': '$- \Delta \\text{log(EC50)}$'
+    'mskcc': '$-\\text{log(EC50)}$'
 }
 
 SYSTEM_TO_MARKER_SIZE = {
@@ -99,7 +118,11 @@ if __name__ == '__main__':
     prediction_column = 'pnE'
     title = SYSTEM_CSV_TO_TITLE[args.system_name_in_csv_file]
     xlabel = SYSTEM_TO_PRETTY_TARGET[args.system]
-    ylabel = r'$E(\sigma_p ; \text{TCR}, \text{MHC})$'
+    # ylabel = r'$E(\sigma_p ; \text{TCR}, \text{MHC})$'
+    if args.with_relaxation:
+        ylabel = 'HERMES-relaxed prediction'
+    else:
+        ylabel = 'HERMES-fixed prediction'
     color = 'tab:purple'
     s = SYSTEM_TO_MARKER_SIZE[args.system]
     alpha = SYSTEM_TO_ALPHA[args.system]
@@ -118,6 +141,11 @@ if __name__ == '__main__':
     with_relaxation_str = '_with_relaxation' if args.with_relaxation else ''
 
     df = pd.read_csv(f'../mutation_effects/{args.system}/results/{args.model_version}/{args.system_name_in_csv_file}{with_relaxation_str}-{args.model_version}-use_mt_structure=0.csv')
+
+    # manually adjust the predictions for the mskcc data
+    if args.system == 'mskcc':
+        df_with_target = pd.read_csv(f'../mutation_effects/{args.system}/{args.system_name_in_csv_file}.csv')
+        df[target_column] = df_with_target[target_column] # assuming they are parallel, which they should be
 
     # exlude nans, keep only one wildtype measurement
     is_not_nan_mask = np.logical_and(~np.isnan(df[target_column]), ~np.isnan(df[prediction_column]))
@@ -193,13 +221,156 @@ if __name__ == '__main__':
         plt.savefig(outfile.replace('.png', '.pdf'), dpi=300)
         plt.close()
     
+
     # now also make two heatmaps! one with the predictions, one with the targets
-    plt.figure(figsize=(3.5, 3.5))
 
-    sequences = df['sequence']
-    predictions = df[prediction_column]
-    targets = df[target_column]
+    MUTANT_SPLIT_SYMBOL = '|'
 
-    heatmap = np.full((len(sequences[0]), 20), np.nan)
-    
+    def compute_mutant(wt_seq, mt_seq):
+        assert len(wt_seq) == len(mt_seq), f'Lengths of sequences do not match: {wt_seq} vs {mt_seq}'
+        mutants = []
+        for i in range(len(wt_seq)):
+            if wt_seq[i] != mt_seq[i]:
+                mutants.append(f'{wt_seq[i]}{i+1}{mt_seq[i]}')
+        return MUTANT_SPLIT_SYMBOL.join(mutants), len(mutants)
+
+    def make_colorbar(data, label, filename, cmap, figsize):
+
+        import matplotlib.pyplot as plt
+        import matplotlib.colors as mcolors
+        import matplotlib.colorbar as cbar
+        import numpy as np
+
+        # Define a colormap and normalization based on the data
+        norm = mcolors.Normalize(vmin=np.min(data), vmax=np.max(data))
+
+        # Standalone colorbar figure
+        plt.figure(figsize=figsize)
+        ax2 = plt.gca()
+        # ax2.set_visible(False)  # Hide the axis
+        colorbar = cbar.ColorbarBase(ax2, cmap=cmap, norm=norm, orientation='horizontal')
+        colorbar.set_label(label)
+
+        plt.tight_layout()
+        plt.savefig(filename, dpi=300)
+        plt.savefig(filename.replace('.png', '.pdf'), dpi=300)
+        plt.close()
+
+
+    if args.system in {'nyeso', 'tax', 'mart'}:
+        # make the heatmaps vertically, with the mutations on the y-axis.
+
+        wt_seq = system_name_to_wt_seq(args.system_name_in_csv_file)
+
+        sequences = df['sequence'].values
+
+        mutants, num_mutants = zip(*[compute_mutant(wt_seq, seq) for seq in sequences])
+
+        mutants = np.array(mutants)
+        num_mutants = np.array(num_mutants)
+
+        mutants[num_mutants == 0] = 'WT'
+
+        # sorting indices based on number of mutations
+        sorted_indices = np.argsort(num_mutants)
+
+        mutants = mutants[sorted_indices]
+
+        target_values = df[target_column].values[sorted_indices]
+        predicted_values = df[prediction_column].values[sorted_indices]
+
+        # make the heatmap
+
+        figsize = (1.6, len(mutants)*0.45)
+        fontsize = 14
+
+        plt.figure(figsize=figsize)
+        heatmap = target_values[:, np.newaxis]
+        plt.imshow(heatmap, aspect='auto', cmap='viridis')
+        plt.xticks([])
+        plt.yticks(range(len(mutants)), mutants, fontsize=14)
+        plt.title(xlabel, fontsize=fontsize)
+        plt.tight_layout()
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.png', dpi=300)
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.pdf', dpi=300)
+        plt.close()
+
+        # make colorbar with values of heatmap, but don't know heatmap!
+        make_colorbar(heatmap, xlabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target.png', 'viridis', (4, 1.1))
+
+
+        plt.figure(figsize=figsize)
+        heatmap = predicted_values[:, np.newaxis]
+        plt.imshow(heatmap, aspect='auto', cmap='viridis')
+        plt.xticks([])
+        plt.yticks(range(len(mutants)), mutants, fontsize=fontsize)
+        plt.title(ylabel, fontsize=fontsize)
+        plt.tight_layout()
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.png', dpi=300)
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.pdf', dpi=300)
+        plt.close()
+
+        # make colorbar with values of heatmap, but don't know heatmap!
+        make_colorbar(heatmap, ylabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar.png', 'viridis', (4, 1))
+
+
+    else:
+        # make 2D single-point-mutation heatmap!
+
+        wt_seq = system_name_to_wt_seq(args.system_name_in_csv_file)
+
+        sequences = df['sequence'].values
+        targets = df[target_column].values
+        predictions = df[prediction_column].values
+
+        mutants, num_mutants = zip(*[compute_mutant(wt_seq, seq) for seq in sequences])
+        mutants = np.array(mutants)
+        num_mutants = np.array(num_mutants)
+
+        assert np.all(np.logical_or(num_mutants == 1, num_mutants == 0))
+
+        heatmap_target = np.full((len(wt_seq), 20), np.nan)
+        heatmap_predicted = np.full((len(wt_seq), 20), np.nan)
+
+        for i, (mutant, target, prediction) in enumerate(zip(mutants, targets, predictions)):
+
+            if len(mutant) == 0: # WT!
+                for j, aa in enumerate(wt_seq):
+                    heatmap_target[j, AA_TO_IND[aa]] = target
+                    heatmap_predicted[j, AA_TO_IND[aa]] = prediction
+            else:
+                aa_wt = mutant[0]
+                aa_mt = mutant[-1]
+                pos = int(mutant[1:-1]) - 1
+                heatmap_target[pos, AA_TO_IND[aa_mt]] = target
+                heatmap_predicted[pos, AA_TO_IND[aa_mt]] = prediction
+        
+        # make the heatmaps
+        figsize = (6, 6)
+        fontsize = 14
+
+        heatmap_target = heatmap_target.T
+        heatmap_predicted = heatmap_predicted.T
+
+        plt.figure(figsize=figsize)
+        plt.imshow(heatmap_target, aspect='auto', cmap='viridis')
+
+        plt.xticks(range(len(wt_seq)), wt_seq, fontsize=fontsize)
+        plt.yticks(range(20), IND_TO_AA, fontsize=fontsize)
+        plt.tight_layout()
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.png', dpi=300)
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.pdf', dpi=300)
+        plt.close()
+        make_colorbar(heatmap_target, xlabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target.png', 'viridis', (4, 1.1))
+
+        plt.figure(figsize=figsize)
+        plt.imshow(heatmap_predicted, aspect='auto', cmap='viridis')
+        plt.xticks(range(len(wt_seq)), wt_seq, fontsize=fontsize)
+        plt.yticks(range(20), IND_TO_AA, fontsize=fontsize)
+        plt.tight_layout()
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.png', dpi=300)
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.pdf', dpi=300)
+        plt.close()
+        make_colorbar(heatmap_predicted, ylabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar.png', 'viridis', (4, 1))
+
 
