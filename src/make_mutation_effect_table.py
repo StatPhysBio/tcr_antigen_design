@@ -34,3 +34,24 @@ for model in MODELS:
 
 df.to_csv('../mutation_effects/spearman_table.csv')
 
+
+# make auroc tables
+
+for metric_name, metric in zip(['auroc_reliable', 'auroc_all'], ['AUROC reliable', 'AUROC all']):
+
+    df = pd.DataFrame(index=MODELS, columns=[d[0] for d in DATA])
+    for model in MODELS:
+        for name, path in DATA[-7:]: # only luksza data
+            with open(path) as f:
+                metrics = json.load(f)
+            
+            if model not in metrics[metric]:
+                continue
+
+            value = metrics[metric][model]
+            df.loc[model, name] = f'{value:.2f}'
+
+    df.to_csv(f'../mutation_effects/{metric_name}_table.csv')
+
+
+

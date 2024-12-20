@@ -7,6 +7,10 @@ from scipy.stats import pearsonr, spearmanr
 
 import argparse
 
+import matplotlib as mpl
+mpl.rcParams['pdf.fonttype'] = 42
+mpl.rcParams['ps.fonttype'] = 42
+
 IND_TO_AA = 'CSTAGPDEQNHRKMILVWYF'
 AA_TO_IND = {aa: i for i, aa in enumerate(IND_TO_AA)}
 
@@ -27,6 +31,12 @@ def system_name_to_wt_seq(system_name_in_csv_file):
     else:
         raise ValueError(f'Unknown system: {system_name_in_csv_file}')
 
+PDB_TO_COLOR = {
+    '2bnq': '#4682B4',
+    '2bnr': '#FF6F61',
+    '1ao7': '#4682B4',
+    '1qsf': '#FF6F61',
+}
 
 
 SYSTEM_TO_WT_TO_SHOW_COLUMNS = {
@@ -42,7 +52,7 @@ SYSTEM_TO_TARGET_COLUMN = {
     'tax': '-log10(Kd)',
     'mart': '-log10(Kd)',
     'hsiue_et_al': 'IFN_gamma (pg/ml)',
-    'mskcc': '- log_ec50_M'
+    'mskcc': '-log10(EC50)'
 }
 
 # SYSTEM_TO_PRETTY_TARGET = {
@@ -142,11 +152,6 @@ if __name__ == '__main__':
 
     df = pd.read_csv(f'../mutation_effects/{args.system}/results/{args.model_version}/{args.system_name_in_csv_file}{with_relaxation_str}-{args.model_version}-use_mt_structure=0.csv')
 
-    # manually adjust the predictions for the mskcc data
-    if args.system == 'mskcc':
-        df_with_target = pd.read_csv(f'../mutation_effects/{args.system}/{args.system_name_in_csv_file}.csv')
-        df[target_column] = df_with_target[target_column] # assuming they are parallel, which they should be
-
     # exlude nans, keep only one wildtype measurement
     is_not_nan_mask = np.logical_and(~np.isnan(df[target_column]), ~np.isnan(df[prediction_column]))
     
@@ -168,13 +173,9 @@ if __name__ == '__main__':
         markers = np.array([MOTIF_TO_MARKER[motif] for motif in df['motif'].values])
     else:
         markers = np.array(['o'] * df.shape[0])
+    unique_markers = np.unique(markers)
 
-    pr, pr_pval = pearsonr(targets, predictions)
-    sr, sr_pval = spearmanr(targets, predictions)
-    num = targets.shape[0]
-
-    plt.figure(figsize=(3.5, 3.5))
-
+    plt.figure(figsize=(3.65, 3.65))
     
     if SYSTEM_TO_WT_TO_SHOW_COLUMNS[args.system] is not None:
         wt_values = df[df[SYSTEM_TO_WT_TO_SHOW_COLUMNS[args.system]].astype(bool)][[target_column, prediction_column]].values
@@ -182,10 +183,58 @@ if __name__ == '__main__':
             plt.axvline(x=wt_value_target, c='k', alpha=1.0, ls='--', lw=0.85)
             plt.axhline(y=wt_value_pred, c='k', alpha=1.0, ls='--', lw=0.85)
 
-    unique_markers = np.unique(markers)
-    for marker in unique_markers:
-        mask = markers == marker
-        plt.scatter(targets[mask], predictions[mask], c=color, marker=marker, alpha=alpha, s=s)
+    if args.system == 'mskcc':
+
+        wt_target_value = wt_values[0][0] # there's only one anyways
+
+        is_reliable_mask = df['is_reliable'].values
+
+        targets_rel = targets[is_reliable_mask]
+        predictions_rel = predictions[is_reliable_mask]
+
+        target_non_rel = targets[~is_reliable_mask]
+        prediction_non_rel = predictions[~is_reliable_mask]
+
+        pr, pr_pval = pearsonr(targets_rel, predictions_rel)
+        sr, sr_pval = spearmanr(targets_rel, predictions_rel)
+        num = targets_rel.shape[0]
+
+        from sklearn.metrics import roc_auc_score
+        auroc_all = roc_auc_score(targets > wt_target_value, predictions)
+        auroc_rel = roc_auc_score(targets_rel > wt_target_value, predictions_rel)
+
+        plt.scatter(targets_rel, predictions_rel, c=color, marker=markers[0], alpha=alpha, s=s)
+        plt.scatter(target_non_rel, prediction_non_rel, c='tab:grey', marker=markers[0], alpha=alpha, s=s)
+
+        plt.text(0.03, 0.03, f'Sr w\out grey = {sr:.2f} ({sr_pval:.1e})\nAUROC w\out grey = {auroc_rel:.2f}\nAUROC w\ grey = {auroc_all:.2f}', transform=plt.gca().transAxes, fontsize=11, verticalalignment='bottom', horizontalalignment='left')
+
+    elif args.system in {'nyeso', 'tax'}:
+
+        pr, pr_pval = pearsonr(targets, predictions)
+        sr, sr_pval = spearmanr(targets, predictions)
+        num = targets.shape[0]
+
+        pdbs = df['pdb'].values
+        colors = [PDB_TO_COLOR[pdb] for pdb in pdbs]
+
+        plt.scatter(targets, predictions, c=colors, alpha=alpha, s=s)
+
+        # put text of correlation coefficient
+        plt.text(0.03, 0.03, f'Spearman r = {sr:.2f}\np-val = {sr_pval:.1e}', transform=plt.gca().transAxes, fontsize=12, verticalalignment='bottom', horizontalalignment='left')
+    
+    else:
+
+        pr, pr_pval = pearsonr(targets, predictions)
+        sr, sr_pval = spearmanr(targets, predictions)
+        num = targets.shape[0]
+
+        unique_markers = np.unique(markers)
+        for marker in unique_markers:
+            mask = markers == marker
+            plt.scatter(targets[mask], predictions[mask], c=color, marker=marker, alpha=alpha, s=s)
+
+        # put text of correlation coefficient
+        plt.text(0.03, 0.03, f'Spearman r = {sr:.2f}\np-val = {sr_pval:.1e}', transform=plt.gca().transAxes, fontsize=12, verticalalignment='bottom', horizontalalignment='left')
     
     plt.xticks(fontsize=12)
     plt.yticks(fontsize=12)
@@ -195,9 +244,6 @@ if __name__ == '__main__':
 
     plt.title(title, fontsize=15)
     # plt.title(title+'\n'+f'Spearman r = {sr:.2f} (pv {sr_pval:.1e})', fontsize=12)
-
-    # put text of correlation coefficient
-    plt.text(0.03, 0.03, f'Spearman r = {sr:.2f}\np-val = {sr_pval:.1e}', transform=plt.gca().transAxes, fontsize=12, verticalalignment='bottom', horizontalalignment='left')
 
     # plt.legend(loc='upper left')
 
@@ -278,27 +324,47 @@ if __name__ == '__main__':
     if args.system in {'nyeso', 'tax', 'mart'}:
         # make the heatmaps vertically, with the mutations on the y-axis.
 
-        wt_seq = system_name_to_wt_seq(args.system_name_in_csv_file)
+        # wt_seq = system_name_to_wt_seq(args.system_name_in_csv_file)
 
-        sequences = df['sequence'].values
+        # sequences = df['sequence'].values
 
-        mutants, num_mutants = zip(*[compute_mutant(wt_seq, seq) for seq in sequences])
+        # mutants, num_mutants = zip(*[compute_mutant(wt_seq, seq) for seq in sequences])
 
-        mutants = np.array(mutants)
-        num_mutants = np.array(num_mutants)
+        # mutants = np.array(mutants)
+        # num_mutants = np.array(num_mutants)
 
-        mutants[num_mutants == 0] = 'WT'
+        # mutants[num_mutants == 0] = 'WT'
 
-        # sorting indices based on number of mutations
-        sorted_indices = np.argsort(num_mutants)
+        # # sorting indices based on number of mutations
+        # sorted_indices = np.argsort(num_mutants)
 
-        mutants = mutants[sorted_indices]
+        # mutants = mutants[sorted_indices]
+
+        # target_values = df[target_column].values[sorted_indices]
+        # predicted_values = df[prediction_column].values[sorted_indices]
+
+        mutants = df['mutants'].values
+        resnums = [int(mut[1]) for mut in mutants]
+        pdbs = df['pdb'].values
+        
+        # sort first by resnum of first mutation, then by pdb
+        sorted_indices = np.lexsort((resnums, pdbs))
 
         target_values = df[target_column].values[sorted_indices]
         predicted_values = df[prediction_column].values[sorted_indices]
+        mutants = mutants[sorted_indices]
+        pdbs = pdbs[sorted_indices]
+        colors = [PDB_TO_COLOR[pdb] for pdb in pdbs]
+
+        new_mutants = []
+        for mut, pdb in zip(mutants, pdbs):
+            if len(mut.split(MUTANT_SPLIT_SYMBOL)) == 1 and mut[0] == mut[-1]:
+                new_mutants.append(f'WT: {pdb.upper()}')
+            else:
+                new_mutants.append(mut)
+        mutants = np.array(new_mutants)
 
         # make the heatmap
-
         figsize = (len(mutants)*0.45, 2.0)
         fontsize = 15
         rotation = 65
@@ -308,6 +374,9 @@ if __name__ == '__main__':
         plt.imshow(heatmap, aspect='auto', cmap='viridis')
         plt.yticks([])
         plt.xticks(range(len(mutants)), mutants, fontsize=fontsize, rotation=rotation, ha='center', va='top')
+        # color the ticks based on the pdb
+        for i, color in enumerate(colors):
+            plt.gca().get_xticklabels()[i].set_color(color)
         plt.title(xlabel, fontsize=fontsize)
         plt.tight_layout()
         plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target-horizontal.png', dpi=300)
@@ -323,6 +392,9 @@ if __name__ == '__main__':
         plt.imshow(heatmap, aspect='auto', cmap='viridis')
         plt.yticks([])
         plt.xticks(range(len(mutants)), mutants, fontsize=fontsize, rotation=rotation, ha='center', va='top')
+        # color the ticks based on the pdb
+        for i, color in enumerate(colors):
+            plt.gca().get_xticklabels()[i].set_color(color)
         plt.title(ylabel, fontsize=fontsize)
         plt.tight_layout()
         plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-horizontal.png', dpi=300)

@@ -33,7 +33,7 @@ SYSTEM_TO_TARGET_COLUMN = {
     'tax': '-log10(Kd)',
     'mart': '-log10(Kd)',
     'hsiue_et_al': 'IFN_gamma (pg/ml)',
-    'mskcc': '- delta log_ec50_M'
+    'mskcc': '-log10(EC50)'
 }
 
 def get_long_prediction_column_name(model_instance, prediction_column_short, system_name_in_csv_file):
@@ -254,7 +254,7 @@ if __name__ == '__main__':
     fontsize_base = 18
     fig, axs = plt.subplots(num_rows, num_cols, figsize=(num_cols*colsize, num_rows*rowsize))
 
-    metrics = {'Pr': [], 'Sr': [], 'Pr_pval': [], 'Sr_pval': []}
+    metrics = {'Pr': [], 'Sr': [], 'Pr_pval': [], 'Sr_pval': [], 'AUROC reliable': [], 'AUROC all': []}
     colors = []
     model_names_pretty = []
 
@@ -289,21 +289,62 @@ if __name__ == '__main__':
             for wt_value_target, wt_value_pred in wt_values:
                 ax.axvline(x=wt_value_target, c='k', alpha=1.0, ls='--')
                 ax.axhline(y=wt_value_pred, c='k', alpha=1.0, ls='--')
+        
+        # if system is mskcc (luksza data), consider only reliable measurements for correlations, and also compute AUROC with and without gray points (threshold is value above vs below that of wildtype)
+        if args.system == 'mskcc':
 
-        predictions = df_full[prediction_column][mask]
-        targets = df_full[target_column][mask]
+            wt_target_value = wt_values[0][0] # there's only one anyways
 
-        pr, pr_pval = pearsonr(targets, predictions)
-        sr, sr_pval = spearmanr(targets, predictions)
+            predictions_all = df_full[prediction_column].values
+            targets_all = df_full[target_column].values
 
-        metrics['Pr'].append(pr)
-        metrics['Sr'].append(sr)
-        metrics['Pr_pval'].append(pr_pval)
-        metrics['Sr_pval'].append(sr_pval)
-        colors.append(color)
-        model_names_pretty.append(make_pretty_name(model_instance, prediction_column_short))
+            is_reliable_mask = np.logical_and(df_full['is_reliable'].values, mask)
+            is_not_reliable_mask = np.logical_and(~df_full['is_reliable'].values, mask)
 
-        ax.scatter(targets, predictions, color=color, s=80, alpha=0.5)
+            predictions_rel = df_full[prediction_column][is_reliable_mask]
+            targets_rel = df_full[target_column][is_reliable_mask]
+
+            prediction_nonrel = df_full[prediction_column][is_not_reliable_mask]
+            target_nonrel = df_full[target_column][is_not_reliable_mask]
+
+            pr, pr_pval = pearsonr(targets_rel, predictions_rel)
+            sr, sr_pval = spearmanr(targets_rel, predictions_rel)
+
+            pr_all, pr_pval_all = pearsonr(targets_all, predictions_all)
+            sr_all, sr_pval_all = spearmanr(targets_all, predictions_all)
+
+            from sklearn.metrics import roc_auc_score
+            auroc_rel = roc_auc_score(targets_rel > wt_target_value, predictions_rel)
+            auroc_all = roc_auc_score(targets_all > wt_target_value, predictions_all)
+
+            metrics['Pr'].append(pr)
+            metrics['Sr'].append(sr)
+            metrics['Pr_pval'].append(pr_pval)
+            metrics['Sr_pval'].append(sr_pval)
+            metrics['AUROC reliable'].append(auroc_rel)
+            metrics['AUROC all'].append(auroc_all)
+
+            colors.append(color)
+            model_names_pretty.append(make_pretty_name(model_instance, prediction_column_short))
+
+            ax.scatter(targets_rel, predictions_rel, color=color, s=80, alpha=0.5)
+            ax.scatter(target_nonrel, prediction_nonrel, color='tab:gray', s=80, alpha=0.5)
+
+        else:
+            predictions = df_full[prediction_column][mask]
+            targets = df_full[target_column][mask]
+
+            pr, pr_pval = pearsonr(targets, predictions)
+            sr, sr_pval = spearmanr(targets, predictions)
+
+            metrics['Pr'].append(pr)
+            metrics['Sr'].append(sr)
+            metrics['Pr_pval'].append(pr_pval)
+            metrics['Sr_pval'].append(sr_pval)
+            colors.append(color)
+            model_names_pretty.append(make_pretty_name(model_instance, prediction_column_short))
+
+            ax.scatter(targets, predictions, color=color, s=80, alpha=0.5)
 
         ax.set_title(title, fontsize=fontsize_base+2)
         ax.set_xlabel(target_column_pretty, fontsize=fontsize_base)
@@ -332,7 +373,9 @@ if __name__ == '__main__':
 
     data = {
         'Pearson r': {},
-        'Spearman r': {}
+        'Spearman r': {},
+        'AUROC reliable': {},
+        'AUROC all': {}
     }
 
     fig, axs = plt.subplots(figsize=(14, num_rows*0.8), nrows=1, ncols=2, sharey=True)
@@ -371,6 +414,11 @@ if __name__ == '__main__':
     plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}_barplots.png')
     plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}_barplots.pdf')
     plt.close()
+
+    if args.system == 'mskcc':
+        for metric in ['AUROC reliable', 'AUROC all']:
+            for i in range(len(model_names_pretty)):
+                data[metric][model_names_pretty[i]] = metrics[metric][i]
 
     # save the data
     with open(f'../mutation_effects/{args.system}/results/{args.system_name_in_csv_file}_metrics.json', 'w') as f:
