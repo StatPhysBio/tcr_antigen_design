@@ -10,6 +10,7 @@ import argparse
 import matplotlib as mpl
 mpl.rcParams['pdf.fonttype'] = 42
 mpl.rcParams['ps.fonttype'] = 42
+plt.rcParams['figure.facecolor'] = 'white'
 
 IND_TO_AA = 'CSTAGPDEQNHRKMILVWYF'
 AA_TO_IND = {aa: i for i, aa in enumerate(IND_TO_AA)}
@@ -68,7 +69,7 @@ SYSTEM_TO_PRETTY_TARGET = {
     'tax': '$-\\text{log}_{10}(K_d)$',
     'mart': '$-\\text{log}_{10}(K_d)$',
     'hsiue_et_al': 'IFN_gamma (pg/ml)',
-    'mskcc': '$-\\text{log(EC50)}$'
+    'mskcc': '$-\\text{log}_{10}(\\text{EC}_{50})$'
 }
 
 SYSTEM_TO_MARKER_SIZE = {
@@ -186,6 +187,7 @@ if __name__ == '__main__':
     if args.system == 'mskcc':
 
         wt_target_value = wt_values[0][0] # there's only one anyways
+        print(f'wt_target_value = {wt_target_value}')
 
         is_reliable_mask = df['is_reliable'].values
 
@@ -203,8 +205,8 @@ if __name__ == '__main__':
         auroc_all = roc_auc_score(targets > wt_target_value, predictions)
         auroc_rel = roc_auc_score(targets_rel > wt_target_value, predictions_rel)
 
-        plt.scatter(targets_rel, predictions_rel, c=color, marker=markers[0], alpha=alpha, s=s)
-        plt.scatter(target_non_rel, prediction_non_rel, c='tab:grey', marker=markers[0], alpha=alpha, s=s)
+        plt.scatter(targets_rel, predictions_rel, c=color, edgecolors="none", marker=markers[0], alpha=alpha, s=s)
+        plt.scatter(target_non_rel, prediction_non_rel, c='tab:grey', edgecolors="none", marker=markers[0], alpha=alpha, s=s)
 
         plt.text(0.03, 0.03, f'Sr w\out grey = {sr:.2f} ({sr_pval:.1e})\nAUROC w\out grey = {auroc_rel:.2f}\nAUROC w\ grey = {auroc_all:.2f}', transform=plt.gca().transAxes, fontsize=11, verticalalignment='bottom', horizontalalignment='left')
 
@@ -217,7 +219,7 @@ if __name__ == '__main__':
         pdbs = df['pdb'].values
         colors = [PDB_TO_COLOR[pdb] for pdb in pdbs]
 
-        plt.scatter(targets, predictions, c=colors, alpha=alpha, s=s)
+        plt.scatter(targets, predictions, c=colors, edgecolors="none", alpha=alpha, s=s)
 
         # put text of correlation coefficient
         plt.text(0.03, 0.03, f'Spearman r = {sr:.2f}\np-val = {sr_pval:.1e}', transform=plt.gca().transAxes, fontsize=12, verticalalignment='bottom', horizontalalignment='left')
@@ -231,10 +233,11 @@ if __name__ == '__main__':
         unique_markers = np.unique(markers)
         for marker in unique_markers:
             mask = markers == marker
-            plt.scatter(targets[mask], predictions[mask], c=color, marker=marker, alpha=alpha, s=s)
+            plt.scatter(targets[mask], predictions[mask], c=color, edgecolors="none", marker=marker, alpha=alpha, s=s)
 
         # put text of correlation coefficient
         plt.text(0.03, 0.03, f'Spearman r = {sr:.2f}\np-val = {sr_pval:.1e}', transform=plt.gca().transAxes, fontsize=12, verticalalignment='bottom', horizontalalignment='left')
+
     
     plt.xticks(fontsize=12)
     plt.yticks(fontsize=12)
@@ -249,8 +252,8 @@ if __name__ == '__main__':
 
     plt.tight_layout()
     outfile = f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-scatterplot.png'
-    plt.savefig(outfile, dpi=300)
-    plt.savefig(outfile.replace('.png', '.pdf'), dpi=300)
+    plt.savefig(outfile, bbox_inches="tight", dpi=300, transparent=False)
+    plt.savefig(outfile.replace('.png', '.pdf'), bbox_inches="tight", dpi=300, transparent=False)
     plt.close()
 
     if len(unique_markers) > 1:
@@ -263,8 +266,8 @@ if __name__ == '__main__':
         plt.axis('off')
         plt.tight_layout()
         outfile = f'../mutation_effects/{args.system}/plots/motif_legend.png'
-        plt.savefig(outfile, dpi=300)
-        plt.savefig(outfile.replace('.png', '.pdf'), dpi=300)
+        plt.savefig(outfile, bbox_inches="tight", dpi=300, transparent=False)
+        plt.savefig(outfile.replace('.png', '.pdf'), bbox_inches="tight", dpi=300, transparent=False)
         plt.close()
     
 
@@ -316,8 +319,8 @@ if __name__ == '__main__':
             t.set_fontsize(14)
 
         plt.tight_layout()
-        plt.savefig(filename, dpi=300)
-        plt.savefig(filename.replace('.png', '.pdf'), dpi=300)
+        plt.savefig(filename, bbox_inches="tight", dpi=300, transparent=False)
+        plt.savefig(filename.replace('.png', '.pdf'), bbox_inches="tight", dpi=300, transparent=False)
         plt.close()
 
 
@@ -371,7 +374,7 @@ if __name__ == '__main__':
 
         plt.figure(figsize=figsize)
         heatmap = target_values[:, np.newaxis].T
-        plt.imshow(heatmap, aspect='auto', cmap='viridis')
+        plt.imshow(heatmap, aspect='auto', cmap='viridis', alpha=1)
         plt.yticks([])
         plt.xticks(range(len(mutants)), mutants, fontsize=fontsize, rotation=rotation, ha='center', va='top')
         # color the ticks based on the pdb
@@ -379,8 +382,8 @@ if __name__ == '__main__':
             plt.gca().get_xticklabels()[i].set_color(color)
         plt.title(xlabel, fontsize=fontsize)
         plt.tight_layout()
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target-horizontal.png', dpi=300)
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target-horizontal.pdf', dpi=300)
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target-horizontal.png', bbox_inches="tight", dpi=300, transparent=False)
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target-horizontal.pdf', bbox_inches="tight", dpi=300, transparent=False)
         plt.close()
 
         # make colorbar with values of heatmap, but don't know heatmap!
@@ -389,7 +392,7 @@ if __name__ == '__main__':
 
         plt.figure(figsize=figsize)
         heatmap = predicted_values[:, np.newaxis].T
-        plt.imshow(heatmap, aspect='auto', cmap='viridis')
+        plt.imshow(heatmap, aspect='auto', cmap='viridis', alpha=1)
         plt.yticks([])
         plt.xticks(range(len(mutants)), mutants, fontsize=fontsize, rotation=rotation, ha='center', va='top')
         # color the ticks based on the pdb
@@ -397,8 +400,8 @@ if __name__ == '__main__':
             plt.gca().get_xticklabels()[i].set_color(color)
         plt.title(ylabel, fontsize=fontsize)
         plt.tight_layout()
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-horizontal.png', dpi=300)
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-horizontal.pdf', dpi=300)
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-horizontal.png', bbox_inches="tight", dpi=300, transparent=False)
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-horizontal.pdf', bbox_inches="tight", dpi=300, transparent=False)
         plt.close()
 
         # make colorbar with values of heatmap, but don't know heatmap!
@@ -444,23 +447,23 @@ if __name__ == '__main__':
         heatmap_predicted = heatmap_predicted.T
 
         plt.figure(figsize=figsize)
-        plt.imshow(heatmap_target, aspect='auto', cmap='viridis')
+        plt.imshow(heatmap_target, aspect='auto', cmap='viridis', alpha=1)
 
         plt.xticks(range(len(wt_seq)), wt_seq, fontsize=fontsize)
         plt.yticks(range(20), IND_TO_AA, fontsize=fontsize)
         plt.tight_layout()
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.png', dpi=300)
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.pdf', dpi=300)
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.png', bbox_inches="tight", dpi=300, transparent=False)
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.pdf', bbox_inches="tight", dpi=300, transparent=False)
         plt.close()
         make_colorbar(heatmap_target, xlabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target.png', 'viridis', (4, 1.1))
 
         plt.figure(figsize=figsize)
-        plt.imshow(heatmap_predicted, aspect='auto', cmap='viridis')
+        plt.imshow(heatmap_predicted, aspect='auto', cmap='viridis', alpha=1)
         plt.xticks(range(len(wt_seq)), wt_seq, fontsize=fontsize)
         plt.yticks(range(20), IND_TO_AA, fontsize=fontsize)
         plt.tight_layout()
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.png', dpi=300)
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.pdf', dpi=300)
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.png', bbox_inches="tight", dpi=300, transparent=False)
+        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.pdf', bbox_inches="tight", dpi=300, transparent=False)
         plt.close()
         make_colorbar(heatmap_predicted, ylabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar.png', 'viridis', (4, 1))
 
