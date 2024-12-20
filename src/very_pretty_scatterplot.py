@@ -378,8 +378,8 @@ if __name__ == '__main__':
         plt.yticks([])
         plt.xticks(range(len(mutants)), mutants, fontsize=fontsize, rotation=rotation, ha='center', va='top')
         # color the ticks based on the pdb
-        for i, color in enumerate(colors):
-            plt.gca().get_xticklabels()[i].set_color(color)
+        # for i, color in enumerate(colors):
+        #     plt.gca().get_xticklabels()[i].set_color(color)
         plt.title(xlabel, fontsize=fontsize)
         plt.tight_layout()
         plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target-horizontal.png', bbox_inches="tight", dpi=300, transparent=False)
@@ -396,8 +396,8 @@ if __name__ == '__main__':
         plt.yticks([])
         plt.xticks(range(len(mutants)), mutants, fontsize=fontsize, rotation=rotation, ha='center', va='top')
         # color the ticks based on the pdb
-        for i, color in enumerate(colors):
-            plt.gca().get_xticklabels()[i].set_color(color)
+        # for i, color in enumerate(colors):
+        #     plt.gca().get_xticklabels()[i].set_color(color)
         plt.title(ylabel, fontsize=fontsize)
         plt.tight_layout()
         plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-horizontal.png', bbox_inches="tight", dpi=300, transparent=False)
