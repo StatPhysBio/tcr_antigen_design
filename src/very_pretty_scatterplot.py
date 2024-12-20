@@ -441,7 +441,7 @@ if __name__ == '__main__':
         
         # make the heatmaps
         figsize = (6, 6)
-        fontsize = 15
+        fontsize = 18
 
         heatmap_target = heatmap_target.T
         heatmap_predicted = heatmap_predicted.T
