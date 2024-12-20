@@ -50,8 +50,8 @@ if __name__ == '__main__':
     # read netMHCpan output
     netmhcpan_df = pd.read_csv(tempfile_out, sep='\t', skiprows=1)
 
-    # add is_binder_by_netmhcpan column to the input tsv file
-    df['is_binder_by_netmhc_pan'] = netmhcpan_df['NB'].values
+    # # add is_binder_by_netmhcpan column to the input tsv file
+    # df['is_binder_by_netmhc_pan'] = netmhcpan_df['NB'].values
 
     # save the new tsv file
     df.to_csv(output_tsvfile, sep='\t', index=False)
