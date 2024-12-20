@@ -22,7 +22,7 @@ if __name__ == '__main__':
     parser.add_argument('--seq_column', type=str, default='sequence', help='column name of the sequence in the csv file')
     args = parser.parse_args()
 
-    output_dir = os.path.join(args.experiment_dir, 'results', args.model_version)
+    output_dir = os.path.join(args.experiment_dir, 'results_old', args.model_version)
     results_dir = os.path.join(output_dir, 'with_relaxation')
     csv_file = os.path.join(args.experiment_dir, args.csv_filename)
     output_csv_file = os.path.join(output_dir, f'{args.csv_filename.strip(".csv")}_with_relaxation-{args.model_version}-use_mt_structure=0.csv')

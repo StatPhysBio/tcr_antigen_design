@@ -11,6 +11,7 @@ tcrs = [1, 2, 3, 4, 5, 6, 7]
 ## 1) Hermes models
 
 columns_to_drop = ['Unnamed: 0', '- delta log_ec50_M']
+columns_to_drop_backup = []
 columns_to_merge_over = ['mutant', 'sequence', 'wt_seq', 'wt_pdb', 'is_wt', 'mutant_chain']
 columns_to_merge_over_backup = ['mutant', 'sequence', 'wt_pdb', 'is_wt', 'mutant_chain']
 
@@ -31,7 +32,10 @@ for model in models:
             except FileNotFoundError:
                 continue
 
-            df_old_pred = df_old_pred.drop(columns=columns_to_drop)
+            try:
+                df_old_pred = df_old_pred.drop(columns=columns_to_drop)
+            except:
+                pass
 
             try:
                 df_merged = pd.merge(df_new_targets, df_old_pred, on=columns_to_merge_over, how='inner')

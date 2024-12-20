@@ -16,7 +16,7 @@ metrics='pnE pnlogp'
 for model_version in $model_version_list
     do
 
-    for tcr in $(seq 2 2)
+    for tcr in $(seq 2 7)
         do
 
         pdbid=${pdbid_list[$tcr-1]}
@@ -24,6 +24,7 @@ for model_version in $model_version_list
         for metric in $metrics
             do
 
+            echo $tcr $pdbid $metric $model_version
 
             python ../../src/gather_score_with_relaxation_results.py \
                             --experiment_dir /gscratch/spe/gvisan01/tcr_pmhc/mutation_effects/mskcc \
@@ -31,15 +32,15 @@ for model_version in $model_version_list
                             --pdbid $pdbid \
                             --model_version $model_version
             
-            python -u pretty_plots.py \
-                        --system mskcc \
-                        --system_name_in_csv_file 'mskcc_tcr'$tcr'_ec50_sat_mut_af3_with_relaxation' \
-                        --target_column'=- delta log_ec50_M' \
-                        --prediction_column $metric \
-                        --model hermes \
-                        --model_instance $model_version \
-                        --use_mt_structure 0 \
-                        --show_wt_lines both_from_df
+            # python -u pretty_plots.py \
+            #             --system mskcc \
+            #             --system_name_in_csv_file 'mskcc_tcr'$tcr'_ec50_sat_mut_af3_with_relaxation' \
+            #             --target_column'=- log(EC50)' \
+            #             --prediction_column $metric \
+            #             --model hermes \
+            #             --model_instance $model_version \
+            #             --use_mt_structure 0 \
+            #             --show_wt_lines both_from_df
 
 
         done
