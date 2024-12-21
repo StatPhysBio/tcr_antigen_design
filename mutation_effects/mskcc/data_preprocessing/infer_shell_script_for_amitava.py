@@ -53,7 +53,7 @@ tcr_pMHC_pairs = {
 
 start_time = time.time()
 K_a_reg = 0.001
-log_Ka_range = [-4, 4]
+log_Ka_range = [-6, 6] # original: [-4, 4]
 all_tcr_info = {}
 
 

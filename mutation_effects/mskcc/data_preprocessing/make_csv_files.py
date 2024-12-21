@@ -86,7 +86,7 @@ for wt_pdb, pep_chain, pep_resnum_start, tcr, pep_start, wt_pep in zip(wt_pdbs, 
 
     df['mutant_chain'] = np.full(len(mutants), pep_chain)
 
-    df.to_csv(f'../mskcc_{tcr}_ec50_sat_mut_af3.csv', index=False)
+    df.to_csv(f'mskcc_{tcr}_ec50_sat_mut_af3__abs_limit_6.csv', index=False)
 
 
 
