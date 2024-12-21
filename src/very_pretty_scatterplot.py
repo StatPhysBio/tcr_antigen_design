@@ -202,13 +202,18 @@ if __name__ == '__main__':
         num = targets_rel.shape[0]
 
         from sklearn.metrics import roc_auc_score
-        auroc_all = roc_auc_score(targets > wt_target_value, predictions)
-        auroc_rel = roc_auc_score(targets_rel > wt_target_value, predictions_rel)
+        # auroc_all = roc_auc_score(targets > wt_target_value, predictions)
+        # auroc_rel = roc_auc_score(targets_rel > wt_target_value, predictions_rel)
+        try:
+            auroc = roc_auc_score(df['is_reliable'].values, predictions)
+        except ValueError:
+            auroc = np.nan
 
         plt.scatter(targets_rel, predictions_rel, c=color, edgecolors="none", marker=markers[0], alpha=alpha, s=s)
         plt.scatter(target_non_rel, prediction_non_rel, c='tab:grey', edgecolors="none", marker=markers[0], alpha=alpha, s=s)
 
-        plt.text(0.03, 0.03, f'Sr w\out grey = {sr:.2f} ({sr_pval:.1e})\nAUROC w\out grey = {auroc_rel:.2f}\nAUROC w\ grey = {auroc_all:.2f}', transform=plt.gca().transAxes, fontsize=11, verticalalignment='bottom', horizontalalignment='left')
+        # plt.text(0.03, 0.03, f'Sr w\out grey = {sr:.2f} ({sr_pval:.1e})\nAUROC w\out grey = {auroc_rel:.2f}\nAUROC w\ grey = {auroc_all:.2f}', transform=plt.gca().transAxes, fontsize=11, verticalalignment='bottom', horizontalalignment='left')
+        plt.text(0.03, 0.03, f'Sr = {sr:.2f} (pv {sr_pval:.1e})\nAUROC = {auroc:.2f}', transform=plt.gca().transAxes, fontsize=11, verticalalignment='bottom', horizontalalignment='left')
 
     elif args.system in {'nyeso', 'tax'}:
 

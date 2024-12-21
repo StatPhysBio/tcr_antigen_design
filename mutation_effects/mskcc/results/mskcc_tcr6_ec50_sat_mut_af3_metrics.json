@@ -75,26 +75,15 @@
             0.0014081421183690461
         ]
     },
-    "AUROC reliable": {
-        "BLOSUM62": 0.723125,
-        "TCRdock benchmark": 0.41500000000000004,
-        "TCRdock": 0.755,
-        "ProteinMPNN 0.30": 0.6575,
-        "ProteinMPNN 0.02": 0.6737500000000001,
-        "HERMES-relaxed 0.50": 0.55625,
-        "HERMES-relaxed 0.00": 0.6212500000000001,
-        "HERMES-fixed 0.50": 0.7537499999999999,
-        "HERMES-fixed 0.00": 0.8287500000000001
-    },
-    "AUROC all": {
-        "BLOSUM62": 0.8095679012345679,
-        "TCRdock benchmark": 0.4444444444444444,
-        "TCRdock": 0.7703703703703704,
-        "ProteinMPNN 0.30": 0.6870370370370371,
-        "ProteinMPNN 0.02": 0.7364197530864198,
-        "HERMES-relaxed 0.50": 0.5329411764705883,
-        "HERMES-relaxed 0.00": 0.6776470588235295,
-        "HERMES-fixed 0.50": 0.8055555555555556,
-        "HERMES-fixed 0.00": 0.8703703703703705
+    "AUROC grey vs colored": {
+        "BLOSUM62": 0.7484417344173443,
+        "TCRdock benchmark": 0.5502710027100272,
+        "TCRdock": 0.5976964769647697,
+        "ProteinMPNN 0.30": 0.6062330623306234,
+        "ProteinMPNN 0.02": 0.6535230352303523,
+        "HERMES-relaxed 0.50": 0.49240915878546543,
+        "HERMES-relaxed 0.00": 0.6643852663016425,
+        "HERMES-fixed 0.50": 0.6344173441734418,
+        "HERMES-fixed 0.00": 0.6723577235772358
     }
 }

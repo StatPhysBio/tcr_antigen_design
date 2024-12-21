@@ -75,6 +75,5 @@
             0.3105263203858819
         ]
     },
-    "AUROC reliable": {},
-    "AUROC all": {}
+    "AUROC grey vs colored": {}
 }

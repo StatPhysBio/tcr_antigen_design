@@ -36,8 +36,7 @@ df.to_csv('../mutation_effects/spearman_table.csv')
 
 
 # make auroc tables
-
-for metric_name, metric in zip(['auroc_reliable', 'auroc_all'], ['AUROC reliable', 'AUROC all']):
+for metric_name, metric in zip(['auroc_grey_vs_colored'], ['AUROC grey vs colored']): # zip(['auroc_reliable', 'auroc_all'], ['AUROC reliable', 'AUROC all']):
 
     df = pd.DataFrame(index=MODELS, columns=[d[0] for d in DATA])
     for model in MODELS:
