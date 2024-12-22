@@ -59,5 +59,8 @@
             1.6582471225663618e-10
         ]
     },
-    "AUROC grey vs colored": {}
+    "AUROC reliable": {},
+    "AUROC all": {},
+    "AUROC grey vs colored": {},
+    "AUROC grey vs above wt": {}
 }

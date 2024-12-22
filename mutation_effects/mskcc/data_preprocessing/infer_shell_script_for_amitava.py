@@ -4,6 +4,10 @@
 Created on Thu Aug 10 21:32:05 2023
 
 @author: zacharysethna
+
+Edited Sat Dec 21 2024
+
+@author: Armita Nourmohammad
 """
 
 import os
@@ -53,7 +57,7 @@ tcr_pMHC_pairs = {
 
 start_time = time.time()
 K_a_reg = 0.001
-log_Ka_range = [-6, 6] # original: [-4, 4]
+log_Ka_range = [-4, 4]
 all_tcr_info = {}
 
 

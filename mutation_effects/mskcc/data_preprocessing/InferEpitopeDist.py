@@ -4,7 +4,15 @@
 Created on Thu Dec  3 22:34:26 2020
 
 @author: zacharysethna
+
+Edited Sat Dec 21 2024
+
+@author: Armita Nourmohammad
+
 """
+
+
+
 
 import numpy as np
 import scipy.optimize as opt
@@ -30,7 +38,13 @@ class TCRpMHCAvidity(object):
             self.A_reg = kwarg['A_reg']
         else:
             self.A_reg = 0.01
-            
+        
+        if 'bgrn_reg' in kwarg:
+            self.bgrn_reg = kwarg['bgrn_reg']
+        else:
+            self.bgrn_reg = 0.1
+        
+        
         if 'K_a_reg' in kwarg:
             self.K_a_reg = kwarg['K_a_reg']
         else:
@@ -39,7 +53,7 @@ class TCRpMHCAvidity(object):
         if 'log_Ka_range' in kwarg:
             self.log_Ka_range = kwarg['log_Ka_range']
         else:
-            self.log_Ka_range = [-3, 3]
+            self.log_Ka_range = [-4, 4]
             
         self.peptide_reactivity_data = {}
         self.peptide_avidity_fits = {}
@@ -106,34 +120,36 @@ class TCRpMHCAvidity(object):
             pass
         
         
-    def t_react(self, c, K_a, n = 1, A = 1):
-        return A/(1 + np.power(K_a/c, n))
+    def t_react(self, c, K_a, n = 1, A = 1, bgrn = 0):
+        return ((A-bgrn)/(1 + np.power(K_a/c, n))) + bgrn
     
     def t_react_l2_cost(self, params, r, c):
-        K_a, n, A = params
+        K_a, n, A, bgrn  = params
         min_c = min(c)
-#        max_c = max(c)
+#       max_c = max(c)
+        
         if np.log10(K_a) < min_c:
             K_a_reg_cost = np.sqrt(self.K_a_reg)*(min_c - np.log10(K_a))
 #        elif np.log10(K_a) > max_c:
 #            K_a_reg_cost = np.sqrt(self.K_a_reg)*(np.log10(K_a) - max_c) 
         else:
             K_a_reg_cost = 0
+            
         #Center cooperativity n at 1
-        return np.concatenate([r - self.t_react(c, K_a, n = n, A = A), [np.sqrt(self.n_reg)*(n-1), np.sqrt(self.A_reg)*(1-A), K_a_reg_cost]])
+        return np.concatenate([r - self.t_react(c, K_a, n = n, A = A, bgrn = bgrn), [np.sqrt(self.n_reg)*(n-1), np.sqrt(self.A_reg)*(1-A), K_a_reg_cost, np.sqrt(self.bgrn_reg)*(bgrn)  ]])
     
     def fit_indiv_t_react_curve(self, reactivity_curve):
         concs = sorted(reactivity_curve.keys())
         if len(concs) == 1: #Low reactivity at high concentration
-            hill_args = [np.inf, 0, reactivity_curve[concs[0]]*2]
+            hill_args = [np.inf, 0, reactivity_curve[concs[0]]*2, 0]
         else:
             hill_args = opt.least_squares(self.t_react_l2_cost, 
-                                       np.array([1., 1., 1.]), 
-                                       bounds = np.array([[0, np.inf], [0, np.inf], [0, 1]]).T, 
+                                       np.array([1., 1., 1., 0.]), 
+                                       bounds = np.array([[0, np.inf], [0, np.inf], [0, 1], [0, 1] ]).T, 
                                        args = ([reactivity_curve[c] for c in concs], concs))['x']
         if all([r < 0.3 for r in reactivity_curve.values()]) and hill_args[0] < self.log_Ka_range[0]:
-            hill_args = [np.inf, 0, reactivity_curve[concs[0]]*2]
-        return {'K_a': hill_args[0], 'n': hill_args[1], 'A': hill_args[2]}
+            hill_args = [np.inf, 0, reactivity_curve[concs[0]]*2, 0]
+        return {'K_a': hill_args[0], 'n': hill_args[1], 'A': hill_args[2], 'bgrn': hill_args[3]}
     
     def fit_mut_pep_avidity(self):
         for pep, c_react in self.peptide_reactivity_data.items():

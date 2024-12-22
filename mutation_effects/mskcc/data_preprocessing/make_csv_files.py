@@ -13,20 +13,19 @@ pd.set_option('display.max_colwidth', None)
 
 import json
 
-def reliability_mask(df, mutants):
-    is_reliable = []
-    columns = ['0.01', '1.0', '100.0']
-    for mutant in mutants:
-        sub_df = df.loc[df['peptide'] == mutant]
-        assert len(sub_df) == 1
+# def reliability_mask(df, mutants):
+    # is_reliable = []
+    # columns = ['0.01', '1.0', '100.0']
+    # for mutant in mutants:
+    #     sub_df = df.loc[df['peptide'] == mutant]
+    #     assert len(sub_df) == 1
 
-        criterion_1 = np.sum(np.isnan(sub_df[columns].values)) == 0
-        criterion_2 = np.nanmax(sub_df[columns].values) > 0.06
+    #     criterion_1 = np.sum(np.isnan(sub_df[columns].values)) == 0
+    #     criterion_2 = np.nanmax(sub_df[columns].values) > 0.06
 
-        is_reliable.append(criterion_1 and criterion_2)
+    #     is_reliable.append(criterion_1 and criterion_2)
     
-    return np.array(is_reliable)
-
+    # return np.array(is_reliable)
 
 
 wt_pdbs = [
@@ -78,7 +77,8 @@ for wt_pdb, pep_chain, pep_resnum_start, tcr, pep_start, wt_pep in zip(wt_pdbs, 
     df['sequence'] = sequences
 
     # make the reliability mask!
-    df['is_reliable'] = reliability_mask(pd.read_csv(f'{pep_start}_{tcr}_reactivity_curves.tsv', sep='\t'), mutants)
+    # df['is_reliable'] = reliability_mask(pd.read_csv(f'{pep_start}_{tcr}_reactivity_curves.tsv', sep='\t'), mutants)
+    df['is_reliable'] = df['-log10(EC50)'] >= -9.0
 
 
     df['wt_pdb'] = np.full(len(mutants), wt_pdb)
@@ -86,7 +86,7 @@ for wt_pdb, pep_chain, pep_resnum_start, tcr, pep_start, wt_pep in zip(wt_pdbs, 
 
     df['mutant_chain'] = np.full(len(mutants), pep_chain)
 
-    df.to_csv(f'mskcc_{tcr}_ec50_sat_mut_af3__abs_limit_6.csv', index=False)
+    df.to_csv(f'../mskcc_{tcr}_ec50_sat_mut_af3.csv', index=False)
 
 
 

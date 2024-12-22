@@ -254,7 +254,7 @@ if __name__ == '__main__':
     fontsize_base = 18
     fig, axs = plt.subplots(num_rows, num_cols, figsize=(num_cols*colsize, num_rows*rowsize))
 
-    metrics = {'Pr': [], 'Sr': [], 'Pr_pval': [], 'Sr_pval': [], 'AUROC grey vs colored': []} # , 'AUROC reliable': [], 'AUROC all': []}
+    metrics = {'Pr': [], 'Sr': [], 'Pr_pval': [], 'Sr_pval': [], 'AUROC grey vs colored': [], 'AUROC reliable': [], 'AUROC all': [], 'AUROC grey vs above wt': []}
     colors = []
     model_names_pretty = []
 
@@ -298,8 +298,15 @@ if __name__ == '__main__':
             predictions_all = df_full[prediction_column].values
             targets_all = df_full[target_column].values
 
+            is_target_above_wt_mask = np.logical_and(targets_all > wt_target_value, mask)
+
             is_reliable_mask = np.logical_and(df_full['is_reliable'].values, mask)
             is_not_reliable_mask = np.logical_and(~df_full['is_reliable'].values, mask)
+
+            is_not_reliable_or_is_target_above_wt = np.logical_or(is_not_reliable_mask, is_target_above_wt_mask)
+            df_subset = df_full[is_not_reliable_or_is_target_above_wt]
+            predictions_subset = df_subset[prediction_column].values
+            targets_subset = df_subset[target_column].values
 
             predictions_rel = df_full[prediction_column][is_reliable_mask]
             targets_rel = df_full[target_column][is_reliable_mask]
@@ -314,20 +321,23 @@ if __name__ == '__main__':
             # sr_all, sr_pval_all = spearmanr(targets_all, predictions_all)
 
             from sklearn.metrics import roc_auc_score
-            # auroc_rel = roc_auc_score(targets_rel > wt_target_value, predictions_rel)
-            # auroc_all = roc_auc_score(targets_all > wt_target_value, predictions_all)
+            auroc_rel = roc_auc_score(targets_rel > wt_target_value, predictions_rel)
+            auroc_all = roc_auc_score(targets_all > wt_target_value, predictions_all)
             try:
                 auroc = roc_auc_score(df_full['is_reliable'].values, predictions_all)
+                auroc_grey_vs_above_wt = roc_auc_score(targets_subset > wt_target_value, predictions_subset)
             except:
                 auroc = np.nan
+                auroc_grey_vs_above_wt = np.nan
 
             metrics['Pr'].append(pr)
             metrics['Sr'].append(sr)
             metrics['Pr_pval'].append(pr_pval)
             metrics['Sr_pval'].append(sr_pval)
-            # metrics['AUROC reliable'].append(auroc_rel)
-            # metrics['AUROC all'].append(auroc_all)
+            metrics['AUROC reliable'].append(auroc_rel)
+            metrics['AUROC all'].append(auroc_all)
             metrics['AUROC grey vs colored'].append(auroc)
+            metrics['AUROC grey vs above wt'].append(auroc_grey_vs_above_wt)
 
             colors.append(color)
             model_names_pretty.append(make_pretty_name(model_instance, prediction_column_short))
@@ -379,9 +389,10 @@ if __name__ == '__main__':
     data = {
         'Pearson r': {},
         'Spearman r': {},
-        # 'AUROC reliable': {},
-        # 'AUROC all': {}
-        'AUROC grey vs colored': {}
+        'AUROC reliable': {},
+        'AUROC all': {},
+        'AUROC grey vs colored': {},
+        'AUROC grey vs above wt': {}
     }
 
     fig, axs = plt.subplots(figsize=(14, num_rows*0.8), nrows=1, ncols=2, sharey=True)
@@ -422,7 +433,7 @@ if __name__ == '__main__':
     plt.close()
 
     if args.system == 'mskcc':
-        for metric in ['AUROC grey vs colored']: # ['AUROC reliable', 'AUROC all']:
+        for metric in ['AUROC grey vs colored', 'AUROC reliable', 'AUROC all', 'AUROC grey vs above wt']:
             for i in range(len(model_names_pretty)):
                 data[metric][model_names_pretty[i]] = metrics[metric][i]
 

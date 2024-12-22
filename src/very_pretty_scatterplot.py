@@ -212,8 +212,9 @@ if __name__ == '__main__':
         plt.scatter(targets_rel, predictions_rel, c=color, edgecolors="none", marker=markers[0], alpha=alpha, s=s)
         plt.scatter(target_non_rel, prediction_non_rel, c='tab:grey', edgecolors="none", marker=markers[0], alpha=alpha, s=s)
 
+        plt.text(0.03, 0.03, f'Spearman r = {sr:.2f}\np-val = {sr_pval:.1e}', transform=plt.gca().transAxes, fontsize=12, verticalalignment='bottom', horizontalalignment='left')
         # plt.text(0.03, 0.03, f'Sr w\out grey = {sr:.2f} ({sr_pval:.1e})\nAUROC w\out grey = {auroc_rel:.2f}\nAUROC w\ grey = {auroc_all:.2f}', transform=plt.gca().transAxes, fontsize=11, verticalalignment='bottom', horizontalalignment='left')
-        plt.text(0.03, 0.03, f'Sr = {sr:.2f} (pv {sr_pval:.1e})\nAUROC = {auroc:.2f}', transform=plt.gca().transAxes, fontsize=11, verticalalignment='bottom', horizontalalignment='left')
+        # plt.text(0.03, 0.03, f'Sr = {sr:.2f} (pv {sr_pval:.1e})\nAUROC = {auroc:.2f}', transform=plt.gca().transAxes, fontsize=11, verticalalignment='bottom', horizontalalignment='left')
 
     elif args.system in {'nyeso', 'tax'}:
 
