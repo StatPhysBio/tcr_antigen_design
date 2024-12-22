@@ -324,7 +324,7 @@ if __name__ == '__main__':
 
         # set fontsize
         for t in colorbar.ax.yaxis.get_ticklabels():
-            t.set_fontsize(14)
+            t.set_fontsize(18)
 
         plt.tight_layout()
         plt.savefig(filename, bbox_inches="tight", dpi=300, transparent=False)
@@ -466,7 +466,7 @@ if __name__ == '__main__':
         plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.svg', format="svg", bbox_inches="tight", dpi=300, transparent=False)
         plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.pdf', format="pdf", bbox_inches="tight", dpi=300, transparent=False)
         plt.close()
-        make_colorbar(heatmap_target, xlabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target.png', 'viridis', (4, 1.1))
+        make_colorbar(heatmap_target, xlabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target.png', 'viridis', (3.6, 0.8))
 
         plt.figure(figsize=figsize)
         plt.imshow(heatmap_predicted, aspect='auto', cmap='viridis', alpha=1)
@@ -477,6 +477,6 @@ if __name__ == '__main__':
         plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.svg', format="svg", bbox_inches="tight", dpi=300, transparent=False)
         plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.pdf', format="pdf", bbox_inches="tight", dpi=300, transparent=False)
         plt.close()
-        make_colorbar(heatmap_predicted, ylabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar.png', 'viridis', (4, 1))
+        make_colorbar(heatmap_predicted, ylabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar.png', 'viridis', (3.6, 0.8))
 
 
