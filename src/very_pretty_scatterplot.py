@@ -291,7 +291,7 @@ if __name__ == '__main__':
                 mutants.append(f'{wt_seq[i]}{i+1}{mt_seq[i]}')
         return MUTANT_SPLIT_SYMBOL.join(mutants), len(mutants)
 
-    def make_colorbar(data, label, filename, cmap, figsize, orientation='horizontal'):
+    def make_colorbar(data, label, filename, cmap, figsize, orientation='horizontal', limits=None):
 
         import matplotlib.pyplot as plt
         import matplotlib.colors as mcolors
@@ -299,7 +299,10 @@ if __name__ == '__main__':
         import numpy as np
 
         # Define a colormap and normalization based on the data
-        norm = mcolors.Normalize(vmin=np.min(data), vmax=np.max(data))
+        if limits is not None:
+            norm = mcolors.Normalize(vmin=limits[0], vmax=limits[1])
+        else:
+            norm = mcolors.Normalize(vmin=np.min(data), vmax=np.max(data))
 
         # Standalone colorbar figure
         plt.figure(figsize=figsize)
@@ -450,8 +453,8 @@ if __name__ == '__main__':
                 heatmap_predicted[pos, AA_TO_IND[aa_mt]] = prediction
         
         # make the heatmaps
-        figsize = (6, 6)
-        fontsize = 18
+        figsize = (4, 6)
+        fontsize = 20
 
         heatmap_target = heatmap_target.T
         heatmap_predicted = heatmap_predicted.T
@@ -466,7 +469,11 @@ if __name__ == '__main__':
         plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.svg', format="svg", bbox_inches="tight", dpi=300, transparent=False)
         plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.pdf', format="pdf", bbox_inches="tight", dpi=300, transparent=False)
         plt.close()
-        make_colorbar(heatmap_target, xlabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target.png', 'viridis', (3.6, 0.8))
+        if args.system == 'mskcc':
+            limits = (-9, 8)
+        elif args.system == 'hsiue_et_al':
+            limits = None
+        make_colorbar(heatmap_target, xlabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target.png', 'viridis', (3.6, 0.8), limits=limits)
 
         plt.figure(figsize=figsize)
         plt.imshow(heatmap_predicted, aspect='auto', cmap='viridis', alpha=1)
@@ -477,6 +484,10 @@ if __name__ == '__main__':
         plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.svg', format="svg", bbox_inches="tight", dpi=300, transparent=False)
         plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.pdf', format="pdf", bbox_inches="tight", dpi=300, transparent=False)
         plt.close()
-        make_colorbar(heatmap_predicted, ylabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar.png', 'viridis', (3.6, 0.8))
+        if args.system == 'mskcc':
+            limits = (12, 56)
+        elif args.system == 'hsiue_et_al':
+            limits = None
+        make_colorbar(heatmap_predicted, ylabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar.png', 'viridis', (3.6, 0.8), limits=limits)
 
 
