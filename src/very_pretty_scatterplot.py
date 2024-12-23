@@ -327,7 +327,11 @@ if __name__ == '__main__':
 
         # set fontsize
         for t in colorbar.ax.yaxis.get_ticklabels():
-            t.set_fontsize(18)
+            t.set_fontsize(14)
+
+        # set fontsize
+        for t in colorbar.ax.xaxis.get_ticklabels():
+            t.set_fontsize(14)
 
         plt.tight_layout()
         plt.savefig(filename, bbox_inches="tight", dpi=300, transparent=False)
@@ -472,7 +476,7 @@ if __name__ == '__main__':
         plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.pdf', format="pdf", bbox_inches="tight", dpi=300, transparent=False)
         plt.close()
         make_colorbar(heatmap_target, xlabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target.png', 'viridis', (3.6, 0.8)) #, limits=limits)
-        make_colorbar(heatmap_target, xlabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target-vertical.png', 'viridis', (0.8, 3.6), orientation='vertical') #, limits=limits)
+        make_colorbar(heatmap_target, xlabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target-vertical.png', 'viridis', (1.2, 3.0), orientation='vertical') #, limits=limits)
 
         plt.figure(figsize=figsize)
         # limits = (12, 56)
@@ -485,6 +489,6 @@ if __name__ == '__main__':
         plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.pdf', format="pdf", bbox_inches="tight", dpi=300, transparent=False)
         plt.close()
         make_colorbar(heatmap_predicted, ylabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar.png', 'viridis', (3.6, 0.8)) #, limits=limits)
-        make_colorbar(heatmap_predicted, ylabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar-vertical.png', 'viridis', (0.8, 3.6), orientation='vertical') #, limits=limits)
+        make_colorbar(heatmap_predicted, ylabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar-vertical.png', 'viridis', (1.0, 3.0), orientation='vertical') #, limits=limits)
 
 
