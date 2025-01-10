@@ -17,7 +17,7 @@ if __name__ == '__main__':
                 'proteinmpnn_v_48_020_0.7/proteinmpnn_samples_v_48_020_0.7_w_pae_w_blosum.tsv']
 
     for tsvfile in tsvfiles:
-        os.system(f'python ../src/add_netmhcpan_to_tsvfile.py \
+        os.system(f'python ../../src/add_netmhcpan_to_tsvfile.py \
                                                 -i {tsvfile} \
                                                 -m HLA-A02:01')
 
