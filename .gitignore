@@ -12,6 +12,7 @@ tcrdock_output_base/
 tcrdock_output_noise=0p5/
 tcrdock_output_T=1/
 tcrdock_output_T=2/
+tcrdock_output_T=3/
 annealing_runs/
 *.key
 TODO.md
