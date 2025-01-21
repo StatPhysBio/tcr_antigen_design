@@ -6,23 +6,26 @@ import pandas as pd
 AMINOACIDS = 'CMFILVWYAGTSNQDEHRKP'
 
 
-df = pd.read_csv('/gscratch/spe/gvisan01/hermes/experiments/aa_cls_eval/output/hermes_py_000.csv')
+for identifier in ['000', '050', '000_ft_cdna117k_ddg_st', '050_ft_cdna117k_ddg_st']:
 
-matrix_num = np.zeros((20, 20))
-matrix_denom = np.zeros((20, 20))
 
-for i, row in df.iterrows():
+    df = pd.read_csv(f'/gscratch/spe/gvisan01/hermes/experiments/aa_cls_eval/output/hermes_py_{identifier}.csv')
 
-    aa_wt = row['resname']
+    matrix_num = np.zeros((20, 20))
+    matrix_denom = np.zeros((20, 20))
 
-    for j, aa_mt in enumerate(AMINOACIDS):
-        logit_wt = f'logit_{aa_wt}'
-        logit_mt = f'logit_{aa_mt}'
-        matrix_num[AMINOACIDS.index(aa_wt), AMINOACIDS.index(aa_mt)] += row[logit_mt] - row[logit_wt]
-        matrix_denom[AMINOACIDS.index(aa_wt), AMINOACIDS.index(aa_mt)] += 1
+    for i, row in df.iterrows():
 
-matrix = matrix_num / matrix_denom
+        aa_wt = row['resname']
 
-matrix_df = pd.DataFrame(matrix, index=list(AMINOACIDS), columns=list(AMINOACIDS))
-matrix_df.to_csv(f'hermes_000_on_general_proteins_marginal_matrix.csv')
+        for j, aa_mt in enumerate(AMINOACIDS):
+            logit_wt = f'logit_{aa_wt}'
+            logit_mt = f'logit_{aa_mt}'
+            matrix_num[AMINOACIDS.index(aa_wt), AMINOACIDS.index(aa_mt)] += row[logit_mt] - row[logit_wt]
+            matrix_denom[AMINOACIDS.index(aa_wt), AMINOACIDS.index(aa_mt)] += 1
+
+    matrix = matrix_num / matrix_denom
+
+    matrix_df = pd.DataFrame(matrix, index=list(AMINOACIDS), columns=list(AMINOACIDS))
+    matrix_df.to_csv(f'hermes_{identifier}_on_general_proteins_marginal_matrix.csv')
 
