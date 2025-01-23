@@ -119,6 +119,8 @@ def make_pretty_name(model, pred_col):
         return 'HERMES-relaxed 0.50'
     elif model == 'proteinmpnn_v_48_002' and pred_col in {'delta_log_p', 'pnlogp-fixed'}:
         return 'ProteinMPNN 0.02'
+    elif model == 'proteinmpnn_v_48_020' and pred_col in {'delta_log_p', 'pnlogp-fixed'}:
+        return 'ProteinMPNN 0.20'
     elif model == 'proteinmpnn_v_48_030' and pred_col in {'delta_log_p', 'pnlogp-fixed'}:
         return 'ProteinMPNN 0.30'
     elif model == 'tcrdock' and pred_col == 'neg_pae':
@@ -228,17 +230,17 @@ if __name__ == '__main__':
 
     # make the list of models and the figure shape based on the system
     if 'hsiue' in args.system:
-        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_030', 'blosum62']
+        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'blosum62']
         prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'sub_score']
         num_rows = 4
         num_cols = 2
     elif 'mskcc' in args.system:
-        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_030', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62']
+        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62']
         prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'neg_pae', 'neg_pae', 'sub_score']
         num_rows = 5
         num_cols = 2
     else:
-        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_030', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62']
+        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62']
         prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'neg_pae', 'neg_pae', 'sub_score']
         num_rows = 5
         num_cols = 2

@@ -4,11 +4,11 @@ proteinmpnn_dir=/gscratch/spe/gvisan01/ProteinMPNN-copy/peptide_scoring_and_desi
 
 base_dir='/gscratch/spe/gvisan01/tcr_pmhc/mutation_effects/mskcc/'
 
-tcrs='7'
+tcrs='1 2'
 
 use_mt_structure='0'
 
-model_version_list='v_48_030 v_48_002'
+model_version_list='v_48_020' # v_48_030 v_48_002'
 
 for tcr in $tcrs
     do
