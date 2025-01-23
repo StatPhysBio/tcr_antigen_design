@@ -20,7 +20,7 @@
 # }
 
 PDB_TO_PEP_INFO = {
-    '5d2n-filtered': ['I', 1, 'NLVPMVATV'],
+    '5d2n-filtered': ['I', 1, 'NLVPMVATV)'],
     'af3_tcr2': ['B', 1, 'NLVPMVATV'],
     'af3_tcr3': ['B', 1, 'NLVPMVATV'],
     'af3_tcr4': ['B', 1, 'IMDQVPFSV'],
