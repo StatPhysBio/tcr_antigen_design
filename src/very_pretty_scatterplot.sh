@@ -1,7 +1,7 @@
 
-python very_pretty_scatterplot.py --model_version hermes_py_000 --with_relaxation 1 --system nyeso --system_name_in_csv_file nyeso_peptide_kd_closest
+# python very_pretty_scatterplot.py --model_version hermes_py_000 --with_relaxation 1 --system nyeso --system_name_in_csv_file nyeso_peptide_kd_closest
 
-python very_pretty_scatterplot.py --model_version hermes_py_000 --with_relaxation 1 --system tax --system_name_in_csv_file tax_peptide_kd_closest
+# python very_pretty_scatterplot.py --model_version hermes_py_000 --with_relaxation 1 --system tax --system_name_in_csv_file tax_peptide_kd_closest
 
 # # python very_pretty_scatterplot.py --model_version hermes_py_000 --with_relaxation 1 --system mart --system_name_in_csv_file mart_peptide_kd_closest
 # # python very_pretty_scatterplot.py --model_version hermes_py_000 --with_relaxation 1 --system mart --system_name_in_csv_file mart_peptide_kd_3qdg

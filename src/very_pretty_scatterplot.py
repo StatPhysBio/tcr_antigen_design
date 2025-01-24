@@ -443,12 +443,15 @@ if __name__ == '__main__':
         heatmap_target = np.full((len(wt_seq), 20), np.nan)
         heatmap_predicted = np.full((len(wt_seq), 20), np.nan)
 
+        wt_coords = []
+
         for i, (mutant, target, prediction) in enumerate(zip(mutants, targets, predictions)):
 
             if len(mutant) == 0: # WT!
                 for j, aa in enumerate(wt_seq):
                     heatmap_target[j, AA_TO_IND[aa]] = target
                     heatmap_predicted[j, AA_TO_IND[aa]] = prediction
+                    wt_coords.append((j, AA_TO_IND[aa]))
             else:
                 aa_wt = mutant[0]
                 aa_mt = mutant[-1]
@@ -467,7 +470,9 @@ if __name__ == '__main__':
 # 
         limits = (-9, 8)
         plt.imshow(heatmap_target, aspect='auto', cmap='viridis', alpha=1)#, vmin=limits[0], vmax=limits[1])
-
+        # plot boxes around the wildtype residues
+        for wt_coord in wt_coords:
+            plt.plot([wt_coord[0]-0.5, wt_coord[0]+0.5, wt_coord[0]+0.5, wt_coord[0]-0.5, wt_coord[0]-0.5], [wt_coord[1]-0.5, wt_coord[1]-0.5, wt_coord[1]+0.5, wt_coord[1]+0.5, wt_coord[1]-0.5], c='red', lw=2.0)
         plt.xticks(range(len(wt_seq)), wt_seq, fontsize=fontsize)
         plt.yticks(range(20), IND_TO_AA, fontsize=fontsize)
         plt.tight_layout()
@@ -481,6 +486,9 @@ if __name__ == '__main__':
         plt.figure(figsize=figsize)
         # limits = (12, 56)
         plt.imshow(heatmap_predicted, aspect='auto', cmap='viridis', alpha=1)#, vmin=limits[0], vmax=limits[1])
+        # plot boxes around the wildtype residues
+        for wt_coord in wt_coords:
+            plt.plot([wt_coord[0]-0.5, wt_coord[0]+0.5, wt_coord[0]+0.5, wt_coord[0]-0.5, wt_coord[0]-0.5], [wt_coord[1]-0.5, wt_coord[1]-0.5, wt_coord[1]+0.5, wt_coord[1]+0.5, wt_coord[1]-0.5], c='red', lw=2.0)
         plt.xticks(range(len(wt_seq)), wt_seq, fontsize=fontsize)
         plt.yticks(range(20), IND_TO_AA, fontsize=fontsize)
         plt.tight_layout()
