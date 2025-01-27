@@ -277,7 +277,7 @@ SYSTEM_TO_MHC = {
 SYSTEM_TO_WILDTYPE_NAMES = {
     'nyeso': ['NYESO', 'NYESO C9V'],
     'magea3_and_titin': ['MageA3', 'Titin'],
-    'ebv': ['EBV', 'EBV E5Q']
+    'ebv': ['HPVG', 'HPVG E5Q']
 }
 
 MODELS_IN_ORDER = ['hermes_fixed_000', 'hermes_fixed_050', 'hermes_relaxed_000', 'hermes_relaxed_050', 'proteinmpnn_002', 'proteinmpnn_020', 'blosum_t1', 'blosum_t2', 'blosum_t3', 'mhc']

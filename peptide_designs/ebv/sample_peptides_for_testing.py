@@ -31,7 +31,7 @@ def hamming_distance(seq1, seq2):
 
 HPVG_SEQ = 'HPVGEADYFEY'
 HPVG_Q5_SEQ = 'HPVGQADYFEY'
-
+24
 SEED = 43
 np.random.seed(SEED)
 
