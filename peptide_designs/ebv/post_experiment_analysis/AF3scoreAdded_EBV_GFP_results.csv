@@ -1,6 +1,6 @@
 Unnamed: 0,index,sequence,model,sampling_method,wt_for_design,tcrdock_pae,hamming_distances_from_hpvg,hamming_distance_from_hpvg_q5,af3_tcr_pmhc_pae_score,af3_ranking_scores,r1,r2,r3,is_binder_by_netmhcpan,is_binder_by_netmhcpan__weak
 ebv_p1_wt,0.0,HPVGEADYFEY,hpvg_wt,,hpvg,4.901100366,0.0,1.0,1.151490769,0.93,50.72400461,51.1177811,47.99924364,1.0,1.0
-ebv_p2,1.0,HPVGQADYFEY,hpvg_q5_wt,,hpvg_q5,4.817274817,1.0,0.0,1.133118838,0.93,35.55361679,33.11486338,30.76014301,1.0,1.0
+ebv_p2_wt_Q,1.0,HPVGQADYFEY,hpvg_q5_wt,,hpvg_q5,4.817274817,1.0,0.0,1.133118838,0.93,35.55361679,33.11486338,30.76014301,1.0,1.0
 ebv_p3,2.0,HPVGNADYWQY,so3_convnet_base_ensemble,fixed_structure,hpvg,4.868461466,3.0,3.0,1.463231143,0.91,2.542712642,3.913211199,3.602310879,1.0,1.0
 ebv_p4,3.0,MPIGHADFWEY,so3_convnet_base_ensemble,fixed_structure,hpvg,4.7884186,5.0,5.0,1.160595936,0.92,0.005884108,0.01112994,0.0,1.0,1.0
 ebv_p5,4.0,MPVGRADYWQY,so3_convnet_base_ensemble,fixed_structure,hpvg,4.905924473,4.0,4.0,1.561238374,0.9,0.023636163,0.0,0.012725631,1.0,1.0
