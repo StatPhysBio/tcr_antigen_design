@@ -8,6 +8,10 @@ Created on Thu Aug 10 21:32:05 2023
 Edited Sat Dec 21 2024
 
 @author: Armita Nourmohammad
+
+Edited Sun Jan 26 2025
+
+@author: Gian Marco Visani
 """
 
 import os
@@ -173,28 +177,13 @@ if __name__ == '__main__':
 
     data_folder = './'
 
-    # cmv_peptide = 'NLVPMVATV'
-    # gp100_peptide = 'IMDQVPFSV'
-    # neopeptide = 'GRLKALCQR'
-    # tcr_pMHC_pairs = {
-    #     'tcr1': cmv_peptide,
-    #     'tcr2': cmv_peptide,
-    #     'tcr3': cmv_peptide,
-    #     'tcr4': gp100_peptide,
-    #     'tcr5': gp100_peptide,
-    #     'tcr6': gp100_peptide,
-    #     'tcr7': neopeptide
-    # }
-
     K_a_reg = 0.001
     log_Ka_range = [-4, 4]
 
     all_tcr_info = {}
 
-
     # make the reactivity curves tsv files on the fly, extracting them from avidity_curves.xlsx
     # construct the objects
-
     avidity_curves = pd.read_excel(os.path.join(data_folder, 'avidity_curves.xlsx')).astype(str)
     columns_dict = {
         'tcr1': [0, 1, 2, 3],
