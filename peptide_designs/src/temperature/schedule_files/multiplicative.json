@@ -1,0 +1,16 @@
+{
+    "peptide": {
+        "region": "peptide",
+        "schedule": "multiplicative",
+        "T_0": 10,
+        "T_f": 0,
+        "a": 0.95
+    },
+    "pocket": {
+        "region": "pocket",
+        "schedule": "multiplicative",
+        "T_0": 100,
+        "T_f": 0,
+        "a": 0.95
+    }
+}
