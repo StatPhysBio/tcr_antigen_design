@@ -1,4 +1,4 @@
-Kd,system,name,sequence,-log10(Kd),study,mutants,wt_seq,pdb,chain,neg_delta_log10_Kd,is_wt_to_show
+Kd [microM],system,name,sequence,-log10(Kd),study,mutants,wt_seq,pdb,chain,neg_delta_log10_Kd,is_wt_to_show
 1.66,Tax,Tax WT,LLFGYPVYV,-0.220108088040055,pettmann_et_al,L1L,LLFGYPVYV,1ao7,C,0.0,1,1
 2.67,Tax,Tax 5F,LLFGFPVYV,-0.4265112613645752,pettmann_et_al,Y5F,LLFGYPVYV,1ao7,C,-0.20640317332452018,0,0
 2.8,Tax,Tax 7T,LLFGYPTYV,-0.4471580313422192,pettmann_et_al,V7T,LLFGYPVYV,1ao7,C,-0.22704994330216421,0,0

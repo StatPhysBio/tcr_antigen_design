@@ -1,4 +1,4 @@
-Kd,system,name,sequence,-log10(Kd),study,pdbs,chains
+Kd [microM],system,name,sequence,-log10(Kd),study,pdbs,chains
 4.93,NY-ESO-1,NYE 9V,SLLMWITQV,-0.69284691927723,pettmann_et_al,2bnr|2bnq,C|C
 6.28,NY-ESO-1,NYE 3A,SLAMWITQV,-0.7979596437371961,pettmann_et_al,2bnr|2bnq,C|C
 22.8,NY-ESO-1,NYE 6V,SLLMWVTQV,-1.3579348470004537,pettmann_et_al,2bnr|2bnq,C|C
