@@ -5,7 +5,7 @@ T-cells play a key role in adaptive immunity by mounting specific responses agai
 ![Schematic](local/schematic.png)
 
 
-This repository contains data and code to generate the results in the paper "T-cell receptor specificity landscape revealed through de novo peptide design" by Visani G.M. et al.\\
+This repository contains data and code to generate the results in the paper "T-cell receptor specificity landscape revealed through de novo peptide design" by Visani G.M. et al.\
 The code is contingent upon the installation of the following three tools:
 - HERMES (https://github.com/StatPhysBio/hermes)
 - ProteinMPNN (fork with code to score and design peptides https://github.com/gvisani/ProteinMPNN-copy)
@@ -14,8 +14,8 @@ The code is contingent upon the installation of the following three tools:
 
 ## TCR-pMHC binding affinity and T-cell activity prediction
 
-Code and benchmarking results of TCR-pMHC binding affinity prediction across different peptides can be found in `mutation_effects/nyeso` and `mutation_effects/tax`.\\
-Code and benchmarking results of T-cell activity prediction across different peptides can be found in `mutation_effects/mskcc` and `mutation_effects/hsiue_et_al`.\\
+Code and benchmarking results of TCR-pMHC binding affinity prediction across different peptides can be found in `mutation_effects/nyeso` and `mutation_effects/tax`. \
+Code and benchmarking results of T-cell activity prediction across different peptides can be found in `mutation_effects/mskcc` and `mutation_effects/hsiue_et_al`. \
 Code for running HERMES-relaxed to score peptides can be found in `mutation_effects/src`.
 
 ## De-novo peptide design with in-vitro validation
@@ -24,7 +24,7 @@ Code for running HERMES-relaxed to score peptides can be found in `mutation_effe
 
 If you're only looking for our HERMES-made peptide designs with in-vitro T-cell activity measurements, you can find them all in `peptide_designs/All-designs.xlsx`.
 
-Scripts to generate peptides with different algorithms, benchmarking results (via TCRdock PAE), and post-in-vitro-experiment analysis can be found in `peptide_designs/nyeso`, `peptide_designs/ebv`, `peptide_designs/magea3_and_titin`.\\
+Scripts to generate peptides with different algorithms, benchmarking results (via TCRdock PAE), and post-in-vitro-experiment analysis can be found in `peptide_designs/nyeso`, `peptide_designs/ebv`, `peptide_designs/magea3_and_titin`. \
 Code for using HERMES-relaxed to design peptides can be found in `peptide_designs/src`. What is currently present is an older version of the code that is not well integrated with the HERMES repository, we will provide updated code soon.
 
 
@@ -32,7 +32,7 @@ Code for using HERMES-relaxed to design peptides can be found in `peptide_design
 
 ![TCR specificity](local/entropy_figure.png)
 
-We use the entropy of HERMES-fixed's predicted Position Weight Matrix of peptides to quantify the diversity of the TCR recognition landscape. Specifically, we compute peptide entropies conditioned on TCR-MHC structures using HERMES-fixed, and compare them to the entropies of the same peptides conditioned on the MHC only, grabbed from the MHC Motif Atlas (http://mhcmotifatlas.org/home).\\
+We use the entropy of HERMES-fixed's predicted Position Weight Matrix of peptides to quantify the diversity of the TCR recognition landscape. Specifically, we compute peptide entropies conditioned on TCR-MHC structures using HERMES-fixed, and compare them to the entropies of the same peptides conditioned on the MHC only, grabbed from the MHC Motif Atlas (http://mhcmotifatlas.org/home). \
 Code and data can be found in `tcr_specificity`.
 
 
