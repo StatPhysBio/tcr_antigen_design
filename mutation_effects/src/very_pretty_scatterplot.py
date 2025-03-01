@@ -151,7 +151,7 @@ if __name__ == '__main__':
 
     with_relaxation_str = '_with_relaxation' if args.with_relaxation else ''
 
-    df = pd.read_csv(f'../mutation_effects/{args.system}/results/{args.model_version}/{args.system_name_in_csv_file}{with_relaxation_str}-{args.model_version}-use_mt_structure=0.csv')
+    df = pd.read_csv(f'/{args.system}/results/{args.model_version}/{args.system_name_in_csv_file}{with_relaxation_str}-{args.model_version}-use_mt_structure=0.csv')
 
     # exlude nans, keep only one wildtype measurement
     is_not_nan_mask = np.logical_and(~np.isnan(df[target_column]), ~np.isnan(df[prediction_column]))
@@ -257,7 +257,7 @@ if __name__ == '__main__':
     # plt.legend(loc='upper left')
 
     plt.tight_layout()
-    outfile = f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-scatterplot.png'
+    outfile = f'/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-scatterplot.png'
     plt.savefig(outfile, bbox_inches="tight", dpi=300, transparent=False)
     plt.savefig(outfile.replace('.png', '.svg'), format="svg", bbox_inches="tight", dpi=300, transparent=False)
     plt.savefig(outfile.replace('.png', '.pdf'), format="pdf", bbox_inches="tight", dpi=300, transparent=False)
@@ -272,7 +272,7 @@ if __name__ == '__main__':
         plt.legend(loc='center')
         plt.axis('off')
         plt.tight_layout()
-        outfile = f'../mutation_effects/{args.system}/plots/motif_legend.png'
+        outfile = f'/{args.system}/plots/motif_legend.png'
         plt.savefig(outfile, bbox_inches="tight", dpi=300, transparent=False)
         plt.savefig(outfile.replace('.png', '.svg'), format="svg", bbox_inches="tight", dpi=300, transparent=False)
         plt.savefig(outfile.replace('.png', '.pdf'), format="pdf", bbox_inches="tight", dpi=300, transparent=False)
@@ -398,12 +398,12 @@ if __name__ == '__main__':
             plt.gca().get_xticklabels()[i].set_color(color)
         plt.title(xlabel, fontsize=fontsize)
         plt.tight_layout()
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target-horizontal.png', bbox_inches="tight", dpi=300, transparent=False)
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target-horizontal.svg', format="svg", bbox_inches="tight", dpi=300, transparent=False)
+        plt.savefig(f'/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target-horizontal.png', bbox_inches="tight", dpi=300, transparent=False)
+        plt.savefig(f'/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target-horizontal.svg', format="svg", bbox_inches="tight", dpi=300, transparent=False)
         plt.close()
 
         # make colorbar with values of heatmap, but don't show heatmap!
-        make_colorbar(heatmap, xlabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target-vertical.png', 'viridis', (1.1, 2), 'vertical')
+        make_colorbar(heatmap, xlabel, f'/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target-vertical.png', 'viridis', (1.1, 2), 'vertical')
 
 
         plt.figure(figsize=figsize)
@@ -416,13 +416,13 @@ if __name__ == '__main__':
             plt.gca().get_xticklabels()[i].set_color(color)
         plt.title(ylabel, fontsize=fontsize)
         plt.tight_layout()
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-horizontal.png', bbox_inches="tight", dpi=300, transparent=False)
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-horizontal.svg', format="svg", bbox_inches="tight", dpi=300, transparent=False)
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-horizontal.pdf', format="pdf", bbox_inches="tight", dpi=300, transparent=False)
+        plt.savefig(f'/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-horizontal.png', bbox_inches="tight", dpi=300, transparent=False)
+        plt.savefig(f'/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-horizontal.svg', format="svg", bbox_inches="tight", dpi=300, transparent=False)
+        plt.savefig(f'/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-horizontal.pdf', format="pdf", bbox_inches="tight", dpi=300, transparent=False)
         plt.close()
 
         # make colorbar with values of heatmap, but don't show heatmap!
-        make_colorbar(heatmap, ylabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar-vertical.png', 'viridis', (0.9, 2), 'vertical')
+        make_colorbar(heatmap, ylabel, f'/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar-vertical.png', 'viridis', (0.9, 2), 'vertical')
 
 
     else:
@@ -476,12 +476,12 @@ if __name__ == '__main__':
         plt.xticks(range(len(wt_seq)), wt_seq, fontsize=fontsize)
         plt.yticks(range(20), IND_TO_AA, fontsize=fontsize)
         plt.tight_layout()
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.png', bbox_inches="tight", dpi=300, transparent=False)
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.svg', format="svg", bbox_inches="tight", dpi=300, transparent=False)
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.pdf', format="pdf", bbox_inches="tight", dpi=300, transparent=False)
+        plt.savefig(f'/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.png', bbox_inches="tight", dpi=300, transparent=False)
+        plt.savefig(f'/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.svg', format="svg", bbox_inches="tight", dpi=300, transparent=False)
+        plt.savefig(f'/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-target.pdf', format="pdf", bbox_inches="tight", dpi=300, transparent=False)
         plt.close()
-        make_colorbar(heatmap_target, xlabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target.png', 'viridis', (3.6, 0.8)) #, limits=limits)
-        make_colorbar(heatmap_target, xlabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target-vertical.png', 'viridis', (1.2, 3.0), orientation='vertical') #, limits=limits)
+        make_colorbar(heatmap_target, xlabel, f'/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target.png', 'viridis', (3.6, 0.8)) #, limits=limits)
+        make_colorbar(heatmap_target, xlabel, f'/{args.system}/plots/{args.system_name_in_csv_file}-heatmap-colorbar-target-vertical.png', 'viridis', (1.2, 3.0), orientation='vertical') #, limits=limits)
 
         plt.figure(figsize=figsize)
         # limits = (12, 56)
@@ -492,11 +492,11 @@ if __name__ == '__main__':
         plt.xticks(range(len(wt_seq)), wt_seq, fontsize=fontsize)
         plt.yticks(range(20), IND_TO_AA, fontsize=fontsize)
         plt.tight_layout()
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.png', bbox_inches="tight", dpi=300, transparent=False)
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.svg', format="svg", bbox_inches="tight", dpi=300, transparent=False)
-        plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.pdf', format="pdf", bbox_inches="tight", dpi=300, transparent=False)
+        plt.savefig(f'/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.png', bbox_inches="tight", dpi=300, transparent=False)
+        plt.savefig(f'/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.svg', format="svg", bbox_inches="tight", dpi=300, transparent=False)
+        plt.savefig(f'/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap.pdf', format="pdf", bbox_inches="tight", dpi=300, transparent=False)
         plt.close()
-        make_colorbar(heatmap_predicted, ylabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar.png', 'viridis', (3.6, 0.8)) #, limits=limits)
-        make_colorbar(heatmap_predicted, ylabel, f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar-vertical.png', 'viridis', (1.0, 3.0), orientation='vertical') #, limits=limits)
+        make_colorbar(heatmap_predicted, ylabel, f'/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar.png', 'viridis', (3.6, 0.8)) #, limits=limits)
+        make_colorbar(heatmap_predicted, ylabel, f'/{args.system}/plots/{args.system_name_in_csv_file}-{args.model_version}-{args.with_relaxation}-heatmap-colorbar-vertical.png', 'viridis', (1.0, 3.0), orientation='vertical') #, limits=limits)
 
 
