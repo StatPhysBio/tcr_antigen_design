@@ -6,6 +6,9 @@ peptide_designs/nyeso_old_folder/
 peptide_designs/all_structures/
 peptide_designs/auxiliary_data/
 mutation_effects/magea3_binders/
+mutation_effects/mart/
+mutation_effects/hhatv4/
+mutation_effects/chandran_et_al/
 peptide_designs/as42/
 peptide_designs/mart/
 tcrdock_output/
