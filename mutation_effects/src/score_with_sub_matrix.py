@@ -4,12 +4,24 @@ import numpy as np
 import pandas as pd
 import argparse
 
-from substitution_matrices import BLOSUM62
+from substitution_matrices import NAME_TO_SUB_MATRIX
 
 def score_with_sub_matrix(wt_peptide, mt_peptide, matrix):
+    if 'matrix' in matrix and 'd' in matrix: # the matrix also has a position weighting!
+        M = matrix['matrix']
+        d = matrix['d']
+        assert len(d) == len(wt_peptide), f"Length of d ({len(d)}) must match length of peptide ({len(wt_peptide)})"
+    else:
+        M = matrix
+        d = None
+
     score = 0
-    for wt_aa, mt_aa in zip(wt_peptide, mt_peptide):
-        score += matrix[wt_aa][mt_aa]
+    for i, (wt_aa, mt_aa) in enumerate(zip(wt_peptide, mt_peptide)):
+        if d is not None:
+            score += d[i] * M[wt_aa][mt_aa]
+        else:
+            score += M[wt_aa][mt_aa]
+
     return score
 
 if __name__ == '__main__':
@@ -18,6 +30,7 @@ if __name__ == '__main__':
     parser.add_argument('--output_csv_filepath', type=str, required=True)
     parser.add_argument('--wt_peptide_column', type=str, required=True)
     parser.add_argument('--mt_peptide_column', type=str, required=True)    
+    parser.add_argument('--substitution_matrix', type=str, required=True, choices=list(NAME_TO_SUB_MATRIX.keys()))  
     args = parser.parse_args()
 
     # read csv file
@@ -30,7 +43,7 @@ if __name__ == '__main__':
 
         assert len(mt_peptide) == len(wt_peptide), f"Peptides must have the same length. {mt_peptide} vs {wt_peptide} line {i}"
         
-        score = score_with_sub_matrix(wt_peptide, mt_peptide, BLOSUM62)
+        score = score_with_sub_matrix(wt_peptide, mt_peptide, NAME_TO_SUB_MATRIX[args.substitution_matrix])
         scores.append(score)
     
     df['substitution_matrix_score'] = np.array(scores)

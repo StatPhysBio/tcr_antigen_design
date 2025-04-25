@@ -4,7 +4,7 @@ import json
 import numpy as np
 import pandas as pd
 
-MODELS = ['BLOSUM62', 'TCRdock', 'TCRdock benchmark', 'TULIP', 'ProteinMPNN 0.02', 'ProteinMPNN 0.20', 'HERMES-fixed 0.00', 'HERMES-fixed 0.50', 'HERMES-relaxed 0.00', 'HERMES-relaxed 0.50']
+MODELS = ['BLOSUM62', 'Luksza et al. $C/d$', 'Luksza et al. $C$', 'TCRdock', 'TCRdock benchmark', 'TULIP', 'ProteinMPNN 0.02', 'ProteinMPNN 0.20', 'HERMES-fixed 0.00', 'HERMES-fixed 0.50', 'HERMES-relaxed 0.00', 'HERMES-relaxed 0.50']
 
 # DATA = [('NY-ESO', '/gscratch/spe/gvisan01/tcr_pmhc/mutation_effects/nyeso/results/nyeso_peptide_kd_closest_metrics.json'),
 #         ('TAX', '/gscratch/spe/gvisan01/tcr_pmhc/mutation_effects/tax/results/tax_peptide_kd_closest_metrics.json'),
@@ -20,7 +20,7 @@ MODELS = ['BLOSUM62', 'TCRdock', 'TCRdock benchmark', 'TULIP', 'ProteinMPNN 0.02
 
 DATA = [('NY-ESO', '../nyeso/results/nyeso_peptide_kd_closest_metrics.json'),
         ('TAX', '../tax/results/tax_peptide_kd_closest_metrics.json'),
-        ('MART', '../mart/results/mart_peptide_kd_closest_metrics.json'),
+        # ('MART', '../mart/results/mart_peptide_kd_closest_metrics.json'),
         ('Hsiue', '../hsiue_et_al/results/hsiue_et_al_H2_sat_mut_metrics.json'),
         ('Luksza TCR1', '../mskcc/results/mskcc_tcr1_ec50_sat_mut_af3_metrics.json'),
         ('Luksza TCR2', '../mskcc/results/mskcc_tcr2_ec50_sat_mut_af3_metrics.json'),

@@ -1,4 +1,4 @@
-Kd,system,name,sequence,-log10(Kd),study,mutants,wt_seq,pdb,chain,neg_delta_log10_Kd,is_wt_to_show,is_main_wt,substitution_matrix_score
+Kd [microM],system,name,sequence,-log10(Kd),study,mutants,wt_seq,pdb,chain,neg_delta_log10_Kd,is_wt_to_show,is_main_wt,substitution_matrix_score
 4.93,NY-ESO-1,NYE 9V,SLLMWITQV,-0.7750897078542492,pettmann_et_al|aleksic_et_al,S1S,SLLMWITQV,2bnq,C,0.0,1,0,46
 6.28,NY-ESO-1,NYE 3A,SLAMWITQV,-0.8087517896395324,pettmann_et_al|aleksic_et_al,L3A,SLLMWITQV,2bnq,C,-0.0336620817852831,0,0,41
 22.8,NY-ESO-1,NYE 6V,SLLMWVTQV,-1.3066036760518798,pettmann_et_al|aleksic_et_al,I6V,SLLMWITQV,2bnq,C,-0.5315139681976305,0,0,45

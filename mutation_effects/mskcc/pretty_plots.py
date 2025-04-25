@@ -54,7 +54,7 @@ if __name__ == '__main__':
     parser.add_argument('--system_name_in_csv_file', type=str, default=None)
     parser.add_argument('--target_column', type=str, required=True)
     parser.add_argument('--prediction_column', type=str, default=None)
-    parser.add_argument('--model', type=str, required=True, choices=['hermes', 'proteinmpnn', 'tcrdock', 'tcrdock_no_nearby_templates', 'neg_abs_diff_vdw_radius', 'blosum62'])
+    parser.add_argument('--model', type=str, required=True, choices=['hermes', 'proteinmpnn', 'tcrdock', 'tcrdock_no_nearby_templates', 'neg_abs_diff_vdw_radius', 'blosum62', 'luksza_cross_reactivity', 'luksza_cross_reactivity_without_d'])
     parser.add_argument('--use_mt_structure', type=int, default=0, choices=[0, 1])
     parser.add_argument('--model_instance', type=str, default=None, help='Only used if model is hermes')
     parser.add_argument('--num_seq_per_target', type=int, default=None, help='Only used if model is proteinmpnn')
@@ -123,17 +123,8 @@ if __name__ == '__main__':
         prediction_column = 'neg pmhc_tcr_pae'
         ylabel = r'TCRdock predictions, neg PAE'
         color = 'tab:cyan'
-    elif model == 'neg_abs_diff_vdw_radius':
-        print('Note: "use_mt_structure" is irrelevant with neg_abs_diff_vdw_radius substitution matrix.', file=sys.stderr)
-        base_dir = os.path.join(args.base_dir, f'{system}/results/{model_instance}/')
-        df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}-{model_instance}-use_mt_structure=0.csv'))
-        out_file = f'pretty_scatterplot-{system_name_in_csv_file}-{model_instance}.png'
-        title = f'{system_name_in_csv_file}\n{model_instance}'
-        prediction_column = 'substitution_matrix_score'
-        ylabel = r'Substitution Matrix Score'
-        color = 'tab:red'
-    elif model == 'blosum62':
-        print('Note: "use_mt_structure" is irrelevant with neg_abs_diff_vdw_radius substitution matrix.', file=sys.stderr)
+    elif model in {'blosum62', 'neg_abs_diff_vdw_radius', 'luksza_cross_reactivity', 'luksza_cross_reactivity_without_d'}:
+        print('Note: "use_mt_structure" is irrelevant with static substitution matrix.', file=sys.stderr)
         base_dir = os.path.join(args.base_dir, f'{system}/results/{model_instance}/')
         df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}-{model_instance}-use_mt_structure=0.csv'))
         out_file = f'pretty_scatterplot-{system_name_in_csv_file}-{model_instance}.png'
