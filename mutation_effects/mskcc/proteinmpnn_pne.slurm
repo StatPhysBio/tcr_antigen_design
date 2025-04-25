@@ -1,14 +1,14 @@
 #!/bin/bash
-#SBATCH --job-name=mpnn
+#SBATCH --job-name=mskcc_v_48_020
 #SBATCH --account=spe
 #SBATCH --partition=gpu-a40
 #SBATCH --gres=gpu:1
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --time=23:00:00
-#SBATCH --mem=64G
-#SBATCH -e /gscratch/scrubbed/gvisan01/slurm_logs/mpnn.err
-#SBATCH -o /gscratch/scrubbed/gvisan01/slurm_logs/mpnn.out
+#SBATCH --mem=48G
+#SBATCH -e /gscratch/scrubbed/gvisan01/slurm_logs/mskcc_v_48_020.err
+#SBATCH -o /gscratch/scrubbed/gvisan01/slurm_logs/mskcc_v_48_020.out
 
 proteinmpnn_dir=/gscratch/spe/gvisan01/ProteinMPNN-copy/peptide_scoring_and_design/
 
@@ -18,7 +18,7 @@ tcrs='1 2 3 4 5 6 7'
 
 use_mt_structure='0'
 
-model_version_list='v_48_020' # v_48_030 v_48_002'
+model_version_list='v_48_020' # v_48_030 v_48_020 v_48_002'
 
 for tcr in $tcrs
     do
@@ -28,7 +28,7 @@ for tcr in $tcrs
     for model_version in $model_version_list
         do
 
-        python $proteinmpnn_dir'score_multiple_peptides.py' \
+        python $proteinmpnn_dir'score_multiple_peptides__comparison_with_hermes.py' \
                     --csv_file $base_dir'mskcc_tcr'$tcr'_ec50_sat_mut_af3.csv' \
                     --folder_with_pdbs $base_dir'pdbs' \
                     --output_dir $base_dir'results/proteinmpnn_'$model_version \

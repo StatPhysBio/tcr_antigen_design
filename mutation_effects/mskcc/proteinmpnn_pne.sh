@@ -4,11 +4,11 @@ proteinmpnn_dir=/gscratch/spe/gvisan01/ProteinMPNN-copy/peptide_scoring_and_desi
 
 base_dir='/gscratch/spe/gvisan01/tcr_pmhc/mutation_effects/mskcc/'
 
-tcrs='1 2'
+tcrs='1 2 3 4 5 6 7'
 
 use_mt_structure='0'
 
-model_version_list='v_48_020' # v_48_030 v_48_002'
+model_version_list='v_48_002 v_48_020' # v_48_030 v_48_002'
 
 for tcr in $tcrs
     do
@@ -18,7 +18,7 @@ for tcr in $tcrs
     for model_version in $model_version_list
         do
 
-        python $proteinmpnn_dir'score_multiple_peptides.py' \
+        python $proteinmpnn_dir'score_multiple_peptides__comparison_with_hermes.py' \
                     --csv_file $base_dir'mskcc_tcr'$tcr'_ec50_sat_mut_af3.csv' \
                     --folder_with_pdbs $base_dir'pdbs' \
                     --output_dir $base_dir'results/proteinmpnn_'$model_version \
