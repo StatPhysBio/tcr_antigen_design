@@ -11,6 +11,8 @@ logging.basicConfig(level=logging.ERROR)
 
 import argparse
 
+MUT_EFFECTS_DIR = '..'
+
 
 ## not needed for the other systems
 SYSTEM_TO_PDBS = {
@@ -156,13 +158,13 @@ def get_model_specific_parameters(model_instance, prediction_column_short, args)
     title = make_pretty_name(model_instance, prediction_column_short)
 
     if 'hermes' in model_instance:
-        base_dir = f'../mutation_effects/{system}/results/{model_instance}/'
+        base_dir = f'{MUT_EFFECTS_DIR}/{system}/results/{model_instance}/'
         color = 'tab:purple'
 
         df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}-{model_instance}-use_mt_structure={use_mt_structure}.csv'))
 
     elif 'proteinmpnn' in model_instance:
-        base_dir = f'../mutation_effects/{system}/results/{model_instance}/zero_shot_predictions/'
+        base_dir = f'{MUT_EFFECTS_DIR}/{system}/results/{model_instance}/zero_shot_predictions/'
 
         color = 'tab:brown'
 
@@ -170,7 +172,7 @@ def get_model_specific_parameters(model_instance, prediction_column_short, args)
 
     elif model_instance == 'tcrdock':
         # print('Note: "use_mt_structure" is irrelevant with tcrdock model.', file=sys.stderr)
-        base_dir = f'../mutation_effects/{system}/results/{model_instance}/'
+        base_dir = f'{MUT_EFFECTS_DIR}/{system}/results/{model_instance}/'
         try:
             df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}_w_pae_filtered.tsv'), sep='\t')
         except:
@@ -180,7 +182,7 @@ def get_model_specific_parameters(model_instance, prediction_column_short, args)
     
     elif model_instance == 'tcrdock_no_nearby_templates':
         # print('Note: "use_mt_structure" is irrelevant with tcrdock model.', file=sys.stderr)
-        base_dir = f'../mutation_effects/{system}/results/{model_instance}/'
+        base_dir = f'{MUT_EFFECTS_DIR}/{system}/results/{model_instance}/'
         try:
             df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}_no_nearby_templates_w_pae_filtered.tsv'), sep='\t')
         except:
@@ -200,7 +202,7 @@ def get_model_specific_parameters(model_instance, prediction_column_short, args)
 
     elif 'blosum62' in model_instance:
         # print('Note: "use_mt_structure" is irrelevant with neg_abs_diff_vdw_radius substitution matrix.', file=sys.stderr)
-        base_dir = f'../mutation_effects/{system}/results/{model_instance}/'
+        base_dir = f'{MUT_EFFECTS_DIR}/{system}/results/{model_instance}/'
 
         if 'average' in system_name_in_csv_file:
             df_list = [pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file.replace("averaged", pdb)}-{model_instance}-use_mt_structure={use_mt_structure}.csv')) for pdb in SYSTEM_TO_PDBS[system]]
@@ -215,7 +217,7 @@ def get_model_specific_parameters(model_instance, prediction_column_short, args)
         color = 'tab:pink'
     
     elif model_instance == 'tulip':
-        base_dir = f'../mutation_effects/{system}/results/{model_instance}/'
+        base_dir = f'{MUT_EFFECTS_DIR}/{system}/results/{model_instance}/'
         df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}-{model_instance}.csv'))
         color = 'tab:orange'
     
@@ -390,10 +392,10 @@ if __name__ == '__main__':
 
         ax.tick_params(axis='both', which='major', labelsize=fontsize_base-2)
 
-    os.makedirs(f'../mutation_effects/{args.system}/plots', exist_ok=True)
+    os.makedirs(f'{MUT_EFFECTS_DIR}/{args.system}/plots', exist_ok=True)
     plt.tight_layout()
-    plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}_scatterplots.png')
-    plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}_scatterplots.pdf')
+    plt.savefig(f'{MUT_EFFECTS_DIR}/{args.system}/plots/{args.system_name_in_csv_file}_scatterplots.png')
+    plt.savefig(f'{MUT_EFFECTS_DIR}/{args.system}/plots/{args.system_name_in_csv_file}_scatterplots.pdf')
     plt.close()
     
 
@@ -448,10 +450,10 @@ if __name__ == '__main__':
         ax.tick_params(axis='both', which='major', labelsize=fontsize_base-2)
 
 
-    os.makedirs(f'../mutation_effects/{args.system}/plots', exist_ok=True)
+    os.makedirs(f'{MUT_EFFECTS_DIR}/{args.system}/plots', exist_ok=True)
     plt.tight_layout()
-    plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}_barplots.png')
-    plt.savefig(f'../mutation_effects/{args.system}/plots/{args.system_name_in_csv_file}_barplots.pdf')
+    plt.savefig(f'{MUT_EFFECTS_DIR}/{args.system}/plots/{args.system_name_in_csv_file}_barplots.png')
+    plt.savefig(f'{MUT_EFFECTS_DIR}/{args.system}/plots/{args.system_name_in_csv_file}_barplots.pdf')
     plt.close()
 
     if args.system == 'mskcc':
@@ -460,7 +462,7 @@ if __name__ == '__main__':
                 data[metric][model_names_pretty[i]] = metrics[metric][i]
 
     # save the data
-    with open(f'../mutation_effects/{args.system}/results/{args.system_name_in_csv_file}_metrics.json', 'w') as f:
+    with open(f'{MUT_EFFECTS_DIR}/{args.system}/results/{args.system_name_in_csv_file}_metrics.json', 'w') as f:
         json.dump(data, f, indent=4)
 
     

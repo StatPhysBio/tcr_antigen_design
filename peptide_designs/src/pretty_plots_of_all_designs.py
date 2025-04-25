@@ -280,6 +280,12 @@ SYSTEM_TO_WILDTYPE_NAMES = {
     'ebv': ['HPVG', 'HPVG E5Q']
 }
 
+SYSTEM_TO_PEP_LENGTH = {
+    'nyeso': 9,
+    'magea3_and_titin': 9,
+    'ebv': 11
+}
+
 MODELS_IN_ORDER = ['hermes_fixed_000', 'hermes_fixed_050', 'hermes_relaxed_000', 'hermes_relaxed_050', 'proteinmpnn_002', 'proteinmpnn_020', 'blosum_t1', 'blosum_t2', 'blosum_t3', 'mhc']
 
 SYSTEM_TO_PAE_THRESHOLD = {
@@ -317,12 +323,12 @@ if __name__ == '__main__':
 
     ## PAE, hamming distance, is_mhc_binder
 
-    fontsize = 19
+    fontsize = 20
 
-    ncols = 3
+    ncols = 4
     nrows = 1
     colsize = 5
-    rowsize = 4.5
+    rowsize = 5
     fig, axs = plt.subplots(figsize=(ncols*colsize, nrows*rowsize), ncols=ncols, nrows=nrows)
 
 
@@ -342,13 +348,14 @@ if __name__ == '__main__':
     
     # put number of examples under each violinplot
     # do it in separate loop so that the ylims get updated to their final values
-    for pos, model in zip(positions, MODELS_IN_ORDER):
+    # UPDATE: showing this in a separate plot
+    # for pos, model in zip(positions, MODELS_IN_ORDER):
         
-        scores = model_to_df[model]['neg_pmhc_tcr_pae'].values
-        num_scores = len(scores)
+    #     scores = model_to_df[model]['neg_pmhc_tcr_pae'].values
+    #     num_scores = len(scores)
 
-        min_ylim, max_ylim = ax.get_ylim()
-        ax.text(pos, min_ylim-(0.06 + 0.04*((pos%2)-1))*min_ylim, num_scores, ha='center', va='bottom', fontsize=fontsize-5)
+    #     min_ylim, max_ylim = ax.get_ylim()
+    #     ax.text(pos, min_ylim-(0.06 + 0.04*((pos%2)-1))*min_ylim, num_scores, ha='center', va='bottom', fontsize=fontsize-5)
     
     # wildtype values, use square and diamond like in the main text figure, the order should be preserved, keep it simple without dictionaries
     markers = ['s', 'd']
@@ -366,30 +373,135 @@ if __name__ == '__main__':
 
 
 
-    ## 2) min hamming distance violinplot/boxplot
+    ## 2) min hamming distance heatmap
 
     ax = axs[1]
 
     positions = range(len(MODELS_IN_ORDER))
 
-    for pos, model in zip(positions, MODELS_IN_ORDER):
+    # for pos, model in zip(positions, MODELS_IN_ORDER):
+        
+    #     hamming_distances = model_to_df[model]['min_hamming_distance_to_wt'].values
+    #     color = MODEL_TO_COLOR[model]
+
+    #     parts = ax.violinplot([hamming_distances], positions=[pos], widths=0.6, showmedians=True, showextrema=False)
+    #     color_violinplot_single(parts, [color])
+    
+    # ax.grid(axis='y', ls='--', color='dimgrey', alpha=0.5)
+
+    # ax.set_xticks([])
+    # ax.tick_params(axis='both', labelsize=fontsize-2)
+    # ax.set_ylabel('hamming dist. from WT', fontsize=fontsize)
+
+    import matplotlib.colors as mcolors
+    from collections import Counter
+
+    def custom_colormap(color):
+        return mcolors.LinearSegmentedColormap.from_list("custom_cmap", ["white", color])
+    
+    all_hamming_distances = np.arange(SYSTEM_TO_PEP_LENGTH[args.system]+1)
+
+    
+    x = np.arange(len(MODELS_IN_ORDER)+1)
+    y = np.arange(len(all_hamming_distances)+1)
+
+    for i_col, model in zip(positions, MODELS_IN_ORDER):
         
         hamming_distances = model_to_df[model]['min_hamming_distance_to_wt'].values
         color = MODEL_TO_COLOR[model]
 
-        parts = ax.violinplot([hamming_distances], positions=[pos], widths=0.6, showmedians=True, showextrema=False)
-        color_violinplot_single(parts, [color])
+        counts = dict(Counter(hamming_distances))
+
+
+        h_dist_counts_column = []
+        for h_dist in all_hamming_distances:
+            if h_dist not in counts:
+                h_dist_counts_column.append(0)
+            else:
+                h_dist_counts_column.append(counts[h_dist])
+        
+        h_dist_counts_column = np.array(h_dist_counts_column)
+
+        # Create a mesh grid for this column (taking one slice of x at a time)
+        X, Y = np.meshgrid(x[i_col:i_col+2], y)
+
+        # Normalize data for each column
+        cmap_norm = mcolors.Normalize(vmin=np.min(h_dist_counts_column), vmax=np.max(h_dist_counts_column))
+        
+        # Plot the column using the correct shape
+        ax.pcolormesh(X, Y, h_dist_counts_column.reshape(-1, 1), cmap=custom_colormap(color), norm=cmap_norm)
+
+        # add number in each cell
+        for i_row_and_h_dist in all_hamming_distances:
+            if h_dist_counts_column[i_row_and_h_dist] != 0:
+                ax.text(i_col+0.5, i_row_and_h_dist+0.5, h_dist_counts_column[i_row_and_h_dist], ha='center', va='center', color='black', fontsize=13)
+        
+        # add total number below the column
+        ax.text(i_col+0.5, -0.5 - 0.5*(i_col % 2), int(np.sum(h_dist_counts_column)), ha='center', va='center', color='black', fontsize=13)
     
-    ax.grid(axis='y', ls='--', color='dimgrey', alpha=0.5)
-
-    ax.set_xticks([])
-    ax.tick_params(axis='both', labelsize=fontsize-2)
+    # ax.text(-0.25, -0.75, 'count', ha='right', va='center', color='black', fontsize=fontsize-3)
+    
     ax.set_ylabel('hamming dist. from WT', fontsize=fontsize)
+    ax.set_xticks([])
+    ax.set_yticks(all_hamming_distances+0.5, all_hamming_distances, fontsize=fontsize-2)
+    ax.set_title('number of designs', fontsize=fontsize)
 
 
-    ## 3) barplot of is_mhc_binder
+    ## 3) min hamming distance heatmap with fraction of designs
 
     ax = axs[2]
+
+    all_hamming_distances = np.arange(SYSTEM_TO_PEP_LENGTH[args.system]+1)
+
+    
+    x = np.arange(len(MODELS_IN_ORDER)+1)
+    y = np.arange(len(all_hamming_distances)+1)
+
+    for i_col, model in zip(positions, MODELS_IN_ORDER):
+        
+        hamming_distances = model_to_df[model]['min_hamming_distance_to_wt'].values
+        is_above_threshold = model_to_df[model]['neg_pmhc_tcr_pae'].values > -SYSTEM_TO_PAE_THRESHOLD[args.system]
+        color = MODEL_TO_COLOR[model]
+
+
+        h_dist_counts_column = []
+        for h_dist in all_hamming_distances:
+            if h_dist not in hamming_distances:
+                h_dist_counts_column.append(np.nan)
+            else:
+                h_dist_counts_column.append(int(np.mean(is_above_threshold[hamming_distances == h_dist])*100))
+        
+        h_dist_counts_column = np.array(h_dist_counts_column)
+
+        # Create a mesh grid for this column (taking one slice of x at a time)
+        X, Y = np.meshgrid(x[i_col:i_col+2], y)
+
+        # Normalize data globally
+        cmap_norm = mcolors.Normalize(vmin=0, vmax=100)
+        
+        # Plot the column using the correct shape
+        ax.pcolormesh(X, Y, h_dist_counts_column.reshape(-1, 1), cmap=custom_colormap(color), norm=cmap_norm)
+
+        # add number in each cell
+        for i_row_and_h_dist in all_hamming_distances:
+            if not np.isnan(h_dist_counts_column[i_row_and_h_dist]):
+                ax.text(i_col+0.5, i_row_and_h_dist+0.5, int(h_dist_counts_column[i_row_and_h_dist]), ha='center', va='center', color='black', fontsize=13)
+        
+        # # add total number below the column
+        # ax.text(i_col+0.5, -0.5 - 0.5*(i_col % 2), int(np.mean(is_above_threshold)*100), ha='center', va='center', color='black', fontsize=13)
+    
+    # ax.text(-0.25, -0.75, 'count', ha='right', va='center', color='black', fontsize=fontsize-3)
+    
+    ax.set_ylabel('hamming dist. from WT', fontsize=fontsize)
+    ax.set_xticks([])
+    ax.set_yticks(all_hamming_distances+0.5, all_hamming_distances, fontsize=fontsize-2)
+    ax.set_title('fraction above\n- TCRdock PAE threshold (%)', fontsize=fontsize)
+
+
+
+    ## 4) barplot of is_mhc_binder
+
+    ax = axs[3]
 
     positions = range(len(MODELS_IN_ORDER))
 
@@ -406,6 +518,8 @@ if __name__ == '__main__':
 
         ax.bar([pos], [perc_strong], color=color, hatch='...', alpha=ALPHA)
         ax.bar([pos], [perc_weak_but_not_strong], bottom=[perc_strong], color=color, alpha=ALPHA)
+    
+    ax.grid(axis='y', ls='--', alpha=0.5)
     
     ax.set_ylim([0, 100])
 
@@ -461,8 +575,6 @@ if __name__ == '__main__':
 
     hamming_distances = range(min_hamming_distance, max_hamming_distance+1)
 
-    fontsize = 20
-
     nrows = 2
     ncols = (len(hamming_distances) // 2) + (len(hamming_distances) % 2)
     colsize = 3.5
@@ -514,7 +626,7 @@ if __name__ == '__main__':
             num_scores = len(scores)
             min_ylim, max_ylim = ax.get_ylim()
             ax.text(pos, min_ylim-(0.06 + 0.04*((pos%2)-1))*min_ylim, num_scores, ha='center', va='bottom', fontsize=fontsize-6)
-    
+            
     for col in [0, ncols]:
         axs.flatten()[col].tick_params(axis='both', labelsize=fontsize-3)
         axs.flatten()[col].set_ylabel('- TCRdock PAE', fontsize=fontsize)
@@ -523,6 +635,9 @@ if __name__ == '__main__':
     plt.savefig(f'../{args.system}/design_summary_pae_by_hamming_distance_from_wt.png')
     plt.savefig(f'../{args.system}/design_summary_pae_by_hamming_distance_from_wt.pdf')
     plt.close()
+
+    
+    fontsize = 22
 
 
     plt.figure(figsize=(8, 5))
@@ -554,6 +669,73 @@ if __name__ == '__main__':
     plt.savefig(f'../{args.system}/design_median_pae_vs_hamming_distance_from_wt.png')
     plt.savefig(f'../{args.system}/design_median_pae_vs_hamming_distance_from_wt.pdf')
     plt.close()
+
+
+    ## barplot of fraction of designs above chosen threshold
+
+    plt.figure(figsize=(6.2, 5))
+    fraction_above_threshold = []
+    colors = []
+    for model in MODELS_IN_ORDER:
+        scores = model_to_df[model]['neg_pmhc_tcr_pae'].values
+        is_above_threshold = scores > -SYSTEM_TO_PAE_THRESHOLD[args.system]
+        fraction_above_threshold.append(np.mean(is_above_threshold)*100)
+        colors.append(MODEL_TO_COLOR[model])
     
+    plt.bar(np.arange(len(MODELS_IN_ORDER)), fraction_above_threshold, color=colors, alpha=ALPHA)
+    plt.xticks([])
+    plt.yticks(fontsize=fontsize-1)
+    plt.ylim([0, 100])
+
+    # # write total number of designs at the bottom of the barplot
+    # ax = plt.gca()
+    # for pos, model in enumerate(MODELS_IN_ORDER):
+    #     scores = model_to_df[model]['neg_pmhc_tcr_pae'].values
+    #     num_scores = len(scores)
+    #     min_ylim, max_ylim = ax.get_ylim()
+    #     ax.text(pos, min_ylim-(0.06 + 0.04*((pos%2)-1))*min_ylim, num_scores, ha='center', va='bottom', fontsize=fontsize-6)
+    
+    plt.grid(axis='y', ls='--', alpha=0.5)
+
+    plt.ylabel('fraction above\n- TCRdock PAE threshold', fontsize=fontsize+1)
+    plt.tight_layout()
+    plt.savefig(f'../{args.system}/design_above_threshold.png')
+    plt.savefig(f'../{args.system}/design_above_threshold.pdf')
+    plt.close()
+
+
+    ## plot of fraction of designs above chosen threshold, as a function of hamming distance from WT
+
+    plt.figure(figsize=(8, 5))
+    for model in MODELS_IN_ORDER:
+
+        fraction_above_threshold = []
+        color = MODEL_TO_COLOR[model]
+
+        for i, h_dist in enumerate(hamming_distances):
+            
+            scores = model_to_df[model]['neg_pmhc_tcr_pae'].values
+            is_above_threshold = scores > -SYSTEM_TO_PAE_THRESHOLD[args.system]
+            h_dist_mask = model_to_df[model]['min_hamming_distance_to_wt'].values == h_dist
+            is_above_threshold = is_above_threshold[h_dist_mask]
+
+            if len(is_above_threshold) > 0:
+                fraction_above_threshold.append(np.mean(is_above_threshold)*100)
+            else:
+                fraction_above_threshold.append(np.nan)
+    
+        plt.plot(fraction_above_threshold, marker='o', color=color, lw=3)
+    
+    plt.grid(axis='y', ls='--', alpha=0.5)
+
+    plt.xticks(hamming_distances, fontsize=fontsize-2)
+    plt.yticks(fontsize=fontsize-3)
+    plt.ylim([-5, 105])
+    plt.xlabel('hamming dist. from WT', fontsize=fontsize)
+    plt.ylabel('fraction above\n- TCRdock PAE threshold (%)', fontsize=fontsize)
+    plt.tight_layout()
+    plt.savefig(f'../{args.system}/design_above_threshold_vs_hamming_distance_from_wt.png')
+    plt.savefig(f'../{args.system}/design_above_threshold_vs_hamming_distance_from_wt.pdf')
+    plt.close()
 
 

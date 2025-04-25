@@ -1,4 +1,4 @@
-Kd,system,name,sequence,3d affinity,2d affinity,-log10(Kd),study,pdbs,chains
+Kd [microM],system,name,sequence,3d affinity,2d affinity,-log10(Kd),study,pdbs,chains
 1.66,Tax,Tax WT,LLFGYPVYV,,,-0.22010808804005508,pettmann_et_al,1ao7|1qrn|1qse|1qsf,C|C|C|C
 2.67,Tax,Tax 5F,LLFGFPVYV,,,-0.4265112613645752,pettmann_et_al,1ao7|1qrn|1qse|1qsf,C|C|C|C
 2.8,Tax,Tax 7T,LLFGYPTYV,,,-0.4471580313422192,pettmann_et_al,1ao7|1qrn|1qse|1qsf,C|C|C|C

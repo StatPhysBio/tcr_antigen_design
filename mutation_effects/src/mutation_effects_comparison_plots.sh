@@ -1,11 +1,11 @@
 
-# python mutation_effects_comparison_plots.py --system nyeso --system_name_in_csv_file nyeso_peptide_kd_closest
+python mutation_effects_comparison_plots.py --system nyeso --system_name_in_csv_file nyeso_peptide_kd_closest
 
-# python mutation_effects_comparison_plots.py --system tax --system_name_in_csv_file tax_peptide_kd_closest
+python mutation_effects_comparison_plots.py --system tax --system_name_in_csv_file tax_peptide_kd_closest
 
-# # python mutation_effects_comparison_plots.py --system mart --system_name_in_csv_file mart_peptide_kd_closest
+# python mutation_effects_comparison_plots.py --system mart --system_name_in_csv_file mart_peptide_kd_closest
 
-# python mutation_effects_comparison_plots.py --system hsiue_et_al --system_name_in_csv_file hsiue_et_al_H2_sat_mut
+python mutation_effects_comparison_plots.py --system hsiue_et_al --system_name_in_csv_file hsiue_et_al_H2_sat_mut
 
 python mutation_effects_comparison_plots.py --system mskcc --system_name_in_csv_file mskcc_tcr1_ec50_sat_mut_af3
 
