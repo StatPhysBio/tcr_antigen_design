@@ -57,6 +57,12 @@ def get_long_prediction_column_name(model_instance, prediction_column_short, sys
         else:
             raise ValueError(f'Unknown prediction_column_short: {prediction_column_short}')
         
+    elif 'esmif' in model_instance:
+        if prediction_column_short == 'pnlogp-fixed':
+            return 'esmif_log_proba', system_name_in_csv_file
+        else:
+            raise ValueError(f'Unknown prediction_column_short: {prediction_column_short}')
+        
     elif 'tcrdock' in model_instance:
         system_name_in_csv_file = system_name_in_csv_file.replace('_averaged', '')
         system_name_in_csv_file = system_name_in_csv_file.replace('_closest', '')
@@ -123,6 +129,7 @@ MODEL_INSTANCE_TO_PRETTY_NAME = {
     'hermes_py_050_ft_skempi_no_tcrpmhc_ddg_bi': 'HERMES 0.50 + Skempi FT',
     'proteinmpnn_v_48_002': 'ProteinMPNN 0.02',
     'proteinmpnn_v_48_030': 'ProteinMPNN 0.30',
+    'esmif': 'ESM-IF1',
     'tcrdock': 'TCRdock',
     'tcrdock_no_nearby_templates': 'TCRdock benchmark',
     'blosum62': 'BLOSUM62',
@@ -147,6 +154,8 @@ def make_pretty_name(model, pred_col):
         return 'ProteinMPNN 0.20'
     elif model == 'proteinmpnn_v_48_030' and pred_col in {'delta_log_p', 'pnlogp-fixed'}:
         return 'ProteinMPNN 0.30'
+    elif model == 'esmif' and pred_col == 'pnlogp-fixed':
+        return 'ESM-IF1'
     elif model == 'tcrdock' and pred_col == 'neg_pae':
         return 'TCRdock'
     elif model == 'tcrdock_no_nearby_templates' and pred_col == 'neg_pae':
@@ -187,6 +196,11 @@ def get_model_specific_parameters(model_instance, prediction_column_short, args)
         color = 'tab:brown'
 
         df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}-num_seq_per_target={num_seq_per_target}-use_mt_structure={use_mt_structure}.csv'))
+    
+    elif model_instance == 'esmif':
+        base_dir = f'{MUT_EFFECTS_DIR}/{system}/results/{model_instance}/'
+        df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}-{model_instance}-use_mt_structure={use_mt_structure}.csv'))
+        color = 'tab:green'
 
     elif model_instance == 'tcrdock':
         # print('Note: "use_mt_structure" is irrelevant with tcrdock model.', file=sys.stderr)
@@ -272,22 +286,22 @@ if __name__ == '__main__':
 
     # make the list of models and the figure shape based on the system
     if 'hsiue' in args.system:
-        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'blosum62', 'luksza_cross_reactivity', 'luksza_cross_reactivity_without_d']
-        prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'sub_score', 'sub_score', 'sub_score']
-        num_rows = 5
+        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'esmif', 'blosum62', 'luksza_cross_reactivity', 'luksza_cross_reactivity_without_d']
+        prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'sub_score', 'sub_score', 'sub_score']
+        num_rows = 6
         num_cols = 2
     elif 'mskcc' in args.system:
-        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62', 'luksza_cross_reactivity', 'luksza_cross_reactivity_without_d', 'tapir']
-        prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'neg_pae', 'neg_pae', 'sub_score', 'sub_score', 'sub_score', 'tapir_score']
-        num_rows = 7
+        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'esmif', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62', 'luksza_cross_reactivity', 'luksza_cross_reactivity_without_d', 'tapir']
+        prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'neg_pae', 'neg_pae', 'sub_score', 'sub_score', 'sub_score', 'tapir_score']
+        num_rows = 8
         num_cols = 2
         if 'tcr7' not in args.system_name_in_csv_file:
             models.append('tulip')
             prediction_columns.append('TULIP_SCORE')
     else:
-        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62', 'luksza_cross_reactivity', 'luksza_cross_reactivity_without_d', 'tapir']
-        prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'neg_pae', 'neg_pae', 'sub_score', 'sub_score', 'sub_score', 'tapir_score']
-        num_rows = 6
+        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'esmif', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62', 'luksza_cross_reactivity', 'luksza_cross_reactivity_without_d', 'tapir']
+        prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'neg_pae', 'neg_pae', 'sub_score', 'sub_score', 'sub_score', 'tapir_score']
+        num_rows = 7
         num_cols = 2
     
     target_column = SYSTEM_TO_TARGET_COLUMN[args.system]
