@@ -5,14 +5,8 @@ import pandas as pd
 import argparse
 
 
-ESM_PATH = ''
+ESM_PATH = '/gscratch/spe/gvisan01/esm'
 
-'''
-python score_log_likelihoods.py data/5YH2.pdb \
-    data/5YH2_mutated_seqs.fasta --chain C \
-    --outpath output/5YH2_mutated_seqs_scores.csv \
-    --multichain-backbone
-'''
 
 
 if __name__ == '__main__':
