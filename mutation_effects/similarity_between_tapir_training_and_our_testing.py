@@ -255,42 +255,185 @@ df_tapir = df_tapir.rename(columns={'alpha v': 'alpha_v',
 
 
 
-df_tcr4 = pd.read_csv('mskcc/mskcc_tcr4_tapir.tsv', sep='\t')
-mhc_tcr4 = 'HLA-A*02'
-peptides_tcr4 = pd.read_csv('mskcc/mskcc_tcr4_ec50_sat_mut_af3.csv')['sequence'].values
+# df_tcr4 = pd.read_csv('mskcc/mskcc_tcr4_tapir.tsv', sep='\t')
+# mhc_tcr4 = 'HLA-A*02'
+# peptides_tcr4 = pd.read_csv('mskcc/mskcc_tcr4_ec50_sat_mut_af3.csv')['sequence'].values
 
-df_tcr4_tapir = pd.DataFrame(columns=df_tapir.columns)
-for i, row in tqdm(df_tapir.iterrows(), total=df_tapir.shape[0]):
-    new_row = {}
-    for col in df_tapir.columns:
-        if pd.isna(row[col]):
-            new_row[col] = np.nan
-        else:
-            if col == 'antigen':
-                new_row[col] = row[col] in peptides_tcr4
-            elif col == 'mhc':
-                new_row[col] = row[col] == mhc_tcr4
-            else:
-                new_row[col] = row[col] in df_tcr4[col].values
+# df_tcr4_tapir = pd.DataFrame(columns=df_tapir.columns)
+# for i, row in tqdm(df_tapir.iterrows(), total=df_tapir.shape[0]):
+#     new_row = {}
+#     for col in df_tapir.columns:
+#         if pd.isna(row[col]):
+#             new_row[col] = np.nan
+#         else:
+#             if col == 'antigen':
+#                 new_row[col] = row[col] in peptides_tcr4
+#             elif col == 'mhc':
+#                 new_row[col] = row[col] == mhc_tcr4
+#             else:
+#                 new_row[col] = row[col] in df_tcr4[col].values
     
-    df_tcr4_tapir = pd.concat([df_tcr4_tapir, pd.DataFrame(new_row, index=[0])], ignore_index=True)
+#     df_tcr4_tapir = pd.concat([df_tcr4_tapir, pd.DataFrame(new_row, index=[0])], ignore_index=True)
 
-print(df_tcr4_tapir)
+# print(df_tcr4_tapir)
 
-df_tcr4_tapir.to_csv('tcr4_tapir_matches.csv', index=False)
+# df_tcr4_tapir.to_csv('tcr4_tapir_matches.csv', index=False)
 
-df_tcr4_tapir = pd.read_csv('tcr4_tapir_matches.csv')
+# df_tcr4_tapir = pd.read_csv('tcr4_tapir_matches.csv')
 
-print(np.nansum(df_tcr4_tapir['alpha_v'].values))
-print(np.nansum(df_tcr4_tapir['alpha_j'].values))
-print(np.nansum(df_tcr4_tapir['alpha_cdr3'].values))
-print(np.nansum(df_tcr4_tapir['beta_v'].values))
-print(np.nansum(df_tcr4_tapir['beta_j'].values))
-print(np.nansum(df_tcr4_tapir['beta_cdr3'].values))
-print(np.nansum(df_tcr4_tapir['antigen'].values))
-print(np.nansum(df_tcr4_tapir['mhc'].values))
+# print(np.nansum(df_tcr4_tapir['alpha_v'].values))
+# print(np.nansum(df_tcr4_tapir['alpha_j'].values))
+# print(np.nansum(df_tcr4_tapir['alpha_cdr3'].values))
+# print(np.nansum(df_tcr4_tapir['beta_v'].values))
+# print(np.nansum(df_tcr4_tapir['beta_j'].values))
+# print(np.nansum(df_tcr4_tapir['beta_cdr3'].values))
+# print(np.nansum(df_tcr4_tapir['antigen'].values))
+# print(np.nansum(df_tcr4_tapir['mhc'].values))
 
-num_matches_per_row = np.nansum(df_tcr4_tapir.values, axis=1)
+# num_matches_per_row = np.nansum(df_tcr4_tapir.values, axis=1)
+# print(np.where(num_matches_per_row == 3)[0])
+# print(np.where(num_matches_per_row == 4)[0])
+# print(np.where(num_matches_per_row == 5)[0])
+# print(np.where(num_matches_per_row == 6)[0])
+# print(np.where(num_matches_per_row == 7)[0])
+# print(np.where(num_matches_per_row == 8)[0])
+
+# print(df_tcr4_tapir.iloc[np.where(num_matches_per_row == 5)[0]])
+# print(df_tapir.iloc[np.where(num_matches_per_row == 5)[0]])
+
+
+
+# df_tcr5 = pd.read_csv('mskcc/mskcc_tcr5_tapir.tsv', sep='\t')
+# mhc_tcr5 = 'HLA-A*02'
+# peptides_tcr5 = pd.read_csv('mskcc/mskcc_tcr5_ec50_sat_mut_af3.csv')['sequence'].values
+
+# df_tcr5_tapir = pd.DataFrame(columns=df_tapir.columns)
+# for i, row in tqdm(df_tapir.iterrows(), total=df_tapir.shape[0]):
+#     new_row = {}
+#     for col in df_tapir.columns:
+#         if pd.isna(row[col]):
+#             new_row[col] = np.nan
+#         else:
+#             if col == 'antigen':
+#                 new_row[col] = row[col] in peptides_tcr5
+#             elif col == 'mhc':
+#                 new_row[col] = row[col] == mhc_tcr5
+#             else:
+#                 new_row[col] = row[col] in df_tcr5[col].values
+    
+#     df_tcr5_tapir = pd.concat([df_tcr5_tapir, pd.DataFrame(new_row, index=[0])], ignore_index=True)
+
+# print(df_tcr5_tapir)
+
+# df_tcr5_tapir.to_csv('tcr5_tapir_matches.csv', index=False)
+
+# df_tcr5_tapir = pd.read_csv('tcr5_tapir_matches.csv')
+
+# print(np.nansum(df_tcr5_tapir['alpha_v'].values))
+# print(np.nansum(df_tcr5_tapir['alpha_j'].values))
+# print(np.nansum(df_tcr5_tapir['alpha_cdr3'].values))
+# print(np.nansum(df_tcr5_tapir['beta_v'].values))
+# print(np.nansum(df_tcr5_tapir['beta_j'].values))
+# print(np.nansum(df_tcr5_tapir['beta_cdr3'].values))
+# print(np.nansum(df_tcr5_tapir['antigen'].values))
+# print(np.nansum(df_tcr5_tapir['mhc'].values))
+
+# num_matches_per_row = np.nansum(df_tcr5_tapir.values, axis=1)
+# print(np.where(num_matches_per_row == 3)[0])
+# print(np.where(num_matches_per_row == 4)[0])
+# print(np.where(num_matches_per_row == 5)[0])
+# print(np.where(num_matches_per_row == 6)[0])
+# print(np.where(num_matches_per_row == 7)[0])
+# print(np.where(num_matches_per_row == 8)[0])
+
+# print(df_tcr5_tapir.iloc[np.where(num_matches_per_row == 8)[0]])
+# print(df_tapir.iloc[np.where(num_matches_per_row == 8)[0]])
+
+
+# df_tcr6 = pd.read_csv('mskcc/mskcc_tcr6_tapir.tsv', sep='\t')
+# mhc_tcr6 = 'HLA-A*02'
+# peptides_tcr6 = pd.read_csv('mskcc/mskcc_tcr6_ec50_sat_mut_af3.csv')['sequence'].values
+
+# df_tcr6_tapir = pd.DataFrame(columns=df_tapir.columns)
+# for i, row in tqdm(df_tapir.iterrows(), total=df_tapir.shape[0]):
+#     new_row = {}
+#     for col in df_tapir.columns:
+#         if pd.isna(row[col]):
+#             new_row[col] = np.nan
+#         else:
+#             if col == 'antigen':
+#                 new_row[col] = row[col] in peptides_tcr6
+#             elif col == 'mhc':
+#                 new_row[col] = row[col] == mhc_tcr6
+#             else:
+#                 new_row[col] = row[col] in df_tcr6[col].values
+    
+#     df_tcr6_tapir = pd.concat([df_tcr6_tapir, pd.DataFrame(new_row, index=[0])], ignore_index=True)
+
+# print(df_tcr6_tapir)
+
+# df_tcr6_tapir.to_csv('tcr6_tapir_matches.csv', index=False)
+
+# df_tcr6_tapir = pd.read_csv('tcr6_tapir_matches.csv')
+
+# print(np.nansum(df_tcr6_tapir['alpha_v'].values))
+# print(np.nansum(df_tcr6_tapir['alpha_j'].values))
+# print(np.nansum(df_tcr6_tapir['alpha_cdr3'].values))
+# print(np.nansum(df_tcr6_tapir['beta_v'].values))
+# print(np.nansum(df_tcr6_tapir['beta_j'].values))
+# print(np.nansum(df_tcr6_tapir['beta_cdr3'].values))
+# print(np.nansum(df_tcr6_tapir['antigen'].values))
+# print(np.nansum(df_tcr6_tapir['mhc'].values))
+
+# num_matches_per_row = np.nansum(df_tcr6_tapir.values, axis=1)
+# print(np.where(num_matches_per_row == 3)[0])
+# print(np.where(num_matches_per_row == 4)[0])
+# print(np.where(num_matches_per_row == 5)[0])
+# print(np.where(num_matches_per_row == 6)[0])
+# print(np.where(num_matches_per_row == 7)[0])
+# print(np.where(num_matches_per_row == 8)[0])
+
+# print(df_tcr6_tapir.iloc[np.where(num_matches_per_row == 8)[0]])
+# print(df_tapir.iloc[np.where(num_matches_per_row == 8)[0]])
+
+
+
+# df_tcr7 = pd.read_csv('mskcc/mskcc_tcr7_tapir.tsv', sep='\t')
+# mhc_tcr7 = 'HLA-B*27'
+# peptides_tcr7 = pd.read_csv('mskcc/mskcc_tcr7_ec50_sat_mut_af3.csv')['sequence'].values
+
+# df_tcr7_tapir = pd.DataFrame(columns=df_tapir.columns)
+# for i, row in tqdm(df_tapir.iterrows(), total=df_tapir.shape[0]):
+#     new_row = {}
+#     for col in df_tapir.columns:
+#         if pd.isna(row[col]):
+#             new_row[col] = np.nan
+#         else:
+#             if col == 'antigen':
+#                 new_row[col] = row[col] in peptides_tcr7
+#             elif col == 'mhc':
+#                 new_row[col] = row[col] == mhc_tcr7
+#             else:
+#                 new_row[col] = row[col] in df_tcr7[col].values
+    
+#     df_tcr7_tapir = pd.concat([df_tcr7_tapir, pd.DataFrame(new_row, index=[0])], ignore_index=True)
+
+# print(df_tcr7_tapir)
+
+# df_tcr7_tapir.to_csv('tcr7_tapir_matches.csv', index=False)
+
+df_tcr7_tapir = pd.read_csv('tcr7_tapir_matches.csv')
+
+print(np.nansum(df_tcr7_tapir['alpha_v'].values))
+print(np.nansum(df_tcr7_tapir['alpha_j'].values))
+print(np.nansum(df_tcr7_tapir['alpha_cdr3'].values))
+print(np.nansum(df_tcr7_tapir['beta_v'].values))
+print(np.nansum(df_tcr7_tapir['beta_j'].values))
+print(np.nansum(df_tcr7_tapir['beta_cdr3'].values))
+print(np.nansum(df_tcr7_tapir['antigen'].values))
+print(np.nansum(df_tcr7_tapir['mhc'].values))
+
+num_matches_per_row = np.nansum(df_tcr7_tapir.values, axis=1)
 print(np.where(num_matches_per_row == 3)[0])
 print(np.where(num_matches_per_row == 4)[0])
 print(np.where(num_matches_per_row == 5)[0])
@@ -298,5 +441,6 @@ print(np.where(num_matches_per_row == 6)[0])
 print(np.where(num_matches_per_row == 7)[0])
 print(np.where(num_matches_per_row == 8)[0])
 
-print(df_tcr4_tapir.iloc[np.where(num_matches_per_row == 5)[0]])
-print(df_tapir.iloc[np.where(num_matches_per_row == 5)[0]])
+print(df_tcr7_tapir.iloc[np.where(num_matches_per_row == 3)[0]])
+print(df_tapir.iloc[np.where(num_matches_per_row == 3)[0]])
+
