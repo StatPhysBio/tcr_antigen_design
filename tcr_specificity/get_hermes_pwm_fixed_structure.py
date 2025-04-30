@@ -21,6 +21,7 @@ from hermes.inference.inference_hermes import predict_from_pdbfile, load_hermes_
 from hermes.utils.protein_naming import ind_to_ol_size, ol_to_ind_size
 
 
+
 def prediction(args, pdb, chain, resnums, models, hparams, finetuning_hparams):
 
     region_ids = [(chain, resnum, ' ') for resnum in resnums]
@@ -43,7 +44,7 @@ def prediction(args, pdb, chain, resnums, models, hparams, finetuning_hparams):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--hermes_path', type=str, default='/gscratch/spe/gvisan01/hermes/')
-    parser.add_argument('--model_version', type=str, default='hermes_py_000')
+    parser.add_argument('--model_version', type=str, default='hermes_py_000_ft_cdna117k_relaxed_pred')
 
     parser.add_argument('--pdbdir', type=str, default='pdbs/pmhc')
     parser.add_argument('--output_dir', type=str, default='pwm_csv_files/mhc_hcnn_fixed_structure')
