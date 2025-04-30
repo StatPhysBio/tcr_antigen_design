@@ -90,6 +90,7 @@ def fastrelax_positions(
     fr.min_type("lbfgs_armijo_nonmonotone")
     fr.apply(pose)
     
+    
 
 def find_calpha_neighbors(
     core_positions,

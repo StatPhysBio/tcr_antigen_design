@@ -5,7 +5,7 @@ import pandas as pd
 import argparse
 
 
-ESM_PATH = '/gscratch/spe/gvisan01/esm'
+ESM_PATH = '/gscratch/spe/gvisan01/esm/esm'
 
 
 
@@ -20,7 +20,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     output_directory = os.path.dirname(args.output_csv_filepath)
-    os.makedirs(output_directory, axist_ok=True)
+    os.makedirs(output_directory, exist_ok=True)
 
     # make temporary directory with fasta files and scores
     temp_fasta_dir = os.path.join(output_directory, 'temp_fasta')
@@ -51,12 +51,12 @@ if __name__ == '__main__':
         
         # score with ESM-IF1
         esmif_output_file_path = os.path.join(temp_output_dir, f'{pdb}_{chain}_scores.csv')
-        os.system(f'python {ESM_PATH}/examples/inverse_folding/score_log_likelihoods.py \
-                                {os.path.join(args.pdbdir, pdb+".pdb")} \
-                                {fasta_file_path} \
-                                --chain {chain} \
-                                --outpath {esmif_output_file_path} \
-                                --multichain-backbone')
+
+        command = f'python {ESM_PATH}/examples/inverse_folding/score_log_likelihoods.py {os.path.join(args.pdbdir, pdb+".pdb")} {fasta_file_path} --chain {chain} --outpath {esmif_output_file_path} --multichain-backbone'
+
+        print(command)
+
+        os.system(command)
     
         # write the scores in a peptide->score dictionary
         scores_df = pd.read_csv(esmif_output_file_path)

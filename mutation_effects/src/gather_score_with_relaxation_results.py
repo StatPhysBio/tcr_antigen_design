@@ -29,7 +29,7 @@ if __name__ == '__main__':
 
     df = pd.read_csv(csv_file)
 
-    # gather results, pnE ad pnlogp
+    # gather results, pnE and pnlogp
 
     for metric in ['pnE', 'pnlogp']:
 

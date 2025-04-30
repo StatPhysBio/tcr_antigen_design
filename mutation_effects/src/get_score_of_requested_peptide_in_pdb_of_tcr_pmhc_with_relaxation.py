@@ -134,6 +134,18 @@ class PeptideMutator(object):
             nrepeats = 1
         )
 
+    def score(self):
+        """
+        Score the pose
+        """
+        self.scorefxn_cartesian(self.pose)
+
+        energy_of_complex = 0.0
+        for i in self.complex_resnums:
+            energy_of_complex += self.pose.energies().residue_total_energy(i)
+
+        return energy_of_complex
+    
 
 def collect_pnEs_for_sequences(pne_dir, sequences):
     sequences = set(sequences)
@@ -341,9 +353,13 @@ if __name__ == '__main__':
     pnlogp_ensemble = []
     pes_ensemble = []
     logps_ensemble = []
+    rosetta_energy_ensemble = []
     for i in tqdm(range(args.num_repeats)):
         mutator.init_original_pose()
         mutator.mutate(args.verbose)
+
+        rosetta_energy = mutator.score()
+        print('Rosetta energy:', rosetta_energy)
 
         requested_regions = {'peptide': mutator.regions['peptide']} # only keep peptide region to make it quicker
         print(requested_regions['peptide'])
@@ -379,11 +395,13 @@ if __name__ == '__main__':
         pnlogp_ensemble.append(ensembled_peptide_pnlogp)
         pes_ensemble.append(ensembled_peptide_pes)
         logps_ensemble.append(ensembled_peptide_logps)
+        rosetta_energy_ensemble.append(rosetta_energy)
 
     pnE_ensemble = np.array(pnE_ensemble)
     pnlogp_ensemble = np.array(pnlogp_ensemble)
     pes_ensemble = np.stack(pes_ensemble, axis=0)
     logps_ensemble = np.stack(logps_ensemble, axis=0)
+    rosetta_energy_ensemble = np.array(rosetta_energy_ensemble)
 
     os.makedirs(args.output_dir, exist_ok=True)
 
@@ -395,4 +413,5 @@ if __name__ == '__main__':
     np.save(os.path.join(args.output_dir, f'{args.model_version}{DIV}{args.pdb}{DIV}{args.sequence}{DIV}{args.job}{DIV}{args.num_repeats}{DIV}pnlogp.npy'), pnlogp_ensemble)
     # np.save(os.path.join(args.output_dir, f'{args.model_version}{DIV}{args.pdb}{DIV}{args.sequence}{DIV}{args.job}{DIV}{args.num_repeats}{DIV}pes.npy'), pes_ensemble)
     # np.save(os.path.join(args.output_dir, f'{args.model_version}{DIV}{args.pdb}{DIV}{args.sequence}{DIV}{args.job}{DIV}{args.num_repeats}{DIV}logps.npy'), logps_ensemble)
+    np.save(os.path.join(args.output_dir, f'{args.model_version}{DIV}{args.pdb}{DIV}{args.sequence}{DIV}{args.job}{DIV}{args.num_repeats}{DIV}rosetta_energy.npy'), rosetta_energy_ensemble)
 
