@@ -89,6 +89,12 @@ def get_long_prediction_column_name(model_instance, prediction_column_short, sys
         else:
             raise ValueError(f'Unknown prediction_column_short: {prediction_column_short}')
     
+    elif model_instance == 'nettcr2p2':
+        if prediction_column_short == 'nettcr_score':
+            return 'nettcr_score', system_name_in_csv_file
+        else:
+            raise ValueError(f'Unknown prediction_column_short: {prediction_column_short}')
+    
     else:
         raise ValueError(f'Unknown model_instance: {model_instance}')
 
@@ -101,7 +107,8 @@ SHORT_PREDICTION_NAME_TO_PRETTY_NAME = {
     'pnlogp-fixed': 'log P on fixed structure',
     'delta_log_p': '$pE$ on fixed structure',
     'TULIP_SCORE': 'TULIP score',
-    'tapir_score': 'TAPIR score'
+    'tapir_score': 'TAPIR score',
+    'nettcr_score': 'NetTCR-2.2 score',
 }
 
 def short_prediction_name_to_pretty_name(short_prediction_name):
@@ -136,7 +143,8 @@ MODEL_INSTANCE_TO_PRETTY_NAME = {
     'luksza_cross_reactivity': 'Luksza et al. $C$',
     'luksza_cross_reactivity_without_d': 'Luksza et al. $C/d$',
     'tulip': 'TULIP',
-    'tapir': 'TAPIR'
+    'tapir': 'TAPIR',
+    'nettcr2p2': 'NetTCR-2.2',
 }
 
 def make_pretty_name(model, pred_col):
@@ -170,6 +178,8 @@ def make_pretty_name(model, pred_col):
         return 'TULIP'
     elif model == 'tapir' and pred_col == 'tapir_score':
         return 'TAPIR'
+    elif model == 'nettcr2p2' and pred_col == 'nettcr_score':
+        return 'NetTCR-2.2'
     else:
         raise ValueError(f'Unknown model and pred_col: {model}, {pred_col}')
 
@@ -258,6 +268,11 @@ def get_model_specific_parameters(model_instance, prediction_column_short, args)
         df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}-{model_instance}.csv'))
         color = 'tab:orange'
     
+    elif model_instance == 'nettcr2p2':
+        base_dir = f'{MUT_EFFECTS_DIR}/{system}/results/{model_instance}/'
+        df_full = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}-{model_instance}.csv'))
+        color = 'tab:orange'
+    
     else:
         raise ValueError(f'Unknown model_instance: {model_instance}')
     
@@ -288,20 +303,23 @@ if __name__ == '__main__':
     if 'hsiue' in args.system:
         models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'esmif', 'blosum62', 'luksza_cross_reactivity', 'luksza_cross_reactivity_without_d']
         prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'sub_score', 'sub_score', 'sub_score']
-        num_rows = 6
+        assert len(models) == len(prediction_columns)
+        num_rows = len(models) // 2 + 1
         num_cols = 2
     elif 'mskcc' in args.system:
-        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'esmif', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62', 'luksza_cross_reactivity', 'luksza_cross_reactivity_without_d', 'tapir']
-        prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'neg_pae', 'neg_pae', 'sub_score', 'sub_score', 'sub_score', 'tapir_score']
-        num_rows = 8
-        num_cols = 2
+        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'esmif', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62', 'luksza_cross_reactivity', 'luksza_cross_reactivity_without_d', 'tapir', 'nettcr2p2']
+        prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'neg_pae', 'neg_pae', 'sub_score', 'sub_score', 'sub_score', 'tapir_score', 'nettcr_score']
         if 'tcr7' not in args.system_name_in_csv_file:
             models.append('tulip')
             prediction_columns.append('TULIP_SCORE')
+        assert len(models) == len(prediction_columns)
+        num_rows = len(models) // 2 + 1
+        num_cols = 2
     else:
-        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'esmif', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62', 'luksza_cross_reactivity', 'luksza_cross_reactivity_without_d', 'tapir']
-        prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'neg_pae', 'neg_pae', 'sub_score', 'sub_score', 'sub_score', 'tapir_score']
-        num_rows = 7
+        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'esmif', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62', 'luksza_cross_reactivity', 'luksza_cross_reactivity_without_d', 'tapir', 'nettcr2p2']
+        prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'neg_pae', 'neg_pae', 'sub_score', 'sub_score', 'sub_score', 'tapir_score', 'nettcr_score']
+        assert len(models) == len(prediction_columns)
+        num_rows = len(models) // 2 + 1
         num_cols = 2
     
     target_column = SYSTEM_TO_TARGET_COLUMN[args.system]
