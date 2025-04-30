@@ -32,11 +32,11 @@ if __name__ == '__main__':
     parser.add_argument('--total_relaxations', type=int, default=100)
 
     parser.add_argument('-A',  '--account', type=str, default='stf')
-    parser.add_argument('-P',  '--partition', type=str, default='gpu-l40s')
+    parser.add_argument('-P',  '--partition', type=str, default='cpu-g2-mem2x')
     parser.add_argument('-G',  '--use_gpu', type=int, default=0, choices=[0, 1])
     parser.add_argument('-C',  '--num_cores', type=int, default=1)
-    parser.add_argument('-W',  '--walltime', type=str, default='02:30:00')
-    parser.add_argument('-M',  '--memory', type=str, default='5G')
+    parser.add_argument('-W',  '--walltime', type=str, default='02:00:00')
+    parser.add_argument('-M',  '--memory', type=str, default='6G')
     parser.add_argument('-E',  '--send_emails', type=int, default=0, choices=[0, 1])
     parser.add_argument('-EA', '--email_address', type=str, default='gvisan01@uw.edu')
 
@@ -56,7 +56,7 @@ if __name__ == '__main__':
         email_text = ''
     
     for model_version in args.model_version:
-        os.makedirs(f'./results/{model_version}/with_relaxation', exist_ok=True)
+        os.makedirs(f'./results/{model_version}/with_relaxation__runs_with_rosetta_scores', exist_ok=True)
     
         for tcr in TCRS:
             pdb = TCR_TO_PDB[tcr]
@@ -81,7 +81,7 @@ if __name__ == '__main__':
                                                     outfile=os.path.join(logs_path, f"{identifier}.out"))
                     slurm_text += '\n\n'
 
-                    slurm_text += f"python ../../src/get_score_of_requested_peptide_in_pdb_of_tcr_pmhc_with_relaxation.py \
+                    slurm_text += f"python ../src/get_score_of_requested_peptide_in_pdb_of_tcr_pmhc_with_relaxation.py \
                                                 --model_version {model_version} \
                                                 --pdb {pdb} \
                                                 --pdbdir ./pdbs \
@@ -89,7 +89,7 @@ if __name__ == '__main__':
                                                 --peptide_resnum_start {PDB_TO_PEP_INFO[pdb][1]} \
                                                 --sequence {sequence} \
                                                 --num_repeats {args.num_repeats} \
-                                                --output_dir ./results/{model_version}/with_relaxation/ \
+                                                --output_dir ./results/{model_version}/with_relaxation__runs_with_rosetta_scores/ \
                                                 --verbose 0 \
                                                 --job {j}"
 
