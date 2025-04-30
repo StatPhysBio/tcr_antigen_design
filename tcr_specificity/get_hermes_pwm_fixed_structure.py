@@ -46,8 +46,8 @@ if __name__ == '__main__':
     parser.add_argument('--hermes_path', type=str, default='/gscratch/spe/gvisan01/hermes/')
     parser.add_argument('--model_version', type=str, default='hermes_py_000_ft_cdna117k_relaxed_pred')
 
-    parser.add_argument('--pdbdir', type=str, default='pdbs/pmhc')
-    parser.add_argument('--output_dir', type=str, default='pwm_csv_files/mhc_hcnn_fixed_structure')
+    parser.add_argument('--pdbdir', type=str, default='pdbs/tcr_pmhc')
+    parser.add_argument('--output_dir', type=str, default='pwm_csv_files/hcnn_fixed_structure')
 
     parser.add_argument('--input_csv_filepath', type=str, default='pdbs_allele_df_with_peptide_info.csv')
     parser.add_argument('--pdb_column', type=str, default='pdbid')
