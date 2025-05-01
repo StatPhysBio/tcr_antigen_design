@@ -1,134 +1,134 @@
-pdb	allele
-1k5n	B2709
-4u1m	B4201
-3czf	B2709
-6y26	B2705
-6mt3	B1801
-6y29	B2709
-3mrg	A0201
-6mt6	B3701
-7kgq	A0201
-6mtl	B4405
-6joz	A1101
-4u1j	B4201
-7kgp	A0201
-3mrk	A0201
-2a83	B2705
-3mrb	A0201
-1oga	A0201
-6vb2	B1502
-6pyj	B2705
-7m8u	B3501
-7m8t	A1101
-6o4z	A0201
-6j1w	A3001
-5eu5	A0201
-2gtw	A0201
-1uxs	B2705
-6v2q	B5703
-5def	B2704
-1m6o	B4402
-4lcy	B4601
-6j29	A3003
-3kpm	B4402
-5wmo	B0702
-5vwh	B5801
-5txs	B1501
-1n2r	B4403
-5eo0	B0702
-1syv	B4405
-1uxw	B2709
-5w6a	C0602
-2cik	B3501
-4u1s	B8101
-1xr9	B1501
-6uzm	B1502
-3lko	B3501
-5vwf	B5703
-3bp7	B2709
-3bo8	A0101
-5vue	B5701
-5wmn	B0702
-4nt6	C0801
-3kpq	B4405
-3bp4	B2705
-3c9n	B1501
-6uli	C0802
-3lks	B3501
-6uzs	B1501
-6d2t	B5701
-7lfz	B0702
-3lv3	B2705
-3kpl	B4402
-7lgt	B0702
-4o2e	B3901
-3upr	B5701
-3rl1	A0301
-6vb3	B1501
-6j1v	A3003
-4nqx	A0101
-3kpn	B4403
-4u1l	B8101
-4u1k	B0702
-5wlg	H2-Db
-2bst	B2705
-1hsa	B2705
-1w0w	B2709
-6xqa	A2402
-5gsr	H2-Kd
-6o9b	A0301
-6ujo	A0206
-1w0v	B2705
-1xr8	B1501
-7lg0	B0702
-3kpo	B4403
-5vgd	C0501
-4hwz	A6801
-1sys	B4403
-3i6l	A2402
-1q94	A1101
-5bs0	A0101
-4n8v	A1101
-1a9e	B3501
-3bzf	E0101
-6pag	C0702
-2xpg	A0301
-5brz	A0101
-6gl1	E0103
-4i48	A6802
-1im9	C0401
-1kpr	E0103
-2bck	A2402
-3am8	E0101
-5w69	C0602
-7jyw	A2402
-1efx	C0304
-3mre	A0201
-3d25	A0201
-2bvp	B5703
-6j2a	A3003
-5ib2	B2705
-1x7q	A1101
-7jyv	A2402
-4u1h	B0702
-3kla	A0201
-2git	A0201
-4u1n	B4202
-4hx1	A6802
-5deg	B2706
-5fa3	A0201
-3bxn	B1402
-3h7b	A0201
-3kpp	B4405
-5u98	B5701
-5vwj	B5801
-1vgk	H2-Kd
-6gh1	E0103
-1jge	B2705
-6vb7	B1502
-5ind	B5801
-1e27	B5101
-1i7r	A0201
-3bvn	B1402
-1qqd	C0401
-4qrr	B3501
+targetid	allele	native_pdbfile
+1k5n	B2709	datasets_alphafold_finetune/pmhc_finetune/natives/1k5n_AC.pdb
+4u1m	B4201	datasets_alphafold_finetune/pmhc_finetune/natives/4u1m_AC.pdb
+3czf	B2709	datasets_alphafold_finetune/pmhc_finetune/natives/3czf_AC.pdb
+6y26	B2705	datasets_alphafold_finetune/pmhc_finetune/natives/6y26_AC.pdb
+6mt3	B1801	datasets_alphafold_finetune/pmhc_finetune/natives/6mt3_AB.pdb
+6y29	B2709	datasets_alphafold_finetune/pmhc_finetune/natives/6y29_AC.pdb
+3mrg	A0201	datasets_alphafold_finetune/pmhc_finetune/natives/3mrg_AP.pdb
+6mt6	B3701	datasets_alphafold_finetune/pmhc_finetune/natives/6mt6_AB.pdb
+7kgq	A0201	datasets_alphafold_finetune/pmhc_finetune/natives/7kgq_AC.pdb
+6mtl	B4405	datasets_alphafold_finetune/pmhc_finetune/natives/6mtl_AC.pdb
+6joz	A1101	datasets_alphafold_finetune/pmhc_finetune/natives/6joz_AC.pdb
+4u1j	B4201	datasets_alphafold_finetune/pmhc_finetune/natives/4u1j_AC.pdb
+7kgp	A0201	datasets_alphafold_finetune/pmhc_finetune/natives/7kgp_AC.pdb
+3mrk	A0201	datasets_alphafold_finetune/pmhc_finetune/natives/3mrk_AP.pdb
+2a83	B2705	datasets_alphafold_finetune/pmhc_finetune/natives/2a83_AC.pdb
+3mrb	A0201	datasets_alphafold_finetune/pmhc_finetune/natives/3mrb_AP.pdb
+1oga	A0201	datasets_alphafold_finetune/pmhc_finetune/natives/1oga_AC.pdb
+6vb2	B1502	datasets_alphafold_finetune/pmhc_finetune/natives/6vb2_AC.pdb
+6pyj	B2705	datasets_alphafold_finetune/pmhc_finetune/natives/6pyj_AC.pdb
+7m8u	B3501	datasets_alphafold_finetune/pmhc_finetune/natives/7m8u_AC.pdb
+7m8t	A1101	datasets_alphafold_finetune/pmhc_finetune/natives/7m8t_AC.pdb
+6o4z	A0201	datasets_alphafold_finetune/pmhc_finetune/natives/6o4z_AC.pdb
+6j1w	A3001	datasets_alphafold_finetune/pmhc_finetune/natives/6j1w_AC.pdb
+5eu5	A0201	datasets_alphafold_finetune/pmhc_finetune/natives/5eu5_AC.pdb
+2gtw	A0201	datasets_alphafold_finetune/pmhc_finetune/natives/2gtw_AC.pdb
+1uxs	B2705	datasets_alphafold_finetune/pmhc_finetune/natives/1uxs_AC.pdb
+6v2q	B5703	datasets_alphafold_finetune/pmhc_finetune/natives/6v2q_AC.pdb
+5def	B2704	datasets_alphafold_finetune/pmhc_finetune/natives/5def_AC.pdb
+1m6o	B4402	datasets_alphafold_finetune/pmhc_finetune/natives/1m6o_AC.pdb
+4lcy	B4601	datasets_alphafold_finetune/pmhc_finetune/natives/4lcy_AC.pdb
+6j29	A3003	datasets_alphafold_finetune/pmhc_finetune/natives/6j29_AC.pdb
+3kpm	B4402	datasets_alphafold_finetune/pmhc_finetune/natives/3kpm_AC.pdb
+5wmo	B0702	datasets_alphafold_finetune/pmhc_finetune/natives/5wmo_AC.pdb
+5vwh	B5801	datasets_alphafold_finetune/pmhc_finetune/natives/5vwh_AC.pdb
+5txs	B1501	datasets_alphafold_finetune/pmhc_finetune/natives/5txs_AC.pdb
+1n2r	B4403	datasets_alphafold_finetune/pmhc_finetune/natives/1n2r_AC.pdb
+5eo0	B0702	datasets_alphafold_finetune/pmhc_finetune/natives/5eo0_AC.pdb
+1syv	B4405	datasets_alphafold_finetune/pmhc_finetune/natives/1syv_AC.pdb
+1uxw	B2709	datasets_alphafold_finetune/pmhc_finetune/natives/1uxw_AC.pdb
+5w6a	C0602	datasets_alphafold_finetune/pmhc_finetune/natives/5w6a_AE.pdb
+2cik	B3501	datasets_alphafold_finetune/pmhc_finetune/natives/2cik_AC.pdb
+4u1s	B8101	datasets_alphafold_finetune/pmhc_finetune/natives/4u1s_AC.pdb
+1xr9	B1501	datasets_alphafold_finetune/pmhc_finetune/natives/1xr9_AC.pdb
+6uzm	B1502	datasets_alphafold_finetune/pmhc_finetune/natives/6uzm_AC.pdb
+3lko	B3501	datasets_alphafold_finetune/pmhc_finetune/natives/3lko_AC.pdb
+5vwf	B5703	datasets_alphafold_finetune/pmhc_finetune/natives/5vwf_AC.pdb
+3bp7	B2709	datasets_alphafold_finetune/pmhc_finetune/natives/3bp7_AC.pdb
+3bo8	A0101	datasets_alphafold_finetune/pmhc_finetune/natives/3bo8_AC.pdb
+5vue	B5701	datasets_alphafold_finetune/pmhc_finetune/natives/5vue_AC.pdb
+5wmn	B0702	datasets_alphafold_finetune/pmhc_finetune/natives/5wmn_AE.pdb
+4nt6	C0801	datasets_alphafold_finetune/pmhc_finetune/natives/4nt6_AC.pdb
+3kpq	B4405	datasets_alphafold_finetune/pmhc_finetune/natives/3kpq_AC.pdb
+3bp4	B2705	datasets_alphafold_finetune/pmhc_finetune/natives/3bp4_AC.pdb
+3c9n	B1501	datasets_alphafold_finetune/pmhc_finetune/natives/3c9n_AC.pdb
+6uli	C0802	datasets_alphafold_finetune/pmhc_finetune/natives/6uli_AC.pdb
+3lks	B3501	datasets_alphafold_finetune/pmhc_finetune/natives/3lks_AC.pdb
+6uzs	B1501	datasets_alphafold_finetune/pmhc_finetune/natives/6uzs_AC.pdb
+6d2t	B5701	datasets_alphafold_finetune/pmhc_finetune/natives/6d2t_AC.pdb
+7lfz	B0702	datasets_alphafold_finetune/pmhc_finetune/natives/7lfz_AC.pdb
+3lv3	B2705	datasets_alphafold_finetune/pmhc_finetune/natives/3lv3_AC.pdb
+3kpl	B4402	datasets_alphafold_finetune/pmhc_finetune/natives/3kpl_AC.pdb
+7lgt	B0702	datasets_alphafold_finetune/pmhc_finetune/natives/7lgt_AF.pdb
+4o2e	B3901	datasets_alphafold_finetune/pmhc_finetune/natives/4o2e_AC.pdb
+3upr	B5701	datasets_alphafold_finetune/pmhc_finetune/natives/3upr_AP.pdb
+3rl1	A0301	datasets_alphafold_finetune/pmhc_finetune/natives/3rl1_AC.pdb
+6vb3	B1501	datasets_alphafold_finetune/pmhc_finetune/natives/6vb3_AC.pdb
+6j1v	A3003	datasets_alphafold_finetune/pmhc_finetune/natives/6j1v_AC.pdb
+4nqx	A0101	datasets_alphafold_finetune/pmhc_finetune/natives/4nqx_AM.pdb
+3kpn	B4403	datasets_alphafold_finetune/pmhc_finetune/natives/3kpn_AC.pdb
+4u1l	B8101	datasets_alphafold_finetune/pmhc_finetune/natives/4u1l_AC.pdb
+4u1k	B0702	datasets_alphafold_finetune/pmhc_finetune/natives/4u1k_AC.pdb
+5wlg	H2-Db	datasets_alphafold_finetune/pmhc_finetune/natives/5wlg_AC.pdb
+2bst	B2705	datasets_alphafold_finetune/pmhc_finetune/natives/2bst_AC.pdb
+1hsa	B2705	datasets_alphafold_finetune/pmhc_finetune/natives/1hsa_AC.pdb
+1w0w	B2709	datasets_alphafold_finetune/pmhc_finetune/natives/1w0w_AC.pdb
+6xqa	A2402	datasets_alphafold_finetune/pmhc_finetune/natives/6xqa_AC.pdb
+5gsr	H2-Kd	datasets_alphafold_finetune/pmhc_finetune/natives/5gsr_AP.pdb
+6o9b	A0301	datasets_alphafold_finetune/pmhc_finetune/natives/6o9b_AC.pdb
+6ujo	A0206	datasets_alphafold_finetune/pmhc_finetune/natives/6ujo_AC.pdb
+1w0v	B2705	datasets_alphafold_finetune/pmhc_finetune/natives/1w0v_AC.pdb
+1xr8	B1501	datasets_alphafold_finetune/pmhc_finetune/natives/1xr8_AC.pdb
+7lg0	B0702	datasets_alphafold_finetune/pmhc_finetune/natives/7lg0_AC.pdb
+3kpo	B4403	datasets_alphafold_finetune/pmhc_finetune/natives/3kpo_AC.pdb
+5vgd	C0501	datasets_alphafold_finetune/pmhc_finetune/natives/5vgd_AC.pdb
+4hwz	A6801	datasets_alphafold_finetune/pmhc_finetune/natives/4hwz_AC.pdb
+1sys	B4403	datasets_alphafold_finetune/pmhc_finetune/natives/1sys_AC.pdb
+3i6l	A2402	datasets_alphafold_finetune/pmhc_finetune/natives/3i6l_DF.pdb
+1q94	A1101	datasets_alphafold_finetune/pmhc_finetune/natives/1q94_AC.pdb
+5bs0	A0101	datasets_alphafold_finetune/pmhc_finetune/natives/5bs0_AC.pdb
+4n8v	A1101	datasets_alphafold_finetune/pmhc_finetune/natives/4n8v_AC.pdb
+1a9e	B3501	datasets_alphafold_finetune/pmhc_finetune/natives/1a9e_AC.pdb
+3bzf	E0101	datasets_alphafold_finetune/pmhc_finetune/natives/3bzf_AP.pdb
+6pag	C0702	datasets_alphafold_finetune/pmhc_finetune/natives/6pag_AC.pdb
+2xpg	A0301	datasets_alphafold_finetune/pmhc_finetune/natives/2xpg_AC.pdb
+5brz	A0101	datasets_alphafold_finetune/pmhc_finetune/natives/5brz_AC.pdb
+6gl1	E0103	datasets_alphafold_finetune/pmhc_finetune/natives/6gl1_AP.pdb
+4i48	A6802	datasets_alphafold_finetune/pmhc_finetune/natives/4i48_AC.pdb
+1im9	C0401	datasets_alphafold_finetune/pmhc_finetune/natives/1im9_AC.pdb
+1kpr	E0103	datasets_alphafold_finetune/pmhc_finetune/natives/1kpr_AP.pdb
+2bck	A2402	datasets_alphafold_finetune/pmhc_finetune/natives/2bck_AC.pdb
+3am8	E0101	datasets_alphafold_finetune/pmhc_finetune/natives/3am8_AE.pdb
+5w69	C0602	datasets_alphafold_finetune/pmhc_finetune/natives/5w69_AI.pdb
+7jyw	A2402	datasets_alphafold_finetune/pmhc_finetune/natives/7jyw_AC.pdb
+1efx	C0304	datasets_alphafold_finetune/pmhc_finetune/natives/1efx_AC.pdb
+3mre	A0201	datasets_alphafold_finetune/pmhc_finetune/natives/3mre_AP.pdb
+3d25	A0201	datasets_alphafold_finetune/pmhc_finetune/natives/3d25_AC.pdb
+2bvp	B5703	datasets_alphafold_finetune/pmhc_finetune/natives/2bvp_AC.pdb
+6j2a	A3003	datasets_alphafold_finetune/pmhc_finetune/natives/6j2a_AC.pdb
+5ib2	B2705	datasets_alphafold_finetune/pmhc_finetune/natives/5ib2_AC.pdb
+1x7q	A1101	datasets_alphafold_finetune/pmhc_finetune/natives/1x7q_AC.pdb
+7jyv	A2402	datasets_alphafold_finetune/pmhc_finetune/natives/7jyv_AC.pdb
+4u1h	B0702	datasets_alphafold_finetune/pmhc_finetune/natives/4u1h_AC.pdb
+3kla	A0201	datasets_alphafold_finetune/pmhc_finetune/natives/3kla_AC.pdb
+2git	A0201	datasets_alphafold_finetune/pmhc_finetune/natives/2git_AC.pdb
+4u1n	B4202	datasets_alphafold_finetune/pmhc_finetune/natives/4u1n_AC.pdb
+4hx1	A6802	datasets_alphafold_finetune/pmhc_finetune/natives/4hx1_AC.pdb
+5deg	B2706	datasets_alphafold_finetune/pmhc_finetune/natives/5deg_AC.pdb
+5fa3	A0201	datasets_alphafold_finetune/pmhc_finetune/natives/5fa3_AC.pdb
+3bxn	B1402	datasets_alphafold_finetune/pmhc_finetune/natives/3bxn_AC.pdb
+3h7b	A0201	datasets_alphafold_finetune/pmhc_finetune/natives/3h7b_AC.pdb
+3kpp	B4405	datasets_alphafold_finetune/pmhc_finetune/natives/3kpp_AC.pdb
+5u98	B5701	datasets_alphafold_finetune/pmhc_finetune/natives/5u98_AC.pdb
+5vwj	B5801	datasets_alphafold_finetune/pmhc_finetune/natives/5vwj_AC.pdb
+1vgk	H2-Kd	datasets_alphafold_finetune/pmhc_finetune/natives/1vgk_AC.pdb
+6gh1	E0103	datasets_alphafold_finetune/pmhc_finetune/natives/6gh1_AP.pdb
+1jge	B2705	datasets_alphafold_finetune/pmhc_finetune/natives/1jge_AC.pdb
+6vb7	B1502	datasets_alphafold_finetune/pmhc_finetune/natives/6vb7_AC.pdb
+5ind	B5801	datasets_alphafold_finetune/pmhc_finetune/natives/5ind_AE.pdb
+1e27	B5101	datasets_alphafold_finetune/pmhc_finetune/natives/1e27_AC.pdb
+1i7r	A0201	datasets_alphafold_finetune/pmhc_finetune/natives/1i7r_AC.pdb
+3bvn	B1402	datasets_alphafold_finetune/pmhc_finetune/natives/3bvn_AC.pdb
+1qqd	C0401	datasets_alphafold_finetune/pmhc_finetune/natives/1qqd_AC.pdb
+4qrr	B3501	datasets_alphafold_finetune/pmhc_finetune/natives/4qrr_AP.pdb
