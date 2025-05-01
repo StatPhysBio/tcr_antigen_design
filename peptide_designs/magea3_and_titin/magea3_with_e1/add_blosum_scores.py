@@ -61,7 +61,8 @@ if __name__ == '__main__':
                 'hcnn_pyrosetta_annealing/hcnn_plus_pyrosetta_annealing_peptides_so3_convnet_noise=0p5_w_pae.tsv',
                 'mhc_pwm/mhc_motif_peptides_w_pae.tsv',
                 'proteinmpnn_v_48_002_0.7/proteinmpnn_samples_v_48_002_0.7_w_pae.tsv',
-                'proteinmpnn_v_48_020_0.7/proteinmpnn_samples_v_48_020_0.7_w_pae.tsv']
+                'proteinmpnn_v_48_020_0.7/proteinmpnn_samples_v_48_020_0.7_w_pae.tsv',
+                'esmif_0.7/esmif_samples_0.7_w_pae.tsv']
 
     for tsvfile in tqdm(tsvfiles):
         df = pd.read_csv(tsvfile, sep='\t')

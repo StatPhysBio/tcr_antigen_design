@@ -10,7 +10,7 @@ from constants import TCR_TO_PDB, PDB_TO_PEP_INFO
 
 # done (in progress) TCRS: 1, (2, 3, 4, 5, 6, 7)  --> AF3 structures
 
-TCRS = ['6', '7']
+TCRS = ['1', '2', '3', '4', '5'] # ['6', '7']
 
 
 SLURM_SETUP = "#!/bin/bash\n\

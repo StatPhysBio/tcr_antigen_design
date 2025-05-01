@@ -20,7 +20,6 @@ for model_version in $model_version_list
                 --pdb_column wt_pdb \
                 --chain_column mutant_chain \
                 --peptides_column sequence \
-                --peptide_resnum_start 1 \
                 --num_seq_per_target 10 \
                 --batch_size 10
 

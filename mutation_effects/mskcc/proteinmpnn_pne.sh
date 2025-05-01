@@ -4,7 +4,7 @@ proteinmpnn_dir=/gscratch/spe/gvisan01/ProteinMPNN-copy/peptide_scoring_and_desi
 
 base_dir='/gscratch/spe/gvisan01/tcr_pmhc/mutation_effects/mskcc/'
 
-tcrs='2 3 4 5 6 7'
+tcrs='1 2 3 4 5 6 7'
 
 use_mt_structure='0'
 
