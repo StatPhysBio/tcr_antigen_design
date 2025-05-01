@@ -31,13 +31,13 @@ if __name__ == '__main__':
 
         outfile_handle = open(os.path.join(output_dir, f'esmif_samples_{sampling_temp}.tsv'), 'w+')
 
-        for pdbid in pdbids:
+        for pdb_i, pdbid in enumerate(pdbids):
 
             pdbpath = os.path.join(pdbdir, pdbid + '.pdb')
 
             command = f'python {ESM_PATH}/examples/inverse_folding/sample_sequences.py \
                                     {pdbpath} \
-                                    --chain B \
+                                    --chain C \
                                     --temperature {sampling_temp} \
                                     --num-samples {NUM_SAMPLES} \
                                     --outpath {output_fasta_path} \
@@ -75,7 +75,9 @@ if __name__ == '__main__':
             header = 'organism	mhc_class	mhc	peptide	va	ja	cdr3a	vb	jb	cdr3b	pdbid	hcnn_model'
             template_row = 'human	1	A*02:01	{seq}	TRAV21*01	TRAJ6*01	CAVRPTSGGSYIPTF	TRBV6-5*01	TRBJ2-2*01	CASSYVGNTGELFF	{pdbid}	esmif'
             
-            outfile_handle.write(header + '\n')
+            if pdb_i == 0:
+                outfile_handle.write(header + '\n')
+            
             written_sequences = set()
             for seq in sequences:
                 if seq in written_sequences:

@@ -32,6 +32,8 @@ def get_dfs_for_system(system):
         df_proteinmpnn_002 = pd.read_csv(os.path.join(THIS_FILE, '../nyeso/nyeso_full_copy/proteinmpnn_v_48_002_0.7/proteinmpnn_samples_v_48_002_0.7_w_pae_w_blosum.tsv'), sep='\t')
         df_proteinmpnn_020 = pd.read_csv(os.path.join(THIS_FILE, '../nyeso/nyeso_full_copy/proteinmpnn_v_48_020_0.7/proteinmpnn_samples_v_48_020_0.7_w_pae_w_blosum.tsv'), sep='\t')
 
+        df_esmif = pd.read_csv(os.path.join(THIS_FILE, '../nyeso/nyeso_full_copy/esmif_0.7/esmif_samples_0.7_w_pae_w_blosum.tsv'), sep='\t')
+
         df_hermes_fixed_000 = pd.read_csv(os.path.join(THIS_FILE, '../nyeso/nyeso_full_copy/hcnn_fixed_structure/hcnn_peptides_from_fixed_structure_so3_convnet_base_ensemble_w_pae_w_blosum.tsv'), sep='\t')
         df_hermes_fixed_050 = pd.read_csv(os.path.join(THIS_FILE, '../nyeso/nyeso_full_copy/hcnn_fixed_structure/hcnn_peptides_from_fixed_structure_so3_convnet_noise=0p5_w_pae_w_blosum.tsv'), sep='\t')
         
@@ -47,6 +49,7 @@ def get_dfs_for_system(system):
         df_mhc = None
         df_proteinmpnn_002 = None
         df_proteinmpnn_020 = None
+        df_esmif = None
         df_hermes_fixed_000 = None
         df_hermes_fixed_050 = None
         df_blosum_t1 = None
@@ -85,6 +88,11 @@ def get_dfs_for_system(system):
             else:
                 df_proteinmpnn_020 = pd.concat([df_proteinmpnn_020, pd.read_csv(os.path.join(THIS_FILE, f'../magea3_and_titin/{substruct}/proteinmpnn_v_48_020_0.7/proteinmpnn_samples_v_48_020_0.7_w_pae_w_blosum.tsv'), sep='\t')])
             
+            if df_esmif is None:
+                df_esmif = pd.read_csv(os.path.join(THIS_FILE, f'../magea3_and_titin/{substruct}/esmif_0.7/esmif_samples_0.7_w_pae_w_blosum.tsv'), sep='\t')
+            else:
+                df_esmif = pd.concat([df_esmif, pd.read_csv(os.path.join(THIS_FILE, f'../magea3_and_titin/{substruct}/esmif_0.7/esmif_samples_0.7_w_pae_w_blosum.tsv'), sep='\t')])
+            
             if df_hermes_fixed_000 is None:
                 df_hermes_fixed_000 = pd.read_csv(os.path.join(THIS_FILE, f'../magea3_and_titin/{substruct}/hcnn_fixed_structure/hcnn_peptides_from_fixed_structure_so3_convnet_base_ensemble_w_pae_w_blosum.tsv'), sep='\t')
             else:
@@ -118,6 +126,7 @@ def get_dfs_for_system(system):
         df_mhc = None
         df_proteinmpnn_002 = None
         df_proteinmpnn_020 = None
+        df_esmif = None
         df_hermes_fixed_000 = None
         df_hermes_fixed_050 = None
         df_blosum_t1 = None
@@ -155,6 +164,11 @@ def get_dfs_for_system(system):
                 df_proteinmpnn_020 = pd.read_csv(os.path.join(THIS_FILE, f'../ebv/{substruct}/proteinmpnn_v_48_020_0.7/proteinmpnn_samples_v_48_020_0.7_w_pae_w_blosum.tsv'), sep='\t')
             else:
                 df_proteinmpnn_020 = pd.concat([df_proteinmpnn_020, pd.read_csv(os.path.join(THIS_FILE, f'../ebv/{substruct}/proteinmpnn_v_48_020_0.7/proteinmpnn_samples_v_48_020_0.7_w_pae_w_blosum.tsv'), sep='\t')])
+            
+            if df_esmif is None:
+                df_esmif = pd.read_csv(os.path.join(THIS_FILE, f'../ebv/{substruct}/esmif_0.7/esmif_samples_0.7_w_pae_w_blosum.tsv'), sep='\t')
+            else:
+                df_esmif = pd.concat([df_esmif, pd.read_csv(os.path.join(THIS_FILE, f'../ebv/{substruct}/esmif_0.7/esmif_samples_0.7_w_pae_w_blosum.tsv'), sep='\t')])
             
             if df_hermes_fixed_000 is None:
                 df_hermes_fixed_000 = pd.read_csv(os.path.join(THIS_FILE, f'../ebv/{substruct}/hcnn_fixed_structure/hcnn_peptides_from_fixed_structure_so3_convnet_base_ensemble_w_pae_w_blosum.tsv'), sep='\t')
@@ -212,13 +226,14 @@ def get_dfs_for_system(system):
     df_mhc = remove_duplicates(add_hamming_distances_to_df(df_mhc, wildtypes))
     df_proteinmpnn_002 = remove_duplicates(add_hamming_distances_to_df(df_proteinmpnn_002, wildtypes))
     df_proteinmpnn_020 = remove_duplicates(add_hamming_distances_to_df(df_proteinmpnn_020, wildtypes))
+    df_esmif = remove_duplicates(add_hamming_distances_to_df(df_esmif, wildtypes))
     df_hermes_fixed_000 = remove_duplicates(add_hamming_distances_to_df(df_hermes_fixed_000, wildtypes))
     df_hermes_fixed_050 = remove_duplicates(add_hamming_distances_to_df(df_hermes_fixed_050, wildtypes))
     df_blosum_t1 = remove_duplicates(add_hamming_distances_to_df(df_blosum_t1, wildtypes))
     df_blosum_t2 = remove_duplicates(add_hamming_distances_to_df(df_blosum_t2, wildtypes))
     df_blosum_t3 = remove_duplicates(add_hamming_distances_to_df(df_blosum_t3, wildtypes))
 
-    return {'wt': df_wildtype, 'hermes_relaxed_000': df_hermes_relaxed_000, 'hermes_relaxed_050': df_hermes_relaxed_050, 'mhc': df_mhc, 'proteinmpnn_002': df_proteinmpnn_002, 'proteinmpnn_020': df_proteinmpnn_020, 'hermes_fixed_000': df_hermes_fixed_000, 'hermes_fixed_050': df_hermes_fixed_050, 'blosum_t1': df_blosum_t1, 'blosum_t2': df_blosum_t2, 'blosum_t3': df_blosum_t3}
+    return {'wt': df_wildtype, 'hermes_relaxed_000': df_hermes_relaxed_000, 'hermes_relaxed_050': df_hermes_relaxed_050, 'mhc': df_mhc, 'proteinmpnn_002': df_proteinmpnn_002, 'proteinmpnn_020': df_proteinmpnn_020, 'esmif': df_esmif, 'hermes_fixed_000': df_hermes_fixed_000, 'hermes_fixed_050': df_hermes_fixed_050, 'blosum_t1': df_blosum_t1, 'blosum_t2': df_blosum_t2, 'blosum_t3': df_blosum_t3}
 
 color_list = plt.get_cmap('tab20').colors
 blue = color_list[0]
@@ -250,6 +265,7 @@ MODEL_TO_COLOR = {
     'mhc': gray,
     'proteinmpnn_002': blue,
     'proteinmpnn_020': blue_light,
+    'esmif': olive,
     'blosum_t1': brown,
     'blosum_t2': brown_light,
     'blosum_t3': '#dec6c2',
@@ -263,6 +279,7 @@ MODEL_TO_PRETTY_NAME = {
     'mhc': '{mhc} PWM',
     'proteinmpnn_002': 'ProteinMPNN 0.02',
     'proteinmpnn_020': 'ProteinMPNN 0.20',
+    'esmif': 'ESM-IF1',
     'blosum_t1': 'BLOSUM62 temp = 1.0',
     'blosum_t2': 'BLOSUM62 temp = 2.0',
     'blosum_t3': 'BLOSUM62 temp = 3.0'
@@ -286,7 +303,7 @@ SYSTEM_TO_PEP_LENGTH = {
     'ebv': 11
 }
 
-MODELS_IN_ORDER = ['hermes_fixed_000', 'hermes_fixed_050', 'hermes_relaxed_000', 'hermes_relaxed_050', 'proteinmpnn_002', 'proteinmpnn_020', 'blosum_t1', 'blosum_t2', 'blosum_t3', 'mhc']
+MODELS_IN_ORDER = ['hermes_fixed_000', 'hermes_fixed_050', 'hermes_relaxed_000', 'hermes_relaxed_050', 'proteinmpnn_002', 'proteinmpnn_020', 'esmif', 'blosum_t1', 'blosum_t2', 'blosum_t3', 'mhc']
 
 SYSTEM_TO_PAE_THRESHOLD = {
     'nyeso': 5.5,
@@ -311,6 +328,7 @@ def color_violinplot_single(parts, color):
         pb.set_facecolor(color)
         pb.set_edgecolor(color)
         pb.set_alpha(ALPHA)
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()

@@ -39,19 +39,24 @@ if __name__ == '__main__':
     #                         -o2 {curr_dir}/proteinmpnn_v_48_020_0.7")
 
     os.system(f"python -u /gscratch/spe/gvisan01/TCRdock-copy/tcrdock_pipeline_on_tsvfile.py \
-                            -i {curr_dir}/blosum62/sample_peptides_from_blosum62__temperature=1.0.tsv \
-                            -o {curr_dir}/blosum62/tcrdock_output_T=1 \
-                            -o2 {curr_dir}/blosum62")
+                            -i {curr_dir}/esmif_0.7/esmif_samples_0.7.tsv \
+                            -o {curr_dir}/esmif_0.7/tcrdock_output \
+                            -o2 {curr_dir}/esmif_0.7")
 
-    os.system(f"python -u /gscratch/spe/gvisan01/TCRdock-copy/tcrdock_pipeline_on_tsvfile.py \
-                            -i {curr_dir}/blosum62/sample_peptides_from_blosum62__temperature=2.0.tsv \
-                            -o {curr_dir}/blosum62/tcrdock_output_T=2 \
-                            -o2 {curr_dir}/blosum62")
+    # os.system(f"python -u /gscratch/spe/gvisan01/TCRdock-copy/tcrdock_pipeline_on_tsvfile.py \
+    #                         -i {curr_dir}/blosum62/sample_peptides_from_blosum62__temperature=1.0.tsv \
+    #                         -o {curr_dir}/blosum62/tcrdock_output_T=1 \
+    #                         -o2 {curr_dir}/blosum62")
 
-    os.system(f"python -u /gscratch/spe/gvisan01/TCRdock-copy/tcrdock_pipeline_on_tsvfile.py \
-                            -i {curr_dir}/blosum62/sample_peptides_from_blosum62__temperature=3.0.tsv \
-                            -o {curr_dir}/blosum62/tcrdock_output_T=3 \
-                            -o2 {curr_dir}/blosum62")
+    # os.system(f"python -u /gscratch/spe/gvisan01/TCRdock-copy/tcrdock_pipeline_on_tsvfile.py \
+    #                         -i {curr_dir}/blosum62/sample_peptides_from_blosum62__temperature=2.0.tsv \
+    #                         -o {curr_dir}/blosum62/tcrdock_output_T=2 \
+    #                         -o2 {curr_dir}/blosum62")
+
+    # os.system(f"python -u /gscratch/spe/gvisan01/TCRdock-copy/tcrdock_pipeline_on_tsvfile.py \
+    #                         -i {curr_dir}/blosum62/sample_peptides_from_blosum62__temperature=3.0.tsv \
+    #                         -o {curr_dir}/blosum62/tcrdock_output_T=3 \
+    #                         -o2 {curr_dir}/blosum62")
 
     # os.system(f"python -u /gscratch/spe/gvisan01/TCRdock-copy/tcrdock_pipeline_on_tsvfile.py \
     #                         -i {curr_dir}/hcnn_pyrosetta_annealing/hcnn_plus_pyrosetta_annealing_peptides_so3_convnet_base_ensemble.tsv \

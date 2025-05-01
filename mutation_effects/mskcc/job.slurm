@@ -1,7 +1,7 @@
 #!/bin/bash
 #SBATCH --job-name=mskcc_hermes_py_050_tcr7_GRLKALCQY_4
 #SBATCH --account=stf
-#SBATCH --partition=cpu-g2-mem2x
+#SBATCH --partition=cpu-g2
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
 #SBATCH --time=02:00:00

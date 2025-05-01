@@ -14,7 +14,8 @@ if __name__ == '__main__':
                 'hcnn_pyrosetta_annealing/hcnn_plus_pyrosetta_annealing_peptides_so3_convnet_noise=0p5_w_pae_w_blosum.tsv',
                 'mhc_pwm/mhc_motif_peptides_w_pae_w_blosum.tsv',
                 'proteinmpnn_v_48_002_0.7/proteinmpnn_samples_v_48_002_0.7_w_pae_w_blosum.tsv',
-                'proteinmpnn_v_48_020_0.7/proteinmpnn_samples_v_48_020_0.7_w_pae_w_blosum.tsv']
+                'proteinmpnn_v_48_020_0.7/proteinmpnn_samples_v_48_020_0.7_w_pae_w_blosum.tsv',
+                'esmif_0.7/esmif_samples_0.7_w_pae_w_blosum.tsv']
 
     for tsvfile in tsvfiles:
         os.system(f'python ../../src/add_netmhcpan_to_tsvfile.py \

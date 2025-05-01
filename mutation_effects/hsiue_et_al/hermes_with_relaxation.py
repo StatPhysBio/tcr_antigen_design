@@ -26,7 +26,7 @@ if __name__ == '__main__':
     parser.add_argument('--total_relaxations', type=int, default=100)
 
     parser.add_argument('-A',  '--account', type=str, default='stf')
-    parser.add_argument('-P',  '--partition', type=str, default='cpu-g2-mem2x')
+    parser.add_argument('-P',  '--partition', type=str, default='cpu-g2')
     parser.add_argument('-G',  '--use_gpu', type=int, default=0, choices=[0, 1])
     parser.add_argument('-C',  '--num_cores', type=int, default=1)
     parser.add_argument('-W',  '--walltime', type=str, default='02:00:00')

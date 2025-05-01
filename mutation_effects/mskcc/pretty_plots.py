@@ -161,7 +161,7 @@ if __name__ == '__main__':
     predictions = df_full[prediction_column][mask]
     targets = df_full[target_column][mask]
 
-    is_bad_value_mask = targets < CUTOFF_BAD_VALUE[args.system_name_in_csv_file]
+    is_bad_value_mask = ~df_full['is_reliable']
 
     pr_fil, pr_pval_fil = pearsonr(targets[~is_bad_value_mask], predictions[~is_bad_value_mask])
     sr_fil, sr_pval_fil = spearmanr(targets[~is_bad_value_mask], predictions[~is_bad_value_mask])
