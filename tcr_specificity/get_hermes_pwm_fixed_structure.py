@@ -44,12 +44,12 @@ def prediction(args, pdb, chain, resnums, models, hparams, finetuning_hparams):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('--hermes_path', type=str, default='/gscratch/spe/gvisan01/hermes/')
-    parser.add_argument('--model_version', type=str, default='hermes_py_000_ft_cdna117k_relaxed_pred')
+    parser.add_argument('--model_version', type=str, default='hermes_py_000')
 
-    parser.add_argument('--pdbdir', type=str, default='pdbs/tcr_pmhc')
-    parser.add_argument('--output_dir', type=str, default='pwm_csv_files/hcnn_fixed_structure')
+    parser.add_argument('--pdbdir', type=str, default='pdbs/pmhc')
+    parser.add_argument('--output_dir', type=str, default='pwm_csv_files/mhc_crystal_hcnn_fixed_structure')
 
-    parser.add_argument('--input_csv_filepath', type=str, default='pdbs_allele_df_with_peptide_info.csv')
+    parser.add_argument('--input_csv_filepath', type=str, default='pmhc_class_1_crystal_structures.csv')
     parser.add_argument('--pdb_column', type=str, default='pdbid')
     parser.add_argument('--chain_column', type=str, default='peptide_chain')
     parser.add_argument('--resnums_column', type=str, default='peptide_resnums')
@@ -83,7 +83,11 @@ if __name__ == '__main__':
         wt_peptide = row[args.sequence_column]
         allele = row[args.allele_column] 
 
-        peptide_pwm = prediction(args, pdb, chain, resnums, models, hparams, finetuning_hparams)
+        try:
+            peptide_pwm = prediction(args, pdb, chain, resnums, models, hparams, finetuning_hparams)
+        except Exception as e:
+            print(f'Error processing {pdb}.')
+            continue
 
         filename = f'{pdb}__{wt_peptide}__{allele}.csv'
         filepath = os.path.join(output_dir, filename)
