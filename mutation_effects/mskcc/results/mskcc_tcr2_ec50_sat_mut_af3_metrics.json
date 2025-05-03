@@ -36,21 +36,53 @@
             0.4607994289983973,
             4.870506092597066e-06
         ],
-        "ProteinMPNN 0.20": [
+        "ProteinMPNN 0.20 Pep and TCR Full Masked": [
+            0.42421387118647363,
+            3.08968220063592e-05
+        ],
+        "ProteinMPNN 0.02 Pep and TCR Full Masked": [
+            0.46614676458262966,
+            3.6506507104708696e-06
+        ],
+        "ProteinMPNN 0.20 TCR Full Masked": [
+            0.07600350780994385,
+            0.4764744126899935
+        ],
+        "ProteinMPNN 0.02 TCR Full Masked": [
+            -0.04528043207231944,
+            0.6717257740940663
+        ],
+        "ProteinMPNN 0.20 Pep Full Masked": [
+            0.39963165512003546,
+            9.534303004164571e-05
+        ],
+        "ProteinMPNN 0.02 Pep Full Masked": [
+            0.4948229713226489,
+            7.139665338773652e-07
+        ],
+        "ProteinMPNN 0.20 Pep 1-by-1 Masked": [
             0.405652618062966,
             7.29329753108676e-05
         ],
-        "ProteinMPNN 0.02": [
+        "ProteinMPNN 0.02 Pep 1-by-1 Masked": [
             0.4988390887842429,
             5.612933558892489e-07
         ],
+        "HERMES-relaxed-min_energy 0.50": [
+            0.3639628912175779,
+            0.00042132946915233614
+        ],
+        "HERMES-relaxed-min_energy 0.00": [
+            0.489993078299051,
+            9.497018266663975e-07
+        ],
         "HERMES-relaxed 0.50": [
-            0.3748196412027626,
-            0.00027286815172099206
+            0.37482490010214964,
+            0.0002728097272263525
         ],
         "HERMES-relaxed 0.00": [
-            0.4908497979762306,
-            9.031222976426354e-07
+            0.4899885957772746,
+            9.499514112925411e-07
         ],
         "HERMES-fixed 0.50": [
             0.5368426231138289,
@@ -98,21 +130,53 @@
             0.4138535621681689,
             5.021256160322524e-05
         ],
-        "ProteinMPNN 0.20": [
+        "ProteinMPNN 0.20 Pep and TCR Full Masked": [
+            0.46620570440795156,
+            3.6389699242705605e-06
+        ],
+        "ProteinMPNN 0.02 Pep and TCR Full Masked": [
+            0.5262625015434004,
+            9.972401899396816e-08
+        ],
+        "ProteinMPNN 0.20 TCR Full Masked": [
+            0.08261925340577025,
+            0.4388340172196148
+        ],
+        "ProteinMPNN 0.02 TCR Full Masked": [
+            0.030234185290365062,
+            0.7772673390464894
+        ],
+        "ProteinMPNN 0.20 Pep Full Masked": [
+            0.43772482199448487,
+            1.6007322112963023e-05
+        ],
+        "ProteinMPNN 0.02 Pep Full Masked": [
+            0.5219492118368523,
+            1.32201432459001e-07
+        ],
+        "ProteinMPNN 0.20 Pep 1-by-1 Masked": [
             0.4581717907560604,
             5.601830535081484e-06
         ],
-        "ProteinMPNN 0.02": [
+        "ProteinMPNN 0.02 Pep 1-by-1 Masked": [
             0.5279252582623369,
             8.936039245123038e-08
         ],
+        "HERMES-relaxed-min_energy 0.50": [
+            0.5067703831748775,
+            3.458433373792186e-07
+        ],
+        "HERMES-relaxed-min_energy 0.00": [
+            0.5588261925340577,
+            1.0400590792798493e-08
+        ],
         "HERMES-relaxed 0.50": [
-            0.4979627114458574,
-            5.917040687352885e-07
+            0.49590484421945097,
+            6.69362810507539e-07
         ],
         "HERMES-relaxed 0.00": [
-            0.569280158044203,
-            4.775123069692002e-09
+            0.5705313413178581,
+            4.34239899885605e-09
         ],
         "HERMES-fixed 0.50": [
             0.6137136271967732,
@@ -133,10 +197,18 @@
         "TCRdock benchmark": 0.642094017094017,
         "TCRdock": 0.6324786324786325,
         "ESM-IF1": 0.763888888888889,
-        "ProteinMPNN 0.20": 0.7286324786324786,
-        "ProteinMPNN 0.02": 0.7596153846153847,
+        "ProteinMPNN 0.20 Pep and TCR Full Masked": 0.7232905982905983,
+        "ProteinMPNN 0.02 Pep and TCR Full Masked": 0.7873931623931624,
+        "ProteinMPNN 0.20 TCR Full Masked": 0.72008547008547,
+        "ProteinMPNN 0.02 TCR Full Masked": 0.6378205128205128,
+        "ProteinMPNN 0.20 Pep Full Masked": 0.719017094017094,
+        "ProteinMPNN 0.02 Pep Full Masked": 0.763888888888889,
+        "ProteinMPNN 0.20 Pep 1-by-1 Masked": 0.7286324786324786,
+        "ProteinMPNN 0.02 Pep 1-by-1 Masked": 0.7596153846153847,
+        "HERMES-relaxed-min_energy 0.50": 0.7788461538461537,
+        "HERMES-relaxed-min_energy 0.00": 0.8557692307692307,
         "HERMES-relaxed 0.50": 0.7777777777777778,
-        "HERMES-relaxed 0.00": 0.858974358974359,
+        "HERMES-relaxed 0.00": 0.8600427350427351,
         "HERMES-fixed 0.50": 0.7970085470085471,
         "HERMES-fixed 0.00": 0.8386752136752137
     },
@@ -150,10 +222,18 @@
         "TCRdock benchmark": 0.7208333333333334,
         "TCRdock": 0.6864583333333334,
         "ESM-IF1": 0.8035714285714285,
-        "ProteinMPNN 0.20": 0.7802579365079365,
-        "ProteinMPNN 0.02": 0.7867063492063492,
-        "HERMES-relaxed 0.50": 0.7891865079365079,
-        "HERMES-relaxed 0.00": 0.8604166666666666,
+        "ProteinMPNN 0.20 Pep and TCR Full Masked": 0.7862103174603174,
+        "ProteinMPNN 0.02 Pep and TCR Full Masked": 0.8095238095238095,
+        "ProteinMPNN 0.20 TCR Full Masked": 0.7048611111111112,
+        "ProteinMPNN 0.02 TCR Full Masked": 0.6324404761904763,
+        "ProteinMPNN 0.20 Pep Full Masked": 0.779265873015873,
+        "ProteinMPNN 0.02 Pep Full Masked": 0.7886904761904762,
+        "ProteinMPNN 0.20 Pep 1-by-1 Masked": 0.7802579365079365,
+        "ProteinMPNN 0.02 Pep 1-by-1 Masked": 0.7867063492063492,
+        "HERMES-relaxed-min_energy 0.50": 0.7802579365079365,
+        "HERMES-relaxed-min_energy 0.00": 0.839781746031746,
+        "HERMES-relaxed 0.50": 0.7896825396825397,
+        "HERMES-relaxed 0.00": 0.8511904761904762,
         "HERMES-fixed 0.50": 0.8494791666666667,
         "HERMES-fixed 0.00": 0.8916666666666666
     },
@@ -167,10 +247,18 @@
         "TCRdock benchmark": 0.679268292682927,
         "TCRdock": 0.699728997289973,
         "ESM-IF1": 0.767297162767546,
-        "ProteinMPNN 0.20": 0.7320806371329021,
-        "ProteinMPNN 0.02": 0.6656296665007466,
-        "HERMES-relaxed 0.50": 0.6005475360876058,
-        "HERMES-relaxed 0.00": 0.6001355013550136,
+        "ProteinMPNN 0.20 Pep and TCR Full Masked": 0.7578397212543553,
+        "ProteinMPNN 0.02 Pep and TCR Full Masked": 0.6932553509208561,
+        "ProteinMPNN 0.20 TCR Full Masked": 0.5530114484818317,
+        "ProteinMPNN 0.02 TCR Full Masked": 0.560477849676456,
+        "ProteinMPNN 0.20 Pep Full Masked": 0.7346938775510204,
+        "ProteinMPNN 0.02 Pep Full Masked": 0.6636386261821802,
+        "ProteinMPNN 0.20 Pep 1-by-1 Masked": 0.7320806371329021,
+        "ProteinMPNN 0.02 Pep 1-by-1 Masked": 0.6656296665007466,
+        "HERMES-relaxed-min_energy 0.50": 0.5999253359880538,
+        "HERMES-relaxed-min_energy 0.00": 0.6166002986560477,
+        "HERMES-relaxed 0.50": 0.6010452961672476,
+        "HERMES-relaxed 0.00": 0.6177202588352413,
         "HERMES-fixed 0.50": 0.7134146341463414,
         "HERMES-fixed 0.00": 0.7237127371273713
     },
@@ -184,10 +272,18 @@
         "TCRdock benchmark": 0.7957317073170731,
         "TCRdock": 0.7378048780487805,
         "ESM-IF1": 0.8709349593495934,
-        "ProteinMPNN 0.20": 0.866869918699187,
-        "ProteinMPNN 0.02": 0.8485772357723577,
-        "HERMES-relaxed 0.50": 0.8119918699186992,
-        "HERMES-relaxed 0.00": 0.8617886178861789,
+        "ProteinMPNN 0.20 Pep and TCR Full Masked": 0.8841463414634146,
+        "ProteinMPNN 0.02 Pep and TCR Full Masked": 0.8689024390243902,
+        "ProteinMPNN 0.20 TCR Full Masked": 0.676829268292683,
+        "ProteinMPNN 0.02 TCR Full Masked": 0.6199186991869918,
+        "ProteinMPNN 0.20 Pep Full Masked": 0.8689024390243901,
+        "ProteinMPNN 0.02 Pep Full Masked": 0.8485772357723578,
+        "ProteinMPNN 0.20 Pep 1-by-1 Masked": 0.866869918699187,
+        "ProteinMPNN 0.02 Pep 1-by-1 Masked": 0.8485772357723577,
+        "HERMES-relaxed-min_energy 0.50": 0.7926829268292683,
+        "HERMES-relaxed-min_energy 0.00": 0.8414634146341463,
+        "HERMES-relaxed 0.50": 0.8130081300813008,
+        "HERMES-relaxed 0.00": 0.8607723577235772,
         "HERMES-fixed 0.50": 0.899390243902439,
         "HERMES-fixed 0.00": 0.9420731707317074
     }

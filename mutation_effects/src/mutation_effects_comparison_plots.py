@@ -43,7 +43,9 @@ def get_long_prediction_column_name(model_instance, prediction_column_short, sys
         if prediction_column_short == 'delta_log_p':
             return 'log_proba_mt__minus__log_proba_wt', system_name_in_csv_file
         elif prediction_column_short == 'pE-relaxed':
-            return 'pnE', system_name_in_csv_file + '_with_relaxation'
+            return 'pnE', system_name_in_csv_file + '_with_relaxation_mean_but_min_energy_runs'
+        elif prediction_column_short == 'pE-relaxed-min-energy':
+            return 'pnE', system_name_in_csv_file + '_with_relaxation_min_energy'
         elif prediction_column_short == 'pE-fixed':
             return 'pnE', system_name_in_csv_file
         else:
@@ -102,6 +104,7 @@ def get_long_prediction_column_name(model_instance, prediction_column_short, sys
 SHORT_PREDICTION_NAME_TO_PRETTY_NAME = {
     'pE-fixed': '$pE$ on fixed structure',
     'pE-relaxed': 'avg. $pE$ on mutated+relaxed structures',
+    'pE-relaxed-min-energy': '$pE$ on\nmutated+relaxed structure\nwith min. rosetta energy',
     'neg_pae': '-PAE',
     'sub_score': 'Substitution Matrix Score',
     'pnlogp-fixed': 'log P on fixed structure',
@@ -116,6 +119,8 @@ def short_prediction_name_to_pretty_name(short_prediction_name):
         return '$pE$ on fixed structure'
     elif short_prediction_name == 'pE-relaxed':
         return 'avg. $pE$ on\nmutated+relaxed structures'
+    elif short_prediction_name == 'pE-relaxed-min-energy':
+        return '$pE$ on\nmutated+relaxed structure\nwith min. rosetta energy'
     elif short_prediction_name == 'neg_pae':
         return '-PAE'
     elif short_prediction_name == 'sub_score':
@@ -156,10 +161,26 @@ def make_pretty_name(model, pred_col):
         return 'HERMES-relaxed 0.00'
     elif model == 'hermes_py_050' and pred_col == 'pE-relaxed':
         return 'HERMES-relaxed 0.50'
+    elif model == 'hermes_py_000' and pred_col == 'pE-relaxed-min-energy':
+        return 'HERMES-relaxed-min_energy 0.00'
+    elif model == 'hermes_py_050' and pred_col == 'pE-relaxed-min-energy':
+        return 'HERMES-relaxed-min_energy 0.50'
     elif model == 'proteinmpnn_v_48_002' and pred_col in {'delta_log_p', 'pnlogp-fixed'}:
-        return 'ProteinMPNN 0.02'
+        return 'ProteinMPNN 0.02 Pep 1-by-1 Masked'
+    elif model == 'proteinmpnn_v_48_002_full_pep_masked' and pred_col in {'delta_log_p', 'pnlogp-fixed'}:
+        return 'ProteinMPNN 0.02 Pep Full Masked'
+    elif model == 'proteinmpnn_v_48_002_full_tcr_masked' and pred_col in {'delta_log_p', 'pnlogp-fixed'}:
+        return 'ProteinMPNN 0.02 TCR Full Masked'
+    elif model == 'proteinmpnn_v_48_002_full_pep_and_tcr_masked' and pred_col in {'delta_log_p', 'pnlogp-fixed'}:
+        return 'ProteinMPNN 0.02 Pep and TCR Full Masked'
     elif model == 'proteinmpnn_v_48_020' and pred_col in {'delta_log_p', 'pnlogp-fixed'}:
-        return 'ProteinMPNN 0.20'
+        return 'ProteinMPNN 0.20 Pep 1-by-1 Masked'
+    elif model == 'proteinmpnn_v_48_020_full_pep_masked' and pred_col in {'delta_log_p', 'pnlogp-fixed'}:
+        return 'ProteinMPNN 0.20 Pep Full Masked'
+    elif model == 'proteinmpnn_v_48_020_full_tcr_masked' and pred_col in {'delta_log_p', 'pnlogp-fixed'}:
+        return 'ProteinMPNN 0.20 TCR Full Masked'
+    elif model == 'proteinmpnn_v_48_020_full_pep_and_tcr_masked' and pred_col in {'delta_log_p', 'pnlogp-fixed'}:
+        return 'ProteinMPNN 0.20 Pep and TCR Full Masked'
     elif model == 'proteinmpnn_v_48_030' and pred_col in {'delta_log_p', 'pnlogp-fixed'}:
         return 'ProteinMPNN 0.30'
     elif model == 'esmif' and pred_col == 'pnlogp-fixed':
@@ -188,8 +209,8 @@ def get_model_specific_parameters(model_instance, prediction_column_short, args)
 
     system = args.system
     system_name_in_csv_file = args.system_name_in_csv_file
-    use_mt_structure = 0 # always 0, there for legagy reasons
-    num_seq_per_target = 10 # always 10, there for legagy reasons
+    use_mt_structure = 0 # always 0, there for legacy reasons
+    num_seq_per_target = 10 # always 10, there for legacy reasons
 
     prediction_column, system_name_in_csv_file = get_long_prediction_column_name(model_instance, prediction_column_short, system_name_in_csv_file)
     title = make_pretty_name(model_instance, prediction_column_short)
@@ -301,14 +322,14 @@ if __name__ == '__main__':
 
     # make the list of models and the figure shape based on the system
     if 'hsiue' in args.system:
-        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'esmif', 'blosum62', 'luksza_cross_reactivity', 'luksza_cross_reactivity_without_d']
-        prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'sub_score', 'sub_score', 'sub_score']
+        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'proteinmpnn_v_48_002_full_pep_masked', 'proteinmpnn_v_48_020_full_pep_masked', 'proteinmpnn_v_48_002_full_tcr_masked', 'proteinmpnn_v_48_020_full_tcr_masked', 'proteinmpnn_v_48_002_full_pep_and_tcr_masked', 'proteinmpnn_v_48_020_full_pep_and_tcr_masked', 'esmif', 'blosum62', 'luksza_cross_reactivity', 'luksza_cross_reactivity_without_d']
+        prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pE-relaxed-min-energy', 'pE-relaxed-min-energy', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'sub_score', 'sub_score', 'sub_score']
         assert len(models) == len(prediction_columns)
         num_rows = len(models) // 2 + 1
         num_cols = 2
     elif 'mskcc' in args.system:
-        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'esmif', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62', 'luksza_cross_reactivity', 'luksza_cross_reactivity_without_d', 'tapir', 'nettcr2p2']
-        prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'neg_pae', 'neg_pae', 'sub_score', 'sub_score', 'sub_score', 'tapir_score', 'nettcr_score']
+        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'proteinmpnn_v_48_002_full_pep_masked', 'proteinmpnn_v_48_020_full_pep_masked', 'proteinmpnn_v_48_002_full_tcr_masked', 'proteinmpnn_v_48_020_full_tcr_masked', 'proteinmpnn_v_48_002_full_pep_and_tcr_masked', 'proteinmpnn_v_48_020_full_pep_and_tcr_masked', 'esmif', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62', 'luksza_cross_reactivity', 'luksza_cross_reactivity_without_d', 'tapir', 'nettcr2p2']
+        prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pE-relaxed-min-energy', 'pE-relaxed-min-energy', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'neg_pae', 'neg_pae', 'sub_score', 'sub_score', 'sub_score', 'tapir_score', 'nettcr_score']
         if 'tcr7' not in args.system_name_in_csv_file:
             models.append('tulip')
             prediction_columns.append('TULIP_SCORE')
@@ -316,8 +337,8 @@ if __name__ == '__main__':
         num_rows = len(models) // 2 + 1
         num_cols = 2
     else:
-        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'esmif', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62', 'luksza_cross_reactivity', 'luksza_cross_reactivity_without_d', 'tapir', 'nettcr2p2']
-        prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'neg_pae', 'neg_pae', 'sub_score', 'sub_score', 'sub_score', 'tapir_score', 'nettcr_score']
+        models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002', 'proteinmpnn_v_48_020', 'proteinmpnn_v_48_002_full_pep_masked', 'proteinmpnn_v_48_020_full_pep_masked', 'proteinmpnn_v_48_002_full_tcr_masked', 'proteinmpnn_v_48_020_full_tcr_masked', 'proteinmpnn_v_48_002_full_pep_and_tcr_masked', 'proteinmpnn_v_48_020_full_pep_and_tcr_masked', 'esmif', 'tcrdock', 'tcrdock_no_nearby_templates', 'blosum62', 'luksza_cross_reactivity', 'luksza_cross_reactivity_without_d', 'tapir', 'nettcr2p2']
+        prediction_columns = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pE-relaxed-min-energy', 'pE-relaxed-min-energy', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'pnlogp-fixed', 'neg_pae', 'neg_pae', 'sub_score', 'sub_score', 'sub_score', 'tapir_score', 'nettcr_score']
         assert len(models) == len(prediction_columns)
         num_rows = len(models) // 2 + 1
         num_cols = 2
