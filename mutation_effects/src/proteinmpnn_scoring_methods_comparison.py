@@ -337,7 +337,7 @@ for proteinmpnn_model_version in PROTEINMPNN_MODEL_GROUPS:
 import matplotlib.pyplot as plt
 import matplotlib.lines as mlines
 legend_handles = []
-for system in SYSTEM_TO_COLOR:
+for system in SYSTEMS:
     handle = mlines.Line2D([], [], 
                            color=SYSTEM_TO_COLOR[system], 
                            marker=SYSTEM_TO_MARKER[system], 
