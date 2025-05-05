@@ -74,7 +74,11 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     # read csv file
-    df = pd.read_csv(args.csv_filepath)
+    if args.csv_filepath.endswith('.tsv'):
+        sep = '\t'
+    else:
+        sep = ','
+    df = pd.read_csv(args.csv_filepath, sep=sep)
 
     # load HERMES models
     trained_models_path = os.path.join(args.hermes_path, 'trained_models', args.model_version)
@@ -130,6 +134,11 @@ if __name__ == '__main__':
     #     df[f'pnE-norm-{args.is_main_wt_column}'] = df['pnE'] - pne_wt
     #     df[f'pnlogp-norm-{args.is_main_wt_column}'] = df['pnlogp'] - pnlogp_wt
 
-    df.to_csv(args.output_csv_filepath, index=False)
+    if args.output_csv_filepath.endswith('.tsv'):
+        sep = '\t'
+    else:
+        sep = ','
+    
+    df.to_csv(args.output_csv_filepath, sep=sep, index=False)
 
     

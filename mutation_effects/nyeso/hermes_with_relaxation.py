@@ -23,7 +23,7 @@ SLURM_SETUP = "#!/bin/bash\n\
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-m',  '--model_version', type=str, nargs='+', default=['hermes_py_000', 'hermes_py_050', 'hermes_py_000_ft_skempi_no_tcrpmhc_ddg_bi', 'hermes_py_050_ft_skempi_no_tcrpmhc_ddg_bi']) # hermes_py_000 hermes_py_050 hermes_py_000_ft_skempi_no_tcrpmhc_ddg_bi hermes_py_050_ft_skempi_no_tcrpmhc_ddg_bi')
+    parser.add_argument('-m',  '--model_version', type=str, nargs='+', default=['hermes_py_000']) # hermes_py_000 hermes_py_050 hermes_py_000_ft_skempi_no_tcrpmhc_ddg_bi hermes_py_050_ft_skempi_no_tcrpmhc_ddg_bi')
     parser.add_argument('--num_repeats', type=int, default=20)
     parser.add_argument('--total_relaxations', type=int, default=100)
 
