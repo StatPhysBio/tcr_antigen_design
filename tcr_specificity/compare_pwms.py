@@ -12,9 +12,9 @@ mpl.rcParams['ps.fonttype'] = 42
 os.makedirs('plots', exist_ok=True)
 
 # every PWM here follows this numbering
-from hermes.utils.protein_naming import ind_to_ol_size, ol_to_ind_size
-
-
+# from hermes.utils.protein_naming import ind_to_ol_size, ol_to_ind_size
+ind_to_ol_size = {0: 'G', 1: 'A', 2: 'C', 3: 'S', 4: 'P', 5: 'T', 6: 'V', 7: 'D', 8: 'I', 9: 'L', 10: 'N', 11: 'M', 12: 'Q', 13: 'K', 14: 'E', 15: 'H', 16: 'F', 17: 'R', 18: 'Y', 19: 'W'}
+ol_to_ind_size = {ind_to_ol_size[key]: key for key in ind_to_ol_size}
 
 def normalize_pwm(pwm):
     return pwm / np.sum(pwm, axis=1, keepdims=True)
@@ -229,7 +229,7 @@ wt_pep_in_struc_to_mhc_motif_rel_entropy_list = np.array(wt_pep_in_struc_to_mhc_
 hermes_py_000_to_mhc_motif_rel_entropy_list = np.array(hermes_py_000_to_mhc_motif_rel_entropy_list)
 
 ## have at least k structures
-mask = num_structures_list >= 3
+mask = num_structures_list >= 2
 
 allele_and_length_list = allele_and_length_list[mask]
 num_structures_list = num_structures_list[mask]
@@ -255,12 +255,12 @@ def make_pretty_allele_and_length_name(allele_and_length):
 
 
 
-fontsize = 16
+fontsize = 18
 
-global_bar_width = 0.7
+global_bar_width = 0.75
 
 ncols = 1
-nrows = 3
+nrows = 4
 colsize = len(allele_and_length_list) * 0.5
 rowsize = 3.5
 fig, axs = plt.subplots(figsize=(ncols*colsize, nrows*rowsize), ncols=ncols, nrows=nrows, sharex=True, sharey=False)
@@ -272,7 +272,7 @@ ax = axs[0]
 ax.bar(x, num_structures_list, width=global_bar_width, color='grey')
 ax.grid(axis='both', ls='--', alpha=0.5)
 ax.set_ylabel('Number of\npMHC structures', fontsize=fontsize)
-ax.tick_params(axis='y', labelsize=fontsize-1)
+ax.tick_params(axis='y', labelsize=fontsize-2)
 
 # entropy difference from mhc motif pwm
 ax = axs[1]
@@ -296,7 +296,7 @@ for i in range(num_bars):
 
 # ax.axhline(0.0, ls='--', color='black')
 ax.grid(axis='both', ls='--', alpha=0.5)
-ax.tick_params(axis='y', labelsize=fontsize-1)
+ax.tick_params(axis='y', labelsize=fontsize-2)
 
 
 # entropy difference from mhc motif pwm
@@ -326,10 +326,43 @@ ax.grid(axis='both', ls='--', alpha=0.5)
 
 ax.set_xticks(x)
 ax.set_xticklabels(map(make_pretty_allele_and_length_name, allele_and_length_list), rotation=70, ha='right')
+ax.tick_params(axis='y', labelsize=fontsize-2)
+ax.tick_params(axis='x', labelsize=fontsize-2)
+
+# ax.legend(loc='lower right', fontsize=fontsize-1)
+
+# just entropies!
+ax = axs[3]
+
+num_groups = len(allele_and_length_list)
+num_bars = 3
+bar_width = global_bar_width / num_bars  # Automatically spread bars within group
+x = np.arange(num_groups)  # Base x-locations
+
+ax.set_ylabel('Entropy', fontsize=fontsize)
+entropies = [
+    wt_pep_in_struc_entropy_list,
+    hermes_py_000_entropy_list,
+    mhc_motif_entropy_list
+]
+
+colors = ['blue', 'orange', 'green']
+labels = ['PWM from WT peptides', 'PWM from HERMES-fixed', 'PWM from MHC Motif Atlas']
+
+for i in range(num_bars):
+    offset = (i - num_bars / 2) * bar_width + bar_width / 2
+    ax.bar(x + offset, entropies[i], width=bar_width, color=colors[i], label=labels[i])
+
+# ax.axhline(0.0, ls='--', color='black')
+ax.grid(axis='both', ls='--', alpha=0.5)
+
+
+ax.set_xticks(x)
+ax.set_xticklabels(map(make_pretty_allele_and_length_name, allele_and_length_list), rotation=70, ha='right')
 ax.tick_params(axis='y', labelsize=fontsize-1)
 ax.tick_params(axis='x', labelsize=fontsize-1)
 
-ax.legend(loc='lower right', fontsize=fontsize-1)
+ax.legend(loc='upper right', fontsize=fontsize-1)
 
 plt.tight_layout()
 plt.savefig('pmhc_pwm_entropy_comparisons.png')

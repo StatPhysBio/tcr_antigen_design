@@ -252,10 +252,11 @@ for proteinmpnn_model_version in PROTEINMPNN_MODEL_GROUPS:
             color = SYSTEM_TO_COLOR[system]
             marker = SYSTEM_TO_MARKER[system]
 
-            ax.scatter(i, sr, color=color, marker=marker, alpha=alpha, s=70)
+            ax.scatter(i, sr, color=color, marker=marker, alpha=alpha, s=90)
 
     protocol_pairs_pretty_names = [f'{make_pretty_name(model1)} vs. {make_pretty_name(model2)}'  for model1, model2 in protocol_pairs]
 
+    ax.grid(axis='y', ls='--', alpha=0.5)
     ax.set_xticks(np.arange(len(protocol_pairs_pretty_names)))
     ax.set_xticklabels(protocol_pairs_pretty_names, ha='right')
     ax.tick_params(axis='x', labelsize=fontsize-1, rotation=70)
@@ -285,7 +286,7 @@ for proteinmpnn_model_version in PROTEINMPNN_MODEL_GROUPS:
 
     protocols = PROTEINMPNN_MODEL_GROUPS[proteinmpnn_model_version]
 
-    plt.figure(figsize=(3.8, 4))
+    plt.figure(figsize=(4, 4.4))
     ax = plt.gca()
 
     for i, protocol in enumerate(protocols):
@@ -301,14 +302,16 @@ for proteinmpnn_model_version in PROTEINMPNN_MODEL_GROUPS:
             color = SYSTEM_TO_COLOR[system]
             marker = SYSTEM_TO_MARKER[system]
 
-            ax.scatter(i, sr, color=color, marker=marker, alpha=alpha, s=70)
+            ax.scatter(i, sr, color=color, marker=marker, alpha=alpha, s=90)
 
-    protocol_pretty_names = [make_pretty_name(model)  for model in protocols]
+    protocol_pretty_names = [make_pretty_name(model) + ' vs. Exp' for model in protocols]
 
     ax.set_xticks(np.arange(len(protocol_pretty_names)))
     ax.set_xticklabels(protocol_pretty_names, ha='right')
     ax.tick_params(axis='x', labelsize=fontsize-1, rotation=70)
     ax.tick_params(axis='y', labelsize=fontsize-1)
+
+    ax.grid(axis='y', ls='--', alpha=0.5)
 
     ax.set_ylabel('Spearman r', fontsize=fontsize)
 
