@@ -51,13 +51,13 @@ if __name__ == '__main__':
     
     for model_version in args.model_version:
 
-        output_dir = f'./hcnn_fixed_structure/{model_version}/with_relaxation'
+        output_dir = f'./hcnn_pyrosetta_annealing/{model_version}/with_relaxation'
         os.makedirs(output_dir, exist_ok=True)
 
         if model_version == 'hermes_py_000':
-            df = pd.read_csv('hcnn_fixed_structure/hcnn_peptides_from_fixed_structure_so3_convnet_base_ensemble_w_pae_w_blosum.tsv', sep='\t')
+            df = pd.read_csv('hcnn_pyrosetta_annealing/hcnn_plus_pyrosetta_annealing_peptides_so3_convnet_base_ensemble_w_pae_w_blosum.tsv', sep='\t')
         elif model_version == 'hermes_py_050':
-            df = pd.read_csv('hcnn_fixed_structure/hcnn_peptides_from_fixed_structure_so3_convnet_noise=0p5_w_pae_w_blosum.tsv', sep='\t')
+            df = pd.read_csv('hcnn_pyrosetta_annealing/hcnn_plus_pyrosetta_annealing_peptides_so3_convnet_noise=0p5_w_pae_w_blosum.tsv', sep='\t')
     
         for pdb, df_group in df.groupby('pdb_for_hermes_scoring'):
             
@@ -89,6 +89,7 @@ if __name__ == '__main__':
                                                 --pdbdir ./pdbs \
                                                 --chain {chain} \
                                                 --sequence {sequence} \
+                                                --peptide_resnum_start 181 \
                                                 --num_repeats {args.num_repeats} \
                                                 --output_dir {output_dir} \
                                                 --verbose 0 \

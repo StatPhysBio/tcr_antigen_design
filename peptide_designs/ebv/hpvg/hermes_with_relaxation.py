@@ -26,7 +26,7 @@ if __name__ == '__main__':
     parser.add_argument('--total_relaxations', type=int, default=100)
 
     parser.add_argument('-A',  '--account', type=str, default='stf')
-    parser.add_argument('-P',  '--partition', type=str, default='cpu-g2-mem2x')
+    parser.add_argument('-P',  '--partition', type=str, default='compute')
     parser.add_argument('-G',  '--use_gpu', type=int, default=0, choices=[0, 1])
     parser.add_argument('-C',  '--num_cores', type=int, default=1)
     parser.add_argument('-W',  '--walltime', type=str, default='03:00:00')
@@ -54,15 +54,15 @@ if __name__ == '__main__':
         output_dir = f'./hcnn_pyrosetta_annealing/{model_version}/with_relaxation'
         os.makedirs(output_dir, exist_ok=True)
 
-        # if model_version == 'hermes_py_000':
-        #     df = pd.read_csv('hcnn_pyrosetta_annealing/hcnn_plus_pyrosetta_annealing_peptides_so3_convnet_base_ensemble_w_pae_w_blosum.tsv', sep='\t')
-        # elif model_version == 'hermes_py_050':
-        #     df = pd.read_csv('hcnn_pyrosetta_annealing/hcnn_plus_pyrosetta_annealing_peptides_so3_convnet_noise=0p5_w_pae_w_blosum.tsv', sep='\t')
-    
         if model_version == 'hermes_py_000':
-            df = pd.read_csv('hcnn_pyrosetta_annealing/test.tsv', sep='\t')
+            df = pd.read_csv('hcnn_pyrosetta_annealing/hcnn_plus_pyrosetta_annealing_peptides_so3_convnet_base_ensemble_w_pae_w_blosum.tsv', sep='\t')
         elif model_version == 'hermes_py_050':
-            df = pd.read_csv('hcnn_pyrosetta_annealing/test.tsv', sep='\t')
+            df = pd.read_csv('hcnn_pyrosetta_annealing/hcnn_plus_pyrosetta_annealing_peptides_so3_convnet_noise=0p5_w_pae_w_blosum.tsv', sep='\t')
+    
+        # if model_version == 'hermes_py_000':
+        #     df = pd.read_csv('hcnn_pyrosetta_annealing/test.tsv', sep='\t')
+        # elif model_version == 'hermes_py_050':
+        #     df = pd.read_csv('hcnn_pyrosetta_annealing/test.tsv', sep='\t')
 
         for pdb, df_group in df.groupby('pdb_for_hermes_scoring'):
             
