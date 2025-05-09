@@ -1,20 +1,12 @@
 #!/bin/bash
-#SBATCH --job-name=esmif_samples_0.7__tcrdock
-#SBATCH --account=spe
-#SBATCH --partition=gpu-a40
-#SBATCH --gres=gpu:1
+#SBATCH --job-name=mage_hermes_py_000_5brz.pdb.human.MH1.A-01.A.C.DE_LIDWNGLAY_4
+#SBATCH --account=stf
+#SBATCH --partition=compute
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=1
-#SBATCH --time=12:00:00
-#SBATCH --mem=44G
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=None
-#SBATCH --export=all
-#SBATCH -e /gscratch/spe/gvisan01/TCRdock-copy/slurm_logs/esmif_samples_0.7.err
-#SBATCH -o /gscratch/spe/gvisan01/TCRdock-copy/slurm_logs/esmif_samples_0.7.out
+#SBATCH --time=03:00:00
+#SBATCH --mem=4G
+#SBATCH -e /gscratch/scrubbed/gvisan01/slurm_logs/mage_hermes_py_000_5brz.pdb.human.MH1.A-01.A.C.DE_LIDWNGLAY_4.err
+#SBATCH -o /gscratch/scrubbed/gvisan01/slurm_logs/mage_hermes_py_000_5brz.pdb.human.MH1.A-01.A.C.DE_LIDWNGLAY_4.out
 
-python /gscratch/spe/gvisan01/TCRdock-copy/setup_for_alphafold.py                                 --targets_tsvfile /mmfs1/gscratch/spe/gvisan01/tcr_pmhc/peptide_designs/magea3_and_titin/magea3/esmif_0.7/esmif_samples_0.7.tsv                                 --output_dir /mmfs1/gscratch/spe/gvisan01/tcr_pmhc/peptide_designs/magea3_and_titin/magea3/esmif_0.7/tcrdock_output                                 --new_docking
-
-python -u /gscratch/spe/gvisan01/TCRdock-copy/run_prediction.py                                 --verbose                                 --targets /mmfs1/gscratch/spe/gvisan01/tcr_pmhc/peptide_designs/magea3_and_titin/magea3/esmif_0.7/tcrdock_output/targets.tsv                                 --outfile_prefix /mmfs1/gscratch/spe/gvisan01/tcr_pmhc/peptide_designs/magea3_and_titin/magea3/esmif_0.7/tcrdock_output/esmif_samples_0.7                                 --model_names model_2_ptm_ft4                                 --data_dir /gscratch/spe/gvisan01/TCRdock-copy/alphafold_params/                                 --model_params_files /gscratch/spe/gvisan01/TCRdock-copy/alphafold_params/params/tcrpmhc_run4_af_mhc_params_891.pkl
-
-python /gscratch/spe/gvisan01/TCRdock-copy/add_pmhc_tcr_pae_to_tsvfile.py                                 --infile /mmfs1/gscratch/spe/gvisan01/tcr_pmhc/peptide_designs/magea3_and_titin/magea3/esmif_0.7/tcrdock_output/esmif_samples_0.7_final.tsv                                 --outfile /mmfs1/gscratch/spe/gvisan01/tcr_pmhc/peptide_designs/magea3_and_titin/magea3/esmif_0.7/esmif_samples_0.7_w_pae.tsv                                --clobber
+python ../../../mutation_effects/src/get_score_of_requested_peptide_in_pdb_of_tcr_pmhc_with_relaxation.py                                                 --model_version hermes_py_000                                                 --pdb 5brz.pdb.human.MH1.A-01.A.C.DE                                                 --pdbdir ./pdbs                                                 --chain B                                                 --sequence LIDWNGLAY                                                 --peptide_resnum_start 181                                                 --num_repeats 20                                                 --output_dir ./hcnn_pyrosetta_annealing/hermes_py_000/with_relaxation                                                 --verbose 0                                                 --job 4

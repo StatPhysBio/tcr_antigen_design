@@ -14,11 +14,11 @@ for model_version in $model_version_list
 
     echo $model_version
 
-    python -u ../../src/get_score_of_requested_peptides_fixed_structure.py \
+    python -u ../src/get_score_of_requested_peptides_fixed_structure.py \
                 --model_version $model_version \
                 --pdbdir ./pdbs \
-                --output_csv_filepath $output_dir$model_version'/hsiue_et_al_H2_sat_mut-'$model_version'-use_mt_structure=0.csv' \
-                --csv_filepath hsiue_et_al_H2_sat_mut.csv \
+                --output_csv_filepath $output_dir$model_version'/hsiue_et_al_H2_sat_mut_af3_yes_template-'$model_version'-use_mt_structure=0.csv' \
+                --csv_filepath hsiue_et_al_H2_sat_mut_af3_yes_template.csv \
                 --pdb_column wt_pdb \
                 --chain_column mutant_chain \
                 --peptide_column sequence \
@@ -27,7 +27,28 @@ for model_version in $model_version_list
 
     python -u pretty_plots.py \
                 --system hsiue_et_al \
-                --system_name_in_csv_file 'hsiue_et_al_H2_sat_mut' \
+                --system_name_in_csv_file 'hsiue_et_al_H2_sat_mut_af3_yes_template' \
+                --target_column'=IFN_gamma (pg/ml)' \
+                --model hermes \
+                --model_instance $model_version \
+                --prediction_column pnE \
+                --use_mt_structure $use_mt_structure \
+                --show_wt_lines both_from_df
+
+    python -u ../src/get_score_of_requested_peptides_fixed_structure.py \
+                --model_version $model_version \
+                --pdbdir ./pdbs \
+                --output_csv_filepath $output_dir$model_version'/hsiue_et_al_H2_sat_mut_af3_no_template-'$model_version'-use_mt_structure=0.csv' \
+                --csv_filepath hsiue_et_al_H2_sat_mut_af3_no_template.csv \
+                --pdb_column wt_pdb \
+                --chain_column mutant_chain \
+                --peptide_column sequence \
+                --peptide_resnum_start 1 \
+                --same_peptide_region 1
+
+    python -u pretty_plots.py \
+                --system hsiue_et_al \
+                --system_name_in_csv_file 'hsiue_et_al_H2_sat_mut_af3_no_template' \
                 --target_column'=IFN_gamma (pg/ml)' \
                 --model hermes \
                 --model_instance $model_version \

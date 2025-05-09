@@ -757,3 +757,56 @@ if __name__ == '__main__':
     plt.close()
 
 
+    ## plots of tcrdock pae vs pnE for hermes models
+
+    ncols = 4
+    nrows = 1
+    colsize = 4
+    rowsize = 4
+    fig, axs = plt.subplots(figsize=(ncols*colsize, nrows*rowsize), ncols=ncols, nrows=nrows, sharey=True)
+
+    hermes_models = [model for model in MODELS_IN_ORDER if 'hermes' in model]
+
+    for i, model in enumerate(hermes_models):
+
+        ax = axs[i]
+
+        color = MODEL_TO_COLOR[model]
+        pae_scores = model_to_df[model]['neg_pmhc_tcr_pae'].values
+        hermes_scores = model_to_df[model]['pnE'].values
+
+        ax.scatter(hermes_scores, pae_scores, color=color)
+
+        ax.set_xlabel(MODEL_TO_PRETTY_NAME[model], fontsize=fontsize)
+        if i == 0:
+            ax.set_ylabel('- TCRdock PAE', fontsize=fontsize)
+        
+        ax.tick_params(axis='both', labelsize=fontsize-2)
+    
+    for i, model in enumerate(hermes_models):
+
+        ax = axs[i]
+
+        pae_scores = model_to_df[model]['neg_pmhc_tcr_pae'].values
+        hermes_scores = model_to_df[model]['pnE'].values
+
+        xlim = ax.get_xlim()
+        xlimsize = xlim[1] - xlim[0]
+        ylim = ax.get_ylim()
+        ylimsize = ylim[1] - ylim[0]
+        
+        sr, sr_pval = spearmanr(hermes_scores, pae_scores)
+        # ax.text(xlim[0] + 0.03 / xlimsize, ylim[0] + 0.13 / ylimsize, rf'$\rho$ = {sr:.2f}', fontsize=fontsize-2, ha='left')
+        # ax.text(xlim[0] + 0.03 / xlimsize, ylim[0] + 0.03 / ylimsize, rf'p-val = {sr_pval:.1e}', fontsize=fontsize-2, ha='left')
+        ax.text(0.03, 0.13, rf'$\rho$ = {sr:.2f}', fontsize=fontsize-1, transform=ax.transAxes, ha='left')
+        ax.text(0.03, 0.03, rf'p-val = {sr_pval:.1e}', fontsize=fontsize-1, transform=ax.transAxes, ha='left')
+    
+    plt.tight_layout()
+    plt.savefig(f'../{args.system}/design_hermes_pne_vs_tcrdock_pae.png')
+    plt.savefig(f'../{args.system}/design_hermes_pne_vs_tcrdock_pae.pdf')
+    plt.close()
+
+
+    ## plot of AUROCS for each hermes model, of pnE vs. MHC presentation
+
+

@@ -12,7 +12,7 @@ for model_version in $model_version_list
     do
 
     python $proteinmpnn_dir'score_multiple_peptides__full_peptide_masked.py' \
-                --csv_file $base_dir'nyeso_peptide_kd_closest.csv' \
+                --csv_file $base_dir'nyeso_peptide_kd_closest_af3_yes_template.csv' \
                 --folder_with_pdbs $base_dir'pdbs' \
                 --output_dir $base_dir'results/proteinmpnn_'$model_version'_full_pep_masked' \
                 --model_version $model_version \
@@ -26,7 +26,7 @@ for model_version in $model_version_list
     python -u pretty_plots.py \
                 --base_dir ../ \
                 --system nyeso \
-                --system_name_in_csv_file nyeso_peptide_kd_closest \
+                --system_name_in_csv_file nyeso_peptide_kd_closest_af3_yes_template \
                 --target_column'=-log10(Kd)' \
                 --prediction_column pnlogp \
                 --model proteinmpnn \

@@ -8,6 +8,7 @@ for model_version in $model_version_list
                     --csv_filename selected_designs_for_hermes_scoring.csv \
                     --pdbid from_csv \
                     --model_version $model_version \
-                    --pdb_column pdb
+                    --pdb_column pdb \
+                    --use_max_instead_of_mean 1 # more closely approximates the real pnE that was computed during annealing
         
 done

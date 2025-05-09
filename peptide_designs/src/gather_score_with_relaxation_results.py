@@ -3,6 +3,7 @@ import os
 from glob import glob
 import numpy as np
 import pandas as pd
+from tqdm import tqdm
 
 import argparse
 
@@ -20,6 +21,7 @@ if __name__ == '__main__':
     parser.add_argument('--pdb_column', type=str, default='pdb', help='Only if pdbid is from_csv')
     parser.add_argument('--seq_column', type=str, default='sequence', help='column name of the sequence in the csv file')
     parser.add_argument('--output_in_inputfile', type=int, default=0, choices=[0, 1])
+    parser.add_argument('--use_max_instead_of_mean', type=int, default=0, choices=[0, 1])
     parser.add_argument('--use_min_rosetta_energy_instead_of_full_average', type=int, default=0, choices=[0, 1])
     parser.add_argument('--use_min_rosetta_energy_runs_but_compute_mean', type=int, default=0, choices=[0, 1])
     args = parser.parse_args()
@@ -37,6 +39,8 @@ if __name__ == '__main__':
     
     if args.output_in_inputfile:
         output_csv_file = args.csv_filename
+        output_dir = os.path.join(os.path.dirname(output_csv_file), args.model_version)
+        results_dir = os.path.join(output_dir, 'with_relaxation')
     else:
         output_csv_file = os.path.join(output_dir, f'{args.csv_filename[:-4]}__{args.model_version}__relaxed{file_extension}')
     
@@ -54,7 +58,7 @@ if __name__ == '__main__':
     for metric in ['pnE', 'pnlogp']:
 
         scores = []
-        for i, row in df.iterrows():
+        for i, row in tqdm(df.iterrows(), total=len(df)):
             seq = row[args.seq_column]
 
             if args.pdbid == 'all':
@@ -80,7 +84,10 @@ if __name__ == '__main__':
             if args.use_min_rosetta_energy_instead_of_full_average:
                 scores.append(np.hstack(temp_metric_scores)[np.argmin(np.hstack(temp_rosetta_energy_scores))])
             else:
-                scores.append(np.mean(np.hstack(temp_metric_scores)))
+                if args.use_max_instead_of_mean:
+                    scores.append(np.max(np.hstack(temp_metric_scores)))
+                else:
+                    scores.append(np.mean(np.hstack(temp_metric_scores)))
 
         df[metric] = scores
 

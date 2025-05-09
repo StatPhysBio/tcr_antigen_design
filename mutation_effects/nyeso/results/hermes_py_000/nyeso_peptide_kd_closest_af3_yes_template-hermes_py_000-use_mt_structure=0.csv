@@ -1,0 +1,15 @@
+Kd [microM],system,name,sequence,-log10(Kd),study,mutants,wt_seq,pdb,chain,neg_delta_log10_Kd,is_wt_to_show,is_main_wt,pnE,pnlogp
+4.93,NY-ESO-1,NYE 9V,SLLMWITQV,-0.7750897078542492,pettmann_et_al|aleksic_et_al,S1S,SLLMWITQV,fold_nyeso_9v_yes_template_model_0,B,0.0,1,0,48.203266,-4.085326
+6.28,NY-ESO-1,NYE 3A,SLAMWITQV,-0.8087517896395324,pettmann_et_al|aleksic_et_al,L3A,SLLMWITQV,fold_nyeso_9v_yes_template_model_0,B,-0.0336620817852831,0,0,39.751835,-12.5367565
+22.8,NY-ESO-1,NYE 6V,SLLMWVTQV,-1.3066036760518798,pettmann_et_al|aleksic_et_al,I6V,SLLMWITQV,fold_nyeso_9v_yes_template_model_0,B,-0.5315139681976305,0,0,47.3141,-4.9744935
+47.3,NY-ESO-1,NYE 3Y,SLYMWITQV,-1.575991197728737,pettmann_et_al|aleksic_et_al,L3Y,SLLMWITQV,fold_nyeso_9v_yes_template_model_0,B,-0.8009014898744878,0,0,40.44065,-11.847942
+140.0,NY-ESO-1,NYE 4D,SLLDWITQV,-2.2737642882298914,pettmann_et_al|aleksic_et_al,M4D,SLLMWITQV,fold_nyeso_9v_yes_template_model_0,B,-1.498674580375642,0,0,42.037914,-10.25068
+162.0,NY-ESO-1,NYE 6T,SLLMWTTQV,-2.1069181941626365,pettmann_et_al|aleksic_et_al,I6T,SLLMWITQV,fold_nyeso_9v_yes_template_model_0,B,-1.3318284863083871,0,0,45.544193,-6.7444005
+299.0,NY-ESO-1,NYE 4A,SLLAWITQV,-2.4756711883244296,pettmann_et_al,M4A,SLLMWITQV,fold_nyeso_9v_yes_template_model_0,B,-1.7005814804701802,0,0,40.95995,-11.328641
+433.0,NY-ESO-1,NYE 5Y,SLLMYITQV,-2.6364878963533656,pettmann_et_al,W5Y,SLLMWITQV,fold_nyeso_9v_yes_template_model_0,B,-1.861398188499116,0,0,42.564972,-9.72362
+1309.0,NY-ESO-1,NYE 5F,SLLMFITQV,-3.116939646550756,pettmann_et_al,W5F,SLLMWITQV,fold_nyeso_9v_yes_template_model_0,B,-2.3418499386965066,0,0,40.797413,-11.491179
+14.0,NY-ESO-1,,SLLMWITQC,-1.146128035678238,aleksic_et_al,S1S,SLLMWITQC,fold_nyeso_yes_template_model_0,B,0.0,1,1,41.391727,-11.376743
+56.0,NY-ESO-1,,SLLMWITQL,-1.7481880270062005,aleksic_et_al,V9L,SLLMWITQV,fold_nyeso_9v_yes_template_model_0,B,-0.9730983191519512,0,0,37.661915,-14.626678
+17.0,NY-ESO-1,,SLIMWITQV,-1.230448921378274,aleksic_et_al,L3I,SLLMWITQV,fold_nyeso_9v_yes_template_model_0,B,-0.4553592135240248,0,0,45.51446,-6.774132
+9.2,NY-ESO-1,,SLMMWITQV,-0.9637878273455552,aleksic_et_al,L3M,SLLMWITQV,fold_nyeso_9v_yes_template_model_0,B,-0.188698119491306,0,0,45.286293,-7.0022993
+100.0,NY-ESO-1,,SLLMWIHQV,-2.0,aleksic_et_al,T7H,SLLMWITQV,fold_nyeso_9v_yes_template_model_0,B,-1.2249102921457506,0,0,39.31514,-12.973451
