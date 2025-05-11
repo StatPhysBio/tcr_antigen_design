@@ -1,0 +1,2 @@
+./pdbs/pmhc/1syv.pdb
+./pdbs/pmhc/7tuc.pdb

@@ -1,0 +1,11 @@
+./pdbs/pmhc/1fzk.pdb
+./pdbs/pmhc/1g7p.pdb
+./pdbs/pmhc/1kpv.pdb
+./pdbs/pmhc/1s7r.pdb
+./pdbs/pmhc/1vad.pdb
+./pdbs/pmhc/1wbz.pdb
+./pdbs/pmhc/2vab.pdb
+./pdbs/pmhc/4pgb.pdb
+./pdbs/pmhc/4pgd.pdb
+./pdbs/pmhc/7wcy.pdb
+./pdbs/pmhc/8p43.pdb

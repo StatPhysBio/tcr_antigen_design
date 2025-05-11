@@ -5,6 +5,7 @@ import numpy as np
 import pandas as pd
 
 from scipy.stats import pearsonr, spearmanr
+from sklearn.metrics import roc_auc_score
 
 import matplotlib.pyplot as plt
 import matplotlib
@@ -312,6 +313,12 @@ SYSTEM_TO_PAE_THRESHOLD = {
 }
 
 ALPHA = 0.5
+
+SYSTEM_TO_HERMES_RELAXED_SCORE_COLUMN = {
+    'nyeso': 'pnE',
+    'magea3_and_titin': 'pnlogp',
+    'ebv': 'pnlogp'
+}
 
 def color_violinplot_multiple(parts, colors):
     for pm, pb, color in zip(parts['cmedians'], parts['bodies'], colors):
@@ -759,54 +766,172 @@ if __name__ == '__main__':
 
     ## plots of tcrdock pae vs pnE for hermes models
 
-    ncols = 4
+    ncols = 2
+    nrows = 1
+    colsize = 4.7
+    rowsize = 3.8
+    fig, axs = plt.subplots(figsize=(ncols*colsize, nrows*rowsize), ncols=ncols, nrows=nrows, sharey=True)
+
+    hermes_models = [model for model in MODELS_IN_ORDER if 'hermes' in model][::-1] # just because barh displayes them bottom-up
+
+    for i, model in enumerate(hermes_models):
+
+        color = MODEL_TO_COLOR[model]
+        pae_scores = model_to_df[model]['neg_pmhc_tcr_pae'].values
+        hermes_score_column = 'pnE' if 'fixed' in model else SYSTEM_TO_HERMES_RELAXED_SCORE_COLUMN[args.system]
+        hermes_scores = model_to_df[model][hermes_score_column].values
+        mhc_pred = model_to_df[model]['is_binder_by_netmhcpan'].values
+
+        sr, sr_pval = spearmanr(pae_scores, hermes_scores)
+        auroc = roc_auc_score(mhc_pred, hermes_scores)
+
+        # sr in first plot, auroc in second plot
+        ax = axs[0]
+        ax.barh(i, sr, color=color, alpha=ALPHA)
+        if sr > 0:
+            ax.text(sr+0.01, i, f'{sr:.2f}', ha='left', va='center', color='black' if sr_pval < 0.05 else 'red', fontsize=fontsize-6)
+        else:
+            ax.text(sr-0.01, i, f'{sr:.2f}', ha='right', va='center', color='black' if sr_pval < 0.05 else 'red', fontsize=fontsize-6)
+        ax.set_xlabel('Spearman r to\n - TCRdock PAE', fontsize=fontsize-5)
+        ax.set_yticks(range(len(hermes_models)), [MODEL_TO_PRETTY_NAME[model]+' energy' for model in hermes_models], fontsize=fontsize-6)
+        ax.set_yticklabels([MODEL_TO_PRETTY_NAME[model]+' energy' for model in hermes_models], fontsize=fontsize-5)
+        ax.tick_params(axis='x', labelsize=fontsize-6)
+        ax.axvline(0, ls='--', color='black')
+        # increase the xlim just enough to fit the text
+        xlim = ax.get_xlim()
+        if sr > 0:
+            ax.set_xlim([xlim[0], max(xlim[1], sr+0.175)])
+        else:
+            ax.set_xlim([min(xlim[0], sr-0.175), xlim[1]])
+        
+
+        ax = axs[1]
+        ax.barh(i, auroc-0.5, color=color, alpha=ALPHA)
+        if (auroc-0.5) > 0:
+            ax.text(auroc-0.5+0.01, i, f'{auroc:.2f}', ha='left', va='center', fontsize=fontsize-6)
+        else:
+            ax.text(auroc-0.5-0.01, i, f'{auroc:.2f}', ha='right', va='center', fontsize=fontsize-6)
+        ax.set_xlabel('AUROC to\n is binder by NetMHCPan', fontsize=fontsize-5)
+        ax.axvline(0, ls='--', color='black')
+        # increase the xlim just enough to fit the text
+        xlim = ax.get_xlim()
+        if (auroc-0.5) > 0:
+            ax.set_xlim([xlim[0], (auroc-0.5)+0.175])
+        else:
+            ax.set_xlim([(auroc-0.5)-0.175, xlim[1]])
+    
+
+    def decimal_precision(x):
+        from decimal import Decimal, getcontext
+        d = Decimal(str(x)).normalize()  # Normalize removes trailing zeros
+        if '.' in str(d):
+            return len(str(d).split('.')[1])
+        return 0
+    
+    # adjust auroc xticks
+    ax = axs[1]
+    xticks_old = ax.get_xticks()
+    xticks = []
+    xtick_labels = []
+    for xt in xticks_old:
+        if decimal_precision(xt) < 2:
+            xticks.append(xt)
+            xtick_labels.append(f'{xt+0.5:.1f}')
+    print(xticks)
+    print(xtick_labels)
+    ax.set_xticks(xticks, xtick_labels, fontsize=fontsize-6)
+    ax.set_xticklabels(xtick_labels, fontsize=fontsize-6)
+    
+    plt.tight_layout()
+    plt.savefig(f'../{args.system}/design_hermes_pne_vs_tcrdock_pae_vs_netmhcpan.png')
+    plt.savefig(f'../{args.system}/design_hermes_pne_vs_tcrdock_pae_vs_netmhcpan.pdf')
+    plt.close()
+
+
+
+    ncols = 2
     nrows = 1
     colsize = 4
-    rowsize = 4
-    fig, axs = plt.subplots(figsize=(ncols*colsize, nrows*rowsize), ncols=ncols, nrows=nrows, sharey=True)
+    rowsize = 3.5
+    fig, axs = plt.subplots(figsize=(ncols*colsize, nrows*rowsize), ncols=ncols, nrows=nrows, sharex=True)
 
     hermes_models = [model for model in MODELS_IN_ORDER if 'hermes' in model]
 
     for i, model in enumerate(hermes_models):
 
-        ax = axs[i]
-
         color = MODEL_TO_COLOR[model]
         pae_scores = model_to_df[model]['neg_pmhc_tcr_pae'].values
-        hermes_scores = model_to_df[model]['pnE'].values
+        hermes_score_column = 'pnE' if 'fixed' in model else SYSTEM_TO_HERMES_RELAXED_SCORE_COLUMN[args.system]
+        hermes_scores = model_to_df[model][hermes_score_column].values
+        mhc_pred = model_to_df[model]['is_binder_by_netmhcpan'].values
 
-        ax.scatter(hermes_scores, pae_scores, color=color)
+        sr, sr_pval = spearmanr(pae_scores, hermes_scores)
+        auroc = roc_auc_score(mhc_pred, hermes_scores)
 
-        ax.set_xlabel(MODEL_TO_PRETTY_NAME[model], fontsize=fontsize)
-        if i == 0:
-            ax.set_ylabel('- TCRdock PAE', fontsize=fontsize)
-        
-        ax.tick_params(axis='both', labelsize=fontsize-2)
-    
-    for i, model in enumerate(hermes_models):
-
-        ax = axs[i]
-
-        pae_scores = model_to_df[model]['neg_pmhc_tcr_pae'].values
-        hermes_scores = model_to_df[model]['pnE'].values
-
-        xlim = ax.get_xlim()
-        xlimsize = xlim[1] - xlim[0]
+        # sr in first plot, auroc in second plot
+        ax = axs[0]
+        ax.bar(i, sr, color=color, alpha=ALPHA)
+        if sr > 0:
+            ax.text(i, sr+0.01, f'{sr:.2f}', ha='center', va='bottom', color='black' if sr_pval < 0.05 else 'red', fontsize=fontsize-6)
+        else:
+            ax.text(i, sr-0.01, f'{sr:.2f}', ha='center', va='top', color='black' if sr_pval < 0.05 else 'red', fontsize=fontsize-6)
+        ax.set_ylabel('Spearman r\nenergy vs. - TCRdock PAE', fontsize=fontsize-5)
+        ax.tick_params(axis='y', labelsize=fontsize-6)
+        ax.axhline(0, ls='--', color='black')
+        # increase the ylim just enough to fit the text
         ylim = ax.get_ylim()
-        ylimsize = ylim[1] - ylim[0]
+        if sr > 0:
+            ax.set_ylim([ylim[0], max(ylim[1], sr+0.07)])
+        else:
+            ax.set_ylim([min(ylim[0], sr-0.07), ylim[1]])
         
-        sr, sr_pval = spearmanr(hermes_scores, pae_scores)
-        # ax.text(xlim[0] + 0.03 / xlimsize, ylim[0] + 0.13 / ylimsize, rf'$\rho$ = {sr:.2f}', fontsize=fontsize-2, ha='left')
-        # ax.text(xlim[0] + 0.03 / xlimsize, ylim[0] + 0.03 / ylimsize, rf'p-val = {sr_pval:.1e}', fontsize=fontsize-2, ha='left')
-        ax.text(0.03, 0.13, rf'$\rho$ = {sr:.2f}', fontsize=fontsize-1, transform=ax.transAxes, ha='left')
-        ax.text(0.03, 0.03, rf'p-val = {sr_pval:.1e}', fontsize=fontsize-1, transform=ax.transAxes, ha='left')
+
+        ax = axs[1]
+        ax.bar(i, auroc-0.5, color=color, alpha=ALPHA)
+        if (auroc-0.5) > 0:
+            ax.text(i, auroc-0.5+0.007, f'{auroc:.2f}', ha='center', va='bottom', fontsize=fontsize-6)
+        else:
+            ax.text(i, auroc-0.5-0.007, f'{auroc:.2f}', ha='center', va='top', fontsize=fontsize-6)
+        ax.set_ylabel(f'AUROC\nenergy vs. {SYSTEM_TO_MHC[args.system]} binder', fontsize=fontsize-5)
+        ax.axhline(0, ls='--', color='black')
+        ax.tick_params(axis='y', labelsize=fontsize-6)
+        # increase the ylim just enough to fit the text
+        ylim = ax.get_ylim()
+        if (auroc-0.5) > 0:
+            ax.set_ylim([ylim[0], (auroc-0.5)+0.07])
+        else:
+            ax.set_ylim([(auroc-0.5)-0.07, ylim[1]])
+        
+    
+
+    def decimal_precision(x):
+        from decimal import Decimal, getcontext
+        d = Decimal(str(x)[:6]).normalize()  # Normalize removes trailing zeros, and we are taking only 6 digits to avoid the weird floating point errors
+        if '.' in str(d):
+            return len(str(d).split('.')[1])
+        return 0
+
+    # remove xticks since we have the color legend
+    axs[0].set_xticks([])
+    axs[1].set_xticks([])
+    
+    # adjust auroc yticks
+    ax = axs[1]
+    yticks_old = ax.get_yticks()
+    yticks = []
+    ytick_labels = []
+    for yt in yticks_old:
+        if decimal_precision(yt) < 2:
+            yticks.append(yt)
+            ytick_labels.append(f'{yt+0.5:.1f}')
+    print(yticks_old)
+    print(yticks)
+    print(ytick_labels)
+    ax.set_yticks(yticks, ytick_labels, fontsize=fontsize-6)
+    ax.set_yticklabels(ytick_labels, fontsize=fontsize-6)
     
     plt.tight_layout()
-    plt.savefig(f'../{args.system}/design_hermes_pne_vs_tcrdock_pae.png')
-    plt.savefig(f'../{args.system}/design_hermes_pne_vs_tcrdock_pae.pdf')
+    plt.savefig(f'../{args.system}/design_hermes_pne_vs_tcrdock_pae_vs_netmhcpan_vertical.png')
+    plt.savefig(f'../{args.system}/design_hermes_pne_vs_tcrdock_pae_vs_netmhcpan_vertical.pdf')
     plt.close()
-
-
-    ## plot of AUROCS for each hermes model, of pnE vs. MHC presentation
-
 

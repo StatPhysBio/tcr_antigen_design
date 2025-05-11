@@ -1,0 +1,15 @@
+./pdbs/pmhc/1jge.pdb
+./pdbs/pmhc/1uxs.pdb
+./pdbs/pmhc/1w0v.pdb
+./pdbs/pmhc/2a83.pdb
+./pdbs/pmhc/2bsr.pdb
+./pdbs/pmhc/2bst.pdb
+./pdbs/pmhc/3b6s.pdb
+./pdbs/pmhc/3bp4.pdb
+./pdbs/pmhc/3dtx.pdb
+./pdbs/pmhc/3lv3.pdb
+./pdbs/pmhc/5ib1.pdb
+./pdbs/pmhc/5ib2.pdb
+./pdbs/pmhc/6pyw.pdb
+./pdbs/pmhc/6y2a.pdb
+./pdbs/pmhc/7cis.pdb

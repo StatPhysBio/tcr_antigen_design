@@ -1,0 +1,2 @@
+./pdbs/pmhc/1sys.pdb
+./pdbs/pmhc/3kpo.pdb

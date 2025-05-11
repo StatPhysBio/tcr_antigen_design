@@ -1,0 +1,6 @@
+./pdbs/pmhc/5kd7.pdb
+./pdbs/pmhc/5t7g.pdb
+./pdbs/pmhc/8d5e.pdb
+./pdbs/pmhc/8d5f.pdb
+./pdbs/pmhc/8fhl.pdb
+./pdbs/pmhc/8fhu.pdb

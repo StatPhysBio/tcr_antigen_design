@@ -1,0 +1,2 @@
+./pdbs/pmhc/6at9.pdb
+./pdbs/pmhc/6mpp.pdb

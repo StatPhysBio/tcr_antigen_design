@@ -60,6 +60,7 @@ def make_pwm_from_sequences(sequences):
 # pep_does_not_contains_x = df['wt_peptide'].apply(lambda pep: 'X' not in pep)
 # df = df[pep_does_not_contains_x]
 
+# df.to_csv('pmhc_class_1_crystal_structures.csv', index=None)
 
 # print(len(df))
 
