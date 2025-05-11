@@ -69,7 +69,10 @@ if __name__ == '__main__':
             else:
                 metric_files = glob(os.path.join(results_dir, f'{args.model_version}{SEP}{args.pdbid}{SEP}{seq}{SEP}*{SEP}{metric}.npy'))
 
-            assert len(metric_files) > 0, f'No metric_files found for {args.model_version} {args.pdbid} {seq}'
+            if len(metric_files) == 0:
+                print(f'Warning: No metric_files found for {args.model_version} {args.pdbid} {seq}')
+                scores.append(np.nan)
+                continue
 
             if args.use_min_rosetta_energy_instead_of_full_average:
                 rosetta_energy_files = [metric_file.replace(f'{metric}', 'rosetta_energy') for metric_file in metric_files] # ensuring that the lists of files for metrics and rosetta_energies are in parallel
