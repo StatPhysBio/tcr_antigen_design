@@ -9,6 +9,6 @@ for model_version in $model_version_list
                     --pdbid from_csv \
                     --model_version $model_version \
                     --pdb_column pdb \
-                    --use_max_instead_of_mean 1 # more closely approximates the real pnE that was computed during annealing
+                    --use_max_instead_of_mean 0 # if 1, more closely approximates the real pnE that was computed during annealing (maybe)
         
 done
