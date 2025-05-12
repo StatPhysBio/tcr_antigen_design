@@ -430,6 +430,42 @@ align_on_mhc_and_compute_rmsds(pdbfile_1, mhc_chain_1, pep_chain_1, tcra_chain_1
                             pdbfile_2, mhc_chain_2, pep_chain_2, tcra_chain_2, tcrb_chain_2)
 
 
+print('nyeso 9v - no template')
+
+pdbfile_1 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/mutation_effects/nyeso/pdbs/2bnq.pdb'
+mhc_chain_1 = 'A'
+pep_chain_1 = 'C'
+tcra_chain_1 = 'D'
+tcrb_chain_1 = 'E'
+
+pdbfile_2 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/mutation_effects/nyeso/pdbs/fold_nyeso_9v_no_template_model_0.pdb'
+mhc_chain_2 = 'A'
+pep_chain_2 = 'B'
+tcra_chain_2 = 'C'
+tcrb_chain_2 = 'D'
+
+align_on_mhc_and_compute_rmsds(pdbfile_1, mhc_chain_1, pep_chain_1, tcra_chain_1, tcrb_chain_1,
+                            pdbfile_2, mhc_chain_2, pep_chain_2, tcra_chain_2, tcrb_chain_2)
+
+
+print('nyeso 9v - yes template')
+
+pdbfile_1 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/mutation_effects/nyeso/pdbs/2bnq.pdb'
+mhc_chain_1 = 'A'
+pep_chain_1 = 'C'
+tcra_chain_1 = 'D'
+tcrb_chain_1 = 'E'
+
+pdbfile_2 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/mutation_effects/nyeso/pdbs/fold_nyeso_9v_yes_template_model_0.pdb'
+mhc_chain_2 = 'A'
+pep_chain_2 = 'B'
+tcra_chain_2 = 'C'
+tcrb_chain_2 = 'D'
+
+align_on_mhc_and_compute_rmsds(pdbfile_1, mhc_chain_1, pep_chain_1, tcra_chain_1, tcrb_chain_1,
+                            pdbfile_2, mhc_chain_2, pep_chain_2, tcra_chain_2, tcrb_chain_2)
+
+
 print('tax - no template')
 
 pdbfile_1 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/mutation_effects/tax/pdbs/1ao7.pdb'
@@ -456,6 +492,40 @@ tcra_chain_1 = 'D'
 tcrb_chain_1 = 'E'
 
 pdbfile_2 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/mutation_effects/tax/pdbs/fold_tax_yes_template_model_0.pdb'
+mhc_chain_2 = 'A'
+pep_chain_2 = 'B'
+tcra_chain_2 = 'C'
+tcrb_chain_2 = 'D'
+
+align_on_mhc_and_compute_rmsds(pdbfile_1, mhc_chain_1, pep_chain_1, tcra_chain_1, tcrb_chain_1,
+                            pdbfile_2, mhc_chain_2, pep_chain_2, tcra_chain_2, tcrb_chain_2)
+
+print('tax 8a - no template')
+
+pdbfile_1 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/mutation_effects/tax/pdbs/1qsf.pdb'
+mhc_chain_1 = 'A'
+pep_chain_1 = 'C'
+tcra_chain_1 = 'D'
+tcrb_chain_1 = 'E'
+
+pdbfile_2 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/mutation_effects/tax/pdbs/fold_tax_8a_no_template_model_1.pdb'
+mhc_chain_2 = 'A'
+pep_chain_2 = 'B'
+tcra_chain_2 = 'C'
+tcrb_chain_2 = 'D'
+
+align_on_mhc_and_compute_rmsds(pdbfile_1, mhc_chain_1, pep_chain_1, tcra_chain_1, tcrb_chain_1,
+                            pdbfile_2, mhc_chain_2, pep_chain_2, tcra_chain_2, tcrb_chain_2)
+
+print('tax 8a - yes template')
+
+pdbfile_1 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/mutation_effects/tax/pdbs/1qsf.pdb'
+mhc_chain_1 = 'A'
+pep_chain_1 = 'C'
+tcra_chain_1 = 'D'
+tcrb_chain_1 = 'E'
+
+pdbfile_2 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/mutation_effects/tax/pdbs/fold_tax_8a_yes_template_model_0.pdb'
 mhc_chain_2 = 'A'
 pep_chain_2 = 'B'
 tcra_chain_2 = 'C'
@@ -498,3 +568,146 @@ tcrb_chain_2 = 'E'
 
 align_on_mhc_and_compute_rmsds(pdbfile_1, mhc_chain_1, pep_chain_1, tcra_chain_1, tcrb_chain_1,
                             pdbfile_2, mhc_chain_2, pep_chain_2, tcra_chain_2, tcrb_chain_2)
+
+
+print('mage - no template')
+
+pdbfile_1 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/peptide_designs/magea3_and_titin/pdbs/5brz.pdb.human.MH1.A-01.A.C.DE.pdb'
+mhc_chain_1 = 'A'
+pep_chain_1 = 'B'
+tcra_chain_1 = 'C'
+tcrb_chain_1 = 'D'
+
+pdbfile_2 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/peptide_designs/magea3_and_titin/pdbs/fold_mage_no_template_model_0.pdb'
+mhc_chain_2 = 'A'
+pep_chain_2 = 'B'
+tcra_chain_2 = 'C'
+tcrb_chain_2 = 'D'
+
+align_on_mhc_and_compute_rmsds(pdbfile_1, mhc_chain_1, pep_chain_1, tcra_chain_1, tcrb_chain_1,
+                            pdbfile_2, mhc_chain_2, pep_chain_2, tcra_chain_2, tcrb_chain_2)
+
+
+print('mage - yes template')
+
+pdbfile_1 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/peptide_designs/magea3_and_titin/pdbs/5brz.pdb.human.MH1.A-01.A.C.DE.pdb'
+mhc_chain_1 = 'A'
+pep_chain_1 = 'B'
+tcra_chain_1 = 'C'
+tcrb_chain_1 = 'D'
+
+pdbfile_2 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/peptide_designs/magea3_and_titin/pdbs/fold_mage_yes_template_seed_2_model_0.pdb'
+mhc_chain_2 = 'A'
+pep_chain_2 = 'B'
+tcra_chain_2 = 'C'
+tcrb_chain_2 = 'D'
+
+align_on_mhc_and_compute_rmsds(pdbfile_1, mhc_chain_1, pep_chain_1, tcra_chain_1, tcrb_chain_1,
+                            pdbfile_2, mhc_chain_2, pep_chain_2, tcra_chain_2, tcrb_chain_2)
+
+
+print('titin - no template')
+
+pdbfile_1 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/peptide_designs/magea3_and_titin/pdbs/5bs0.pdb.human.MH1.A-01.A.C.DE.pdb'
+mhc_chain_1 = 'A'
+pep_chain_1 = 'B'
+tcra_chain_1 = 'C'
+tcrb_chain_1 = 'D'
+
+pdbfile_2 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/peptide_designs/magea3_and_titin/pdbs/fold_titin_no_template_model_0.pdb'
+mhc_chain_2 = 'A'
+pep_chain_2 = 'B'
+tcra_chain_2 = 'C'
+tcrb_chain_2 = 'D'
+
+align_on_mhc_and_compute_rmsds(pdbfile_1, mhc_chain_1, pep_chain_1, tcra_chain_1, tcrb_chain_1,
+                            pdbfile_2, mhc_chain_2, pep_chain_2, tcra_chain_2, tcrb_chain_2)
+
+
+print('titin - yes template')
+
+pdbfile_1 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/peptide_designs/magea3_and_titin/pdbs/5bs0.pdb.human.MH1.A-01.A.C.DE.pdb'
+mhc_chain_1 = 'A'
+pep_chain_1 = 'B'
+tcra_chain_1 = 'C'
+tcrb_chain_1 = 'D'
+
+pdbfile_2 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/peptide_designs/magea3_and_titin/pdbs/fold_titin_yes_template_model_1.pdb'
+mhc_chain_2 = 'A'
+pep_chain_2 = 'B'
+tcra_chain_2 = 'C'
+tcrb_chain_2 = 'D'
+
+align_on_mhc_and_compute_rmsds(pdbfile_1, mhc_chain_1, pep_chain_1, tcra_chain_1, tcrb_chain_1,
+                            pdbfile_2, mhc_chain_2, pep_chain_2, tcra_chain_2, tcrb_chain_2)
+
+
+print('ebv - no template')
+
+pdbfile_1 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/peptide_designs/ebv/pdbs/3mv7.pdb.human.MH1.B-35.A.C.DE.pdb'
+mhc_chain_1 = 'A'
+pep_chain_1 = 'B'
+tcra_chain_1 = 'C'
+tcrb_chain_1 = 'D'
+
+pdbfile_2 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/peptide_designs/ebv/pdbs/fold_ebv_no_template_model_0.pdb'
+mhc_chain_2 = 'A'
+pep_chain_2 = 'B'
+tcra_chain_2 = 'C'
+tcrb_chain_2 = 'D'
+
+align_on_mhc_and_compute_rmsds(pdbfile_1, mhc_chain_1, pep_chain_1, tcra_chain_1, tcrb_chain_1,
+                            pdbfile_2, mhc_chain_2, pep_chain_2, tcra_chain_2, tcrb_chain_2)
+
+print('ebv - yes template')
+
+pdbfile_1 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/peptide_designs/ebv/pdbs/3mv7.pdb.human.MH1.B-35.A.C.DE.pdb'
+mhc_chain_1 = 'A'
+pep_chain_1 = 'B'
+tcra_chain_1 = 'C'
+tcrb_chain_1 = 'D'
+
+pdbfile_2 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/peptide_designs/ebv/pdbs/fold_ebv_yes_template_model_0.pdb'
+mhc_chain_2 = 'A'
+pep_chain_2 = 'B'
+tcra_chain_2 = 'C'
+tcrb_chain_2 = 'D'
+
+align_on_mhc_and_compute_rmsds(pdbfile_1, mhc_chain_1, pep_chain_1, tcra_chain_1, tcrb_chain_1,
+                            pdbfile_2, mhc_chain_2, pep_chain_2, tcra_chain_2, tcrb_chain_2)
+
+
+print('ebv q5 - no template')
+
+pdbfile_1 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/peptide_designs/ebv/pdbs/4prp.pdb.human.MH1.B-35.A.C.DE.pdb'
+mhc_chain_1 = 'A'
+pep_chain_1 = 'B'
+tcra_chain_1 = 'C'
+tcrb_chain_1 = 'D'
+
+pdbfile_2 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/peptide_designs/ebv/pdbs/fold_ebv_q5_no_template_model_0.pdb'
+mhc_chain_2 = 'A'
+pep_chain_2 = 'B'
+tcra_chain_2 = 'C'
+tcrb_chain_2 = 'D'
+
+align_on_mhc_and_compute_rmsds(pdbfile_1, mhc_chain_1, pep_chain_1, tcra_chain_1, tcrb_chain_1,
+                            pdbfile_2, mhc_chain_2, pep_chain_2, tcra_chain_2, tcrb_chain_2)
+
+print('ebv q5 - yes template')
+
+pdbfile_1 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/peptide_designs/ebv/pdbs/4prp.pdb.human.MH1.B-35.A.C.DE.pdb'
+mhc_chain_1 = 'A'
+pep_chain_1 = 'B'
+tcra_chain_1 = 'C'
+tcrb_chain_1 = 'D'
+
+pdbfile_2 = '/Users/gianmarcovisani/Desktop/tcr_pmhc/tcr_antigen_design/peptide_designs/ebv/pdbs/fold_ebv_q5_yes_template_model_1.pdb'
+mhc_chain_2 = 'A'
+pep_chain_2 = 'B'
+tcra_chain_2 = 'C'
+tcrb_chain_2 = 'D'
+
+align_on_mhc_and_compute_rmsds(pdbfile_1, mhc_chain_1, pep_chain_1, tcra_chain_1, tcrb_chain_1,
+                            pdbfile_2, mhc_chain_2, pep_chain_2, tcra_chain_2, tcrb_chain_2)
+

@@ -43,7 +43,7 @@ def get_long_prediction_column_name(model_instance, prediction_column_short, sys
         if prediction_column_short == 'delta_log_p':
             return 'log_proba_mt__minus__log_proba_wt', system_name_in_csv_file
         elif prediction_column_short == 'pE-relaxed':
-            return 'pnE', system_name_in_csv_file + '_with_relaxation_mean_but_min_energy_runs'
+            return 'pnE', system_name_in_csv_file + '_with_relaxation'
         elif prediction_column_short == 'pE-relaxed-min-energy':
             return 'pnE', system_name_in_csv_file + '_with_relaxation_min_energy'
         elif prediction_column_short == 'pE-fixed':

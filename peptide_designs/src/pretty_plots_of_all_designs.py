@@ -27,11 +27,11 @@ def get_dfs_for_system(system):
 
         df_hermes_relaxed_000 = pd.read_csv(os.path.join(THIS_FILE, '../nyeso/nyeso_full_copy/hcnn_pyrosetta_annealing/hcnn_plus_pyrosetta_annealing_peptides_so3_convnet_base_ensemble_w_pae_w_blosum.tsv'), sep='\t')
         df_hermes_relaxed_000_pne = pd.read_csv(os.path.join(THIS_FILE, '../nyeso/nyeso_full_copy/hcnn_pyrosetta_annealing/hcnn_plus_pyrosetta_annealing_peptides_so3_convnet_base_ensemble_w_pae.tsv'), sep='\t')['pnE'].values
-        df_hermes_relaxed_000['pnE'] = df_hermes_relaxed_000_pne
+        df_hermes_relaxed_000['pnE_annealing'] = df_hermes_relaxed_000_pne
 
         df_hermes_relaxed_050 = pd.read_csv(os.path.join(THIS_FILE, '../nyeso/nyeso_full_copy/hcnn_pyrosetta_annealing/hcnn_plus_pyrosetta_annealing_peptides_so3_convnet_noise=0p5_w_pae_w_blosum.tsv'), sep='\t')
         df_hermes_relaxed_050_pne = pd.read_csv(os.path.join(THIS_FILE, '../nyeso/nyeso_full_copy/hcnn_pyrosetta_annealing/hcnn_plus_pyrosetta_annealing_peptides_so3_convnet_noise=0p5_w_pae.tsv'), sep='\t')['pnE'].values
-        df_hermes_relaxed_050['pnE'] = df_hermes_relaxed_050_pne
+        df_hermes_relaxed_050['pnE_annealing'] = df_hermes_relaxed_050_pne
 
         df_mhc = pd.read_csv(os.path.join(THIS_FILE, '../nyeso/nyeso_full_copy/mhc_pwm/mhc_motif_peptides_w_pae_w_blosum.tsv'), sep='\t')
 
@@ -339,10 +339,16 @@ SYSTEM_TO_PAE_THRESHOLD = {
 
 ALPHA = 0.5
 
+# SYSTEM_TO_HERMES_RELAXED_SCORE_COLUMN = {
+#     'nyeso': 'pnE_annealing',
+#     'magea3_and_titin': 'pnlogp',
+#     'ebv': 'pnlogp'
+# }
+
 SYSTEM_TO_HERMES_RELAXED_SCORE_COLUMN = {
     'nyeso': 'pnE',
-    'magea3_and_titin': 'pnlogp',
-    'ebv': 'pnlogp'
+    'magea3_and_titin': 'pnE',
+    'ebv': 'pnE'
 }
 
 def color_violinplot_multiple(parts, colors):
@@ -876,8 +882,8 @@ if __name__ == '__main__':
 
     ncols = 2
     nrows = 1
-    colsize = 4.5
-    rowsize = 4
+    colsize = 4
+    rowsize = 3.3
     fig, axs = plt.subplots(figsize=(ncols*colsize, nrows*rowsize), ncols=ncols, nrows=nrows, sharex=True)
 
     # hermes_models = [model for model in MODELS_IN_ORDER if 'hermes' in model]
@@ -887,7 +893,7 @@ if __name__ == '__main__':
 
         color = MODEL_TO_COLOR[model]
         pae_scores = model_to_df[model]['neg_pmhc_tcr_pae'].values
-        hermes_score_column = 'pnE' # if 'fixed' in model else SYSTEM_TO_HERMES_RELAXED_SCORE_COLUMN[args.system]
+        hermes_score_column = 'pnE' if 'fixed' in model else SYSTEM_TO_HERMES_RELAXED_SCORE_COLUMN[args.system]
         hermes_scores = model_to_df[model][hermes_score_column].values
         mhc_pred = model_to_df[model]['is_binder_by_netmhcpan'].values
 
