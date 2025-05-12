@@ -6,7 +6,8 @@ import argparse
 
 from constants import TCR_TO_PDB, PDB_TO_PEP_INFO
 
-# in progress: 1 no template, 1 yes template, 2 no template, 7 no template, 3 no template
+# done: 1 no template, 1 yes template, 2 no template, 7 no template
+# in progress: 4 no template, 5 no template, 6 no template
 
 
 SLURM_SETUP = "#!/bin/bash\n\
@@ -32,7 +33,7 @@ if __name__ == '__main__':
     parser.add_argument('-P',  '--partition', type=str, default='compute')
     parser.add_argument('-G',  '--use_gpu', type=int, default=0, choices=[0, 1])
     parser.add_argument('-C',  '--num_cores', type=int, default=1)
-    parser.add_argument('-W',  '--walltime', type=str, default='02:00:00')
+    parser.add_argument('-W',  '--walltime', type=str, default='03:00:00')
     parser.add_argument('-M',  '--memory', type=str, default='5G')
     parser.add_argument('-E',  '--send_emails', type=int, default=0, choices=[0, 1])
     parser.add_argument('-EA', '--email_address', type=str, default='gvisan01@uw.edu')
