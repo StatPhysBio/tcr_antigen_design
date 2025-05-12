@@ -7,7 +7,9 @@ from tqdm import tqdm
 
 import argparse
 
-from hermes.utils.protein_naming import ol_to_ind_size, ind_to_ol_size
+# from hermes.utils.protein_naming import ol_to_ind_size, ind_to_ol_size
+ind_to_ol_size = {0: 'G', 1: 'A', 2: 'C', 3: 'S', 4: 'P', 5: 'T', 6: 'V', 7: 'D', 8: 'I', 9: 'L', 10: 'N', 11: 'M', 12: 'Q', 13: 'K', 14: 'E', 15: 'H', 16: 'F', 17: 'R', 18: 'Y', 19: 'W'}
+ol_to_ind_size = {v: k for k, v in ind_to_ol_size.items()}
 
 THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 
