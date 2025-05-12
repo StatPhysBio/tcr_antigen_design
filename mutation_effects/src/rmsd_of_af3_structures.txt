@@ -1,0 +1,57 @@
+
+tcr1 - no template
+RMSD of MHCs aligning MHCs: 0.29
+RMSD of Peptides aligning MHCs: 0.54
+RMSD of TCRs aligning MHCs: 2.45
+RMSD of full alignment: 1.119
+
+
+tcr1 - yes template
+RMSD of MHCs aligning MHCs: 0.31
+RMSD of Peptides aligning MHCs: 0.40
+RMSD of TCRs aligning MHCs: 1.86
+RMSD of full alignment: 0.921
+
+
+nyeso - no template
+RMSD of MHCs aligning MHCs: 0.42
+RMSD of Peptides aligning MHCs: 0.23
+RMSD of TCRs aligning MHCs: 1.50
+RMSD of full alignment: 0.815
+
+
+nyeso - yes template
+RMSD of MHCs aligning MHCs: 0.40
+RMSD of Peptides aligning MHCs: 0.22
+RMSD of TCRs aligning MHCs: 1.41
+RMSD of full alignment: 0.751
+
+
+tax - no template
+RMSD of MHCs aligning MHCs: 0.42
+RMSD of Peptides aligning MHCs: 0.37
+RMSD of TCRs aligning MHCs: 1.77
+RMSD of full alignment: 0.833
+
+
+tax - yes template
+RMSD of MHCs aligning MHCs: 0.41
+RMSD of Peptides aligning MHCs: 0.38
+RMSD of TCRs aligning MHCs: 1.88
+RMSD of full alignment: 0.867
+
+
+hsiue - no template
+RMSD of MHCs aligning MHCs: 0.61
+RMSD of Peptides aligning MHCs: 0.61
+RMSD of TCRs aligning MHCs: 26.69
+RMSD of full alignment: 11.567
+
+
+hsiue - yes template
+RMSD of MHCs aligning MHCs: 0.63
+RMSD of Peptides aligning MHCs: 0.64
+RMSD of TCRs aligning MHCs: 27.86
+RMSD of full alignment: 13.889
+
+
