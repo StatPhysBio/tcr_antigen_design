@@ -3,10 +3,13 @@ import os
 import numpy as np
 import pandas as pd
 import argparse
+from glob import glob
 
 from constants import PDBS, PDB_TO_PEP_CHAIN_AND_RESNUM_START
 
-# in progress: no template, yes template
+SEP = '$'
+
+# in progress: no template, 
 
 SLURM_SETUP = "#!/bin/bash\n\
 #SBATCH --job-name={system_identifier}\n\
@@ -22,17 +25,17 @@ SLURM_SETUP = "#!/bin/bash\n\
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('-m',  '--model_version', type=str, nargs='+', default=['hermes_py_000', 'hermes_py_050']) #, 'hermes_py_000_ft_skempi_no_tcrpmhc_ddg_bi', 'hermes_py_050_ft_skempi_no_tcrpmhc_ddg_bi']) # hermes_py_000 hermes_py_050 hermes_py_000_ft_skempi_no_tcrpmhc_ddg_bi hermes_py_050_ft_skempi_no_tcrpmhc_ddg_bi')
+    parser.add_argument('-m',  '--model_version', type=str, nargs='+', default=['hermes_py_000']) #, 'hermes_py_000_ft_skempi_no_tcrpmhc_ddg_bi', 'hermes_py_050_ft_skempi_no_tcrpmhc_ddg_bi']) # hermes_py_000 hermes_py_050 hermes_py_000_ft_skempi_no_tcrpmhc_ddg_bi hermes_py_050_ft_skempi_no_tcrpmhc_ddg_bi')
     parser.add_argument('--num_repeats', type=int, default=20)
     parser.add_argument('--total_relaxations', type=int, default=100)
-    parser.add_argument('--csvfile', type=str, default=f'hsiue_et_al_H2_sat_mut_af3_yes_template.csv')
+    parser.add_argument('--csvfile', type=str, default=f'hsiue_et_al_H2_sat_mut_af3_no_template.csv')
 
     parser.add_argument('-A',  '--account', type=str, default='stf')
-    parser.add_argument('-P',  '--partition', type=str, default='compute')
+    parser.add_argument('-P',  '--partition', type=str, default='compute-hugemem')
     parser.add_argument('-G',  '--use_gpu', type=int, default=0, choices=[0, 1])
     parser.add_argument('-C',  '--num_cores', type=int, default=1)
     parser.add_argument('-W',  '--walltime', type=str, default='02:00:00')
-    parser.add_argument('-M',  '--memory', type=str, default='4G')
+    parser.add_argument('-M',  '--memory', type=str, default='5G')
     parser.add_argument('-E',  '--send_emails', type=int, default=0, choices=[0, 1])
     parser.add_argument('-EA', '--email_address', type=str, default='gvisan01@uw.edu')
 
@@ -60,6 +63,12 @@ if __name__ == '__main__':
             pdb = row['wt_pdb']
             chain = row['mutant_chain']
             num_jobs = args.total_relaxations // args.num_repeats
+
+            metric_files = glob(os.path.join(f'./results/{model_version}/with_relaxation', f'{model_version}{SEP}{pdb}{SEP}{sequence}{SEP}*{SEP}pnE.npy'))
+
+            if len(metric_files) > 0:
+                print(f'{model_version}{SEP}{pdb}{SEP}{sequence}{SEP}*{SEP}pnE.npy --> found!')
+                continue # already done!!
 
             for j in range(num_jobs):
 
