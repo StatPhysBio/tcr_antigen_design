@@ -1,0 +1,8 @@
+Model: hermes_py_000
+	3mv7 vs. fold_ebv_no_template_model_0: 6.048
+	3mv7 vs. fold_ebv_yes_template_model_0: 16.611
+
+Model: hermes_py_050
+	3mv7 vs. fold_ebv_no_template_model_0: 4.315
+	3mv7 vs. fold_ebv_yes_template_model_0: 17.983
+

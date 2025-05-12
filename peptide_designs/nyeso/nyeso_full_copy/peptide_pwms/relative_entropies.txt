@@ -1,0 +1,12 @@
+Model: hermes_py_000
+	2bnr vs. fold_nyeso_no_template_model_1: 10.124
+	2bnr vs. fold_nyeso_yes_template_model_0: 7.845
+	2bnq vs. fold_nyeso_9v_no_template_model_0: 17.678
+	2bnq vs. fold_nyeso_9v_yes_template_model_0: 14.535
+
+Model: hermes_py_050
+	2bnr vs. fold_nyeso_no_template_model_1: 3.646
+	2bnr vs. fold_nyeso_yes_template_model_0: 3.497
+	2bnq vs. fold_nyeso_9v_no_template_model_0: 3.422
+	2bnq vs. fold_nyeso_9v_yes_template_model_0: 2.893
+

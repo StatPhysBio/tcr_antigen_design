@@ -1,0 +1,8 @@
+Model: hermes_py_000
+	5brz vs. fold_mage_no_template_model_0: 15.159
+	5brz vs. fold_mage_yes_template_seed_2_model_0: 19.644
+
+Model: hermes_py_050
+	5brz vs. fold_mage_no_template_model_0: 5.501
+	5brz vs. fold_mage_yes_template_seed_2_model_0: 7.391
+

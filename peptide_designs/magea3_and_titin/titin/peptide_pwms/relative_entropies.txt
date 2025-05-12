@@ -1,0 +1,8 @@
+Model: hermes_py_000
+	5bs0 vs. fold_titin_no_template_model_0: 37.464
+	5bs0 vs. fold_titin_yes_template_model_1: 38.636
+
+Model: hermes_py_050
+	5bs0 vs. fold_titin_no_template_model_0: 21.827
+	5bs0 vs. fold_titin_yes_template_model_1: 23.766
+
