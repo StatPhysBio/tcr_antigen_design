@@ -1,9 +1,16 @@
 
-import os
+import os, sys
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import matplotlib as mpl
+mpl.rcParams['pdf.fonttype'] = 42
+mpl.rcParams['ps.fonttype'] = 42
+
 import logomaker
+
+sys.path.append('../../../mutation_effects/src')
+from global_constants import LOGOMAKER_COLORS
 
 # every PWM here follows this numbering
 # from hermes.utils.protein_naming import ind_to_ol_size, ol_to_ind_size
@@ -22,12 +29,22 @@ def plot_pwm(pwm, out_path):
 
     information_adjusted_pwm_df = pd.DataFrame(information_adjusted_pwm, index=range(1, pwm.shape[0]+1), columns=[ind_to_ol_size[ind] for ind in range(20)])
 
-    
     # make the figure
+    fontsize = 18
     fig, ax = plt.subplots(figsize=(10, 2))
     ax.set_ylim(0, np.log2(20))
-    logomaker.Logo(information_adjusted_pwm_df, ax=ax)
-    ax.axis('off')
+    logomaker.Logo(information_adjusted_pwm_df, ax=ax, color_scheme=LOGOMAKER_COLORS)
+    # ax.axis('off')
+    ax.spines['top'].set_visible(False)
+    ax.spines['left'].set_visible(False)
+    ax.spines['bottom'].set_visible(False)
+    ax.set_ylim([0, np.log2(20)])
+    ax.yaxis.set_ticks_position('right')  # Set ticks on the right
+    ax.yaxis.set_label_position('right')  # Set the label on the right
+    ax.set_ylabel('bits', fontsize=fontsize)
+    ax.set_yticks([1, 3])
+    ax.tick_params(axis='y', labelsize=fontsize-2)
+    ax.set_xticks([])
     plt.tight_layout()
     plt.savefig(out_path)
     plt.close()

@@ -45,7 +45,7 @@ MODEL_TO_COLOR = {
 SYSTEM_TO_PRETTY_NAME = {
     ('nyeso', None): '1G4 TCR',
     ('tax', None): 'A6 TCR',
-    ('hsiue_et_al', None): 'H2-scDb (Ab)',
+    ('hsiue_et_al', None): 'H2-scDb (Fab)',
     ('mskcc', 1): 'TCR1',
     ('mskcc', 2): 'TCR2',
     ('mskcc', 3): 'TCR3',
@@ -56,7 +56,7 @@ SYSTEM_TO_PRETTY_NAME = {
 }
 
 STRUC_TO_PRETTY_NAME = {
-    'true struc': 'Exper.',
+    'true struc': 'Experim.',
     'af3 yes template': 'AF3\nw/ templ.',
     'af3 no template': 'AF3\nw/out templ.',
 }
@@ -73,7 +73,7 @@ def system_to_csv_names(system, tcr=None):
         if tcr == 1:
             return {'true struc': 'mskcc_tcr1_ec50_sat_mut_af3', 'af3 yes template': 'mskcc_tcr1_ec50_sat_mut_af3_yes_template', 'af3 no template': 'mskcc_tcr1_ec50_sat_mut_af3_yes_template'}
         elif tcr >= 2 and tcr <= 7:
-            return {'af3 yes template': f'mskcc_tcr{tcr}_ec50_sat_mut_af3', 'af3 no template': f'mskcc_tcr{tcr}_ec50_sat_mut_af3_no_template'}
+            return {'true struc': None, 'af3 yes template': f'mskcc_tcr{tcr}_ec50_sat_mut_af3', 'af3 no template': f'mskcc_tcr{tcr}_ec50_sat_mut_af3_no_template'}
         else:
             raise ValueError(f'Invalid TCR value: {tcr}')
     else:
@@ -94,6 +94,9 @@ def get_model_specific_parameters(model_instance, prediction_column_short, syste
 
         struc_to_csvname = system_to_csv_names(system, tcr)
         for struc in struc_to_csvname.keys():
+            if struc_to_csvname[struc] is None:
+                struc_to_df[struc] = None
+                continue
             prediction_column, system_name_in_csv_file = get_long_prediction_column_name(model_instance, prediction_column_short, struc_to_csvname[struc])
             try:
                 struc_to_df[struc] = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}-{model_instance}-use_mt_structure={use_mt_structure}.csv'))
@@ -105,6 +108,9 @@ def get_model_specific_parameters(model_instance, prediction_column_short, syste
 
         struc_to_csvname = system_to_csv_names(system, tcr)
         for struc in struc_to_csvname.keys():
+            if struc_to_csvname[struc] is None:
+                struc_to_df[struc] = None
+                continue
             prediction_column, system_name_in_csv_file = get_long_prediction_column_name(model_instance, prediction_column_short, struc_to_csvname[struc])
             try:
                 struc_to_df[struc] = pd.read_csv(os.path.join(base_dir, f'{system_name_in_csv_file}-num_seq_per_target={num_seq_per_target}-use_mt_structure={use_mt_structure}.csv'))
@@ -160,17 +166,19 @@ if __name__ == '__main__':
     models = ['hermes_py_000', 'hermes_py_050', 'hermes_py_000', 'hermes_py_050', 'proteinmpnn_v_48_002_full_pep_masked', 'proteinmpnn_v_48_020_full_pep_masked']
     pred_columns_short = ['pE-fixed', 'pE-fixed', 'pE-relaxed', 'pE-relaxed', 'pnlogp-fixed', 'pnlogp-fixed']
 
-    fontsize = 13
+    fontsize = 15
 
-    ncols = 5
-    nrows = 2
-    colsize = 3.2
-    rowsize = 3.2
-    fig, axs = plt.subplots(nrows=nrows, ncols=ncols, figsize=(colsize*ncols, rowsize*nrows), dpi=300)
+    ncols = 2
+    nrows = 5
+    colsize = 3
+    rowsize = 2.5
+    fig, axs = plt.subplots(nrows=nrows, ncols=ncols, figsize=(colsize*ncols, rowsize*nrows), dpi=300, sharex=True, sharey=True)
+
+    ylim = (np.inf, -np.inf)
 
     for ax_i, (system, tcr) in enumerate(system_and_tcr):
         ax = axs[ax_i//ncols, ax_i%ncols]
-
+        
         title = SYSTEM_TO_PRETTY_NAME[(system, tcr)]
 
         for j, (model_instance, pred_column_short) in enumerate(zip(models, pred_columns_short)):
@@ -184,27 +192,73 @@ if __name__ == '__main__':
                 df = struc_to_df[struc]
 
                 if df is None:
-                    continue
-
-                sr, sr_pval = get_spearmanr(df, prediction_column, SYSTEM_TO_TARGET_COLUMN[system])
+                    sr, sr_pval = np.nan, np.nan
+                else:
+                    sr, sr_pval = get_spearmanr(df, prediction_column, SYSTEM_TO_TARGET_COLUMN[system])
 
                 xticks.append(STRUC_TO_PRETTY_NAME[struc])
                 srs.append(sr)
                 srs_pvals.append(sr_pval)
+            
+            ax.plot(np.arange(len(xticks)), srs, marker='o', color=color, alpha=0.8, linewidth=2.5)
 
-            ax.plot(xticks, srs, marker='o', color=color, alpha=0.8)
+            ax.set_xticks(np.arange(len(xticks)))
+            ax.set_xticklabels(xticks, fontsize=fontsize)
 
             ax.tick_params(axis='x', labelrotation=60, labelsize=fontsize)
             
-            ax.set_ylabel('Spearman r', fontsize=fontsize)
+            if ax_i%ncols == 0:
+                ax.set_ylabel('Spearman r', fontsize=fontsize)
             
             ax.tick_params(axis='y', labelsize=fontsize-2)
 
-            ax.set_title(title, fontsize=fontsize)
-            ax.axhline(0, color='black', linestyle='--', linewidth=0.8)
+            ax.set_title(title, fontsize=fontsize+2)
+            ax.axhline(0, color='black', linestyle='--', linewidth=1.0)
+
+            ax.grid(color='gray', linestyle='--', alpha=0.5)
+
+            ylim = (min(ylim[0], np.nanmin(srs)-0.075), max(ylim[1], np.nanmax(srs)+0.075))
+    
+    # samw ylim but qwithout ahrey=True because I want the yticklabels to be displayed
+    for ax in axs.flatten():
+        ax.set_ylim(ylim)
 
     plt.tight_layout()
     plt.savefig(os.path.join(MUT_EFFECTS_DIR, 'plots_af3_struc_ablation.pdf'), bbox_inches='tight')
     plt.savefig(os.path.join(MUT_EFFECTS_DIR, 'plots_af3_struc_ablation.png'), bbox_inches='tight')
+    plt.close()
+
+
+    MODEL_TO_COLOR = {
+        'hermes_fixed_000': red,
+        'hermes_fixed_050': red_light,
+        'hermes_relaxed_000': orange,
+        'hermes_relaxed_050': orange_light,
+        'proteinmpnn_002': blue,
+        'proteinmpnn_020': blue_light,
+    }
+
+    MODEL_TO_PRETTY_NAME = {
+        'hermes_fixed_000': 'HERMES-$fixed$ 0.00',
+        'hermes_fixed_050': 'HERMES-$fixed$ 0.50',
+        'hermes_relaxed_000': 'HERMES-$relaxed$ 0.00',
+        'hermes_relaxed_050': 'HERMES-$relaxed$ 0.50',
+        'proteinmpnn_002': 'ProteinMPNN 0.02 Pep',
+        'proteinmpnn_020': 'ProteinMPNN 0.20 Pep',
+    }
+
+    ## make legend
+    from matplotlib.lines import Line2D
+    from matplotlib.patches import Patch
+    handles = []
+    for model in MODEL_TO_COLOR.keys():
+        color = MODEL_TO_COLOR[model]
+        model_pretty_name = MODEL_TO_PRETTY_NAME[model]
+        handles.append(Patch(facecolor=color, edgecolor=color, alpha=0.8, label=model_pretty_name))
+    plt.figure(figsize=(5, 5))
+    plt.legend(handles=handles, loc='center', fontsize=14)
+    plt.axis('off')
+    plt.savefig(f'../plots_af3_struc_ablation__legend.png')
+    plt.savefig(f'../plots_af3_struc_ablation__legend.pdf')
     plt.close()
 
