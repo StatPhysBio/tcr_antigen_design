@@ -25,7 +25,7 @@
 python -u ../../../mutation_effects/src/get_score_of_requested_peptides_fixed_structure.py \
             --model_version hermes_py_000 \
             --pdbdir ./pdbs \
-            --output_csv_filepath wildtype/wildtype_w_pae_w_blosum.tsv \
+            --output_csv_filepath wildtype/wildtype_w_pae_w_blosum_w_hermes_fixed_000.tsv \
             --csv_filepath wildtype/wildtype_w_pae_w_blosum.tsv \
             --pdb_column pdb_for_hermes_scoring \
             --chain_column chain_for_hermes_scoring \
@@ -35,7 +35,7 @@ python -u ../../../mutation_effects/src/get_score_of_requested_peptides_fixed_st
 python -u ../../../mutation_effects/src/get_score_of_requested_peptides_fixed_structure.py \
             --model_version hermes_py_050 \
             --pdbdir ./pdbs \
-            --output_csv_filepath wildtype/wildtype_w_pae_w_blosumtsv \
+            --output_csv_filepath wildtype/wildtype_w_pae_w_blosum_w_hermes_fixed_050.tsv \
             --csv_filepath wildtype/wildtype_w_pae_w_blosum.tsv \
             --pdb_column pdb_for_hermes_scoring \
             --chain_column chain_for_hermes_scoring \

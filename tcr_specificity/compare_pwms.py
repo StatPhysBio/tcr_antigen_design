@@ -157,6 +157,10 @@ if __name__ == '__main__':
             rows_to_keep.append(i_row)
 
         filtered_group_df = group_df.loc[np.array(rows_to_keep)]
+
+        pdbs = filtered_group_df['pdbid'].values.tolist()
+
+        print(pdbs)
         
         wt_pep_in_struc_pwm = make_pwm_from_sequences(filtered_group_df['wt_peptide'].values)
 
