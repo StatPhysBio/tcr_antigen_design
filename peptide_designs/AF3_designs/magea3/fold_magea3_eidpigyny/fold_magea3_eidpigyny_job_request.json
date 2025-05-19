@@ -1,0 +1,39 @@
+[{
+ "name": "magea3_EIDPIGYNY",
+ "modelSeeds": [
+  "186753643"
+ ],
+ "sequences": [
+  {
+   "proteinChain": {
+    "sequence": "GSHSMRYFFTSVSRPGRGEPRFIAVGYVDDTQFVRFDSDAASQKMEPRAPWIEQEGPEYWDQETRNMKAHSQTDRANLGTLRGYYNQSEDGSHTIQIMYGCDVGPDGRFLRGYRQDAYDGKDYIALNEDLRSWTAADMAAQITKRKWEAVHAAEQRRVYLEGRCVDGLRRYLENG",
+    "count": 1,
+    "useStructureTemplate": false
+   }
+  },
+  {
+   "proteinChain": {
+    "sequence": "EIDPIGYNY",
+    "count": 1,
+    "useStructureTemplate": false
+   }
+  },
+  {
+   "proteinChain": {
+    "sequence": "KQEVTQIPAALSVPEGENLVLNCSFTDSAIYNLQWFRQDPGKGLTSLLLIQSSQREQTSGRLNASLDKSSGRSTLYIAASQPGDSATYLCAVRPGGAGPFFVVFGKGTKLSVIP",
+    "count": 1,
+    "useStructureTemplate": false
+   }
+  },
+  {
+   "proteinChain": {
+    "sequence": "KAGVTQTPRYLIKTRGQQVTLSCSPISGHRSVSWYQQTPGQGLQFLFEYFSETQRNKGNFPGRFSGRQFSNSRSEMNVSTLELGDSALYLCASSFNMATGQYFGPGTRLTVT",
+    "count": 1,
+    "useStructureTemplate": false
+   }
+  }
+ ],
+ "dialect": "alphafoldserver",
+ "version": 1
+}
+]

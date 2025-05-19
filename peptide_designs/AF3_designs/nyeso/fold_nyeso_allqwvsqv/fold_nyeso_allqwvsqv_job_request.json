@@ -1,0 +1,39 @@
+[{
+ "name": "nyeso_ALLQWVSQV",
+ "modelSeeds": [
+  "868894034"
+ ],
+ "sequences": [
+  {
+   "proteinChain": {
+    "sequence": "GSHSMRYFFTSVSRPGRGEPRFIAVGYVDDTQFVRFDSDAASQRMEPRAPWIEQEGPEYWDGETRKVKAHSQTHRVDLGTLRGYYNQSEAGSHTVQRMYGCDVGSDWRFLRGYHQYAYDGKDYIALKEDLRSWTAADMAAQTTKHKWEAAHVAEQLRAYLEGTCVEWLRRYLENG",
+    "count": 1,
+    "useStructureTemplate": false
+   }
+  },
+  {
+   "proteinChain": {
+    "sequence": "ALLQWVSQV",
+    "count": 1,
+    "useStructureTemplate": false
+   }
+  },
+  {
+   "proteinChain": {
+    "sequence": "KQEVTQIPAALSVPEGENLVLNCSFTDSAIYNLQWFRQDPGKGLTSLLLIQSSQREQTSGRLNASLDKSSGRSTLYIAASQPGDSATYLCAVRPTSGGSYIPTFGRGTSLIVHP",
+    "count": 1,
+    "useStructureTemplate": false
+   }
+  },
+  {
+   "proteinChain": {
+    "sequence": "NAGVTQTPKFQVLKTGQSMTLQCAQDMNHEYMSWYRQDPGMGLRLIHYSVGAGITDQGEVPNGYNVSRSTTEDFPLRLLSAAPSQTSVYFCASSYVGNTGELFFGEGSRLTVL",
+    "count": 1,
+    "useStructureTemplate": false
+   }
+  }
+ ],
+ "dialect": "alphafoldserver",
+ "version": 1
+}
+]

@@ -1,0 +1,39 @@
+[{
+ "name": "magea3_ESDPINESY",
+ "modelSeeds": [
+  "1894274675"
+ ],
+ "sequences": [
+  {
+   "proteinChain": {
+    "sequence": "GSHSMRYFFTSVSRPGRGEPRFIAVGYVDDTQFVRFDSDAASQKMEPRAPWIEQEGPEYWDQETRNMKAHSQTDRANLGTLRGYYNQSEDGSHTIQIMYGCDVGPDGRFLRGYRQDAYDGKDYIALNEDLRSWTAADMAAQITKRKWEAVHAAEQRRVYLEGRCVDGLRRYLENG",
+    "count": 1,
+    "useStructureTemplate": false
+   }
+  },
+  {
+   "proteinChain": {
+    "sequence": "ESDPINESY",
+    "count": 1,
+    "useStructureTemplate": false
+   }
+  },
+  {
+   "proteinChain": {
+    "sequence": "KQEVTQIPAALSVPEGENLVLNCSFTDSAIYNLQWFRQDPGKGLTSLLLIQSSQREQTSGRLNASLDKSSGRSTLYIAASQPGDSATYLCAVRPGGAGPFFVVFGKGTKLSVIP",
+    "count": 1,
+    "useStructureTemplate": false
+   }
+  },
+  {
+   "proteinChain": {
+    "sequence": "KAGVTQTPRYLIKTRGQQVTLSCSPISGHRSVSWYQQTPGQGLQFLFEYFSETQRNKGNFPGRFSGRQFSNSRSEMNVSTLELGDSALYLCASSFNMATGQYFGPGTRLTVT",
+    "count": 1,
+    "useStructureTemplate": false
+   }
+  }
+ ],
+ "dialect": "alphafoldserver",
+ "version": 1
+}
+]

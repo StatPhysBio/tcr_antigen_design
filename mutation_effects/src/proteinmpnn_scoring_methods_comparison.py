@@ -55,26 +55,26 @@ SYSTEM_TO_PRETTY_NAME = {
     'tcr7': 'TCR7'
 }
 
-PROTEINMPNN_MODEL_GROUPS = {'proteinmpnn_v_48_002': ['proteinmpnn_v_48_002', 'proteinmpnn_v_48_002_full_pep_masked', 'proteinmpnn_v_48_002_full_pep_and_tcr_masked', 'proteinmpnn_v_48_002_full_tcr_masked'],
-                            'proteinmpnn_v_48_020': ['proteinmpnn_v_48_020', 'proteinmpnn_v_48_020_full_pep_masked', 'proteinmpnn_v_48_020_full_pep_and_tcr_masked', 'proteinmpnn_v_48_020_full_tcr_masked']}
+PROTEINMPNN_MODEL_GROUPS = {'proteinmpnn_v_48_002': ['proteinmpnn_v_48_002', 'proteinmpnn_v_48_002_full_pep_masked', 'proteinmpnn_v_48_002_full_pep_and_tcr_masked'], #, 'proteinmpnn_v_48_002_full_tcr_masked'],
+                            'proteinmpnn_v_48_020': ['proteinmpnn_v_48_020', 'proteinmpnn_v_48_020_full_pep_masked', 'proteinmpnn_v_48_020_full_pep_and_tcr_masked']} #, 'proteinmpnn_v_48_020_full_tcr_masked']}
 
 def make_pretty_name(model):
     if model == 'proteinmpnn_v_48_002':
-        return 'Pep 1-by-1'
+        return 'Pep. 1-by-1'
     elif model == 'proteinmpnn_v_48_002_full_pep_masked':
-        return 'Pep'
+        return 'Peptide'
     elif model == 'proteinmpnn_v_48_002_full_tcr_masked':
         return 'TCR'
     elif model == 'proteinmpnn_v_48_002_full_pep_and_tcr_masked':
-        return 'Pep and TCR'
+        return 'Pep. and TCR'
     elif model == 'proteinmpnn_v_48_020':
-        return 'Pep 1-by-1'
+        return 'Pep. 1-by-1'
     elif model == 'proteinmpnn_v_48_020_full_pep_masked':
-        return 'Pep'
+        return 'Peptide'
     elif model == 'proteinmpnn_v_48_020_full_tcr_masked':
         return 'TCR'
     elif model == 'proteinmpnn_v_48_020_full_pep_and_tcr_masked':
-        return 'Pep and TCR'
+        return 'Pep. and TCR'
     else:
         raise ValueError(f'Unknown model: {model}')
 
@@ -236,7 +236,7 @@ for proteinmpnn_model_version in PROTEINMPNN_MODEL_GROUPS:
 
     protocol_pairs = list(combinations(protocols, 2))
 
-    plt.figure(figsize=(4.5, 5))
+    plt.figure(figsize=(4, 4))
     ax = plt.gca()
 
     for i, protocol_pair in enumerate(protocol_pairs):
@@ -248,17 +248,17 @@ for proteinmpnn_model_version in PROTEINMPNN_MODEL_GROUPS:
             except:
                 sr, sr_pval = all_correlations[system][proteinmpnn_model_version][(protocol_pair[1], protocol_pair[0])]
 
-            alpha = 0.95 if sr_pval < 0.05 else 0.2
+            alpha = 0.65 # 0.95 if sr_pval < 0.05 else 0.2
             color = SYSTEM_TO_COLOR[system]
             marker = SYSTEM_TO_MARKER[system]
 
-            ax.scatter(i, sr, color=color, marker=marker, alpha=alpha, s=90)
+            ax.scatter(i, sr, color=color, marker=marker, alpha=alpha, s=110)
 
-    protocol_pairs_pretty_names = [f'{make_pretty_name(model1)} vs. {make_pretty_name(model2)}'  for model1, model2 in protocol_pairs]
+    protocol_pairs_pretty_names = [f'{make_pretty_name(model1)}\nvs.\n{make_pretty_name(model2)}'  for model1, model2 in protocol_pairs]
 
     ax.grid(axis='y', ls='--', alpha=0.5)
     ax.set_xticks(np.arange(len(protocol_pairs_pretty_names)))
-    ax.set_xticklabels(protocol_pairs_pretty_names, ha='right')
+    ax.set_xticklabels(protocol_pairs_pretty_names, ha='center')
     ax.tick_params(axis='x', labelsize=fontsize-1, rotation=70)
     ax.tick_params(axis='y', labelsize=fontsize-1)
 
@@ -273,7 +273,7 @@ for proteinmpnn_model_version in PROTEINMPNN_MODEL_GROUPS:
 
     ax.set_title(title, fontsize=fontsize+1)
 
-    ax.set_ylim((-1.05, 1.05))
+    ax.set_ylim((0.83, 1.02))
     ax.axhline(0, ls='--', color='black')
 
     plt.tight_layout()
@@ -286,7 +286,7 @@ for proteinmpnn_model_version in PROTEINMPNN_MODEL_GROUPS:
 
     protocols = PROTEINMPNN_MODEL_GROUPS[proteinmpnn_model_version]
 
-    plt.figure(figsize=(4, 4.4))
+    plt.figure(figsize=(4, 4))
     ax = plt.gca()
 
     for i, protocol in enumerate(protocols):
@@ -298,16 +298,16 @@ for proteinmpnn_model_version in PROTEINMPNN_MODEL_GROUPS:
             sr, sr_pval = spearmanr(df[PRED_COL], df[system_to_target_col(system)])
 
 
-            alpha = 0.95 if sr_pval < 0.05 else 0.2
+            alpha = 0.65 # 0.95 if sr_pval < 0.05 else 0.2
             color = SYSTEM_TO_COLOR[system]
             marker = SYSTEM_TO_MARKER[system]
 
-            ax.scatter(i, sr, color=color, marker=marker, alpha=alpha, s=90)
+            ax.scatter(i, sr, color=color, marker=marker, alpha=alpha, s=110)
 
-    protocol_pretty_names = [make_pretty_name(model) + ' vs. Exp' for model in protocols]
+    protocol_pretty_names = [make_pretty_name(model) + '\nvs.\nExperimental' for model in protocols]
 
     ax.set_xticks(np.arange(len(protocol_pretty_names)))
-    ax.set_xticklabels(protocol_pretty_names, ha='right')
+    ax.set_xticklabels(protocol_pretty_names, ha='center')
     ax.tick_params(axis='x', labelsize=fontsize-1, rotation=70)
     ax.tick_params(axis='y', labelsize=fontsize-1)
 
@@ -324,7 +324,7 @@ for proteinmpnn_model_version in PROTEINMPNN_MODEL_GROUPS:
 
     ax.set_title(title, fontsize=fontsize+1)
 
-    ax.set_ylim((-1.05, 1.05))
+    ax.set_ylim((-0.5, 0.75))
     ax.axhline(0, ls='--', color='black')
 
     plt.tight_layout()

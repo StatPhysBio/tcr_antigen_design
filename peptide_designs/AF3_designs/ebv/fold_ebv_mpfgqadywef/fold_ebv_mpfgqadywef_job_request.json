@@ -1,0 +1,39 @@
+[{
+ "name": "ebv_MPFGQADYWEF",
+ "modelSeeds": [
+  "1837935218"
+ ],
+ "sequences": [
+  {
+   "proteinChain": {
+    "sequence": "GSHSMRYFYTAMSRPGRGEPRFIAVGYVDDTQFVRFDSDAASPRTEPRAPWIEQEGPEYWDRNTQIFKTNTQTYRESLRNLRGYYNQSEAGSHIIQRMYGCDLGPDGRLLRGHDQSAYDGKDYIALNEDLSSWTAADTAAQITQRKWEAARVAEQLRAYLEGLCVEWLRRYLENG",
+    "count": 1,
+    "useStructureTemplate": false
+   }
+  },
+  {
+   "proteinChain": {
+    "sequence": "MPFGQADYWEF",
+    "count": 1,
+    "useStructureTemplate": false
+   }
+  },
+  {
+   "proteinChain": {
+    "sequence": "EDQVTQSPEALRLQEGESSSLNCSYTVSGLRGLFWYRQDPGKGPEFLFTLYSAGEEKEKERLKATLTKKESFLHITAPKPEDSATYLCAVQDLGTSGSRLTFGEGTQLTVNP",
+    "count": 1,
+    "useStructureTemplate": false
+   }
+  },
+  {
+   "proteinChain": {
+    "sequence": "DSGVTQTPKHLITATGQRVTLRCSPRSGDLSVYWYQQSLDQGLQFLIQYYNGEERAKGNILERFSAQQFPDLHSELNLSSLELGDSALYFCASSARSGELFFGEGSRLTVL",
+    "count": 1,
+    "useStructureTemplate": false
+   }
+  }
+ ],
+ "dialect": "alphafoldserver",
+ "version": 1
+}
+]

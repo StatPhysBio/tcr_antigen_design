@@ -45,7 +45,7 @@ def plot_pwm(pwm, out_path):
     information_adjusted_pwm_df = pd.DataFrame(information_adjusted_pwm, index=range(1, pwm.shape[0]+1), columns=[ind_to_ol_size[ind] for ind in range(20)])
 
     # make the figure
-    fontsize = 18
+    fontsize = 27
     fig, ax = plt.subplots(figsize=(10, 2))
     ax.set_ylim(0, np.log2(20))
     logomaker.Logo(information_adjusted_pwm_df, ax=ax, color_scheme=LOGOMAKER_COLORS)
@@ -58,7 +58,7 @@ def plot_pwm(pwm, out_path):
     ax.yaxis.set_label_position('right')  # Set the label on the right
     ax.set_ylabel('bits', fontsize=fontsize)
     ax.set_yticks([1, 3])
-    ax.tick_params(axis='y', labelsize=fontsize-2)
+    ax.tick_params(axis='y', labelsize=fontsize-1)
     ax.set_xticks([])
     plt.tight_layout()
     plt.savefig(out_path)
@@ -91,101 +91,101 @@ def make_pwm_from_sequences(sequences):
 
 if __name__ == '__main__':
 
-    with gzip.open('/gscratch/spe/gvisan01/peptide_mhc/mhc_motif_atlas/mhc_motif_pwms.pkl.gz', 'rb') as f:
-        mhc_motif_pwms = pickle.load(f)
+    # with gzip.open('/gscratch/spe/gvisan01/peptide_mhc/mhc_motif_atlas/mhc_motif_pwms.pkl.gz', 'rb') as f:
+    #     mhc_motif_pwms = pickle.load(f)
 
-    df = pd.read_csv('pmhc_class_1_crystal_structures.csv')
+    # df = pd.read_csv('pmhc_class_1_crystal_structures.csv')
 
-    def fix_allele(allele):
+    # def fix_allele(allele):
         
-        if isinstance(allele, str):
-            if '*' in allele:
-                return allele[:1] + ''.join(allele[2:].split(':')[:2])
-            else:
-                return allele[:2] + '-' + allele[2:]
-        else:
-            return allele
+    #     if isinstance(allele, str):
+    #         if '*' in allele:
+    #             return allele[:1] + ''.join(allele[2:].split(':')[:2])
+    #         else:
+    #             return allele[:2] + '-' + allele[2:]
+    #     else:
+    #         return allele
 
-    df['mhc_allele_final'] = df['mhc_allele_longer'].apply(fix_allele)
-    df['peptide_length'] = df['wt_peptide'].apply(len)
+    # df['mhc_allele_final'] = df['mhc_allele_longer'].apply(fix_allele)
+    # df['peptide_length'] = df['wt_peptide'].apply(len)
 
-    df = df.dropna(subset=['mhc_allele_final'])
+    # df = df.dropna(subset=['mhc_allele_final'])
 
-    # Exclude rows where wt_peptide contains an X. I don't know what it means.
-    pep_does_not_contains_x = df['wt_peptide'].apply(lambda pep: 'X' not in pep)
-    df = df[pep_does_not_contains_x]
+    # # Exclude rows where wt_peptide contains an X. I don't know what it means.
+    # pep_does_not_contains_x = df['wt_peptide'].apply(lambda pep: 'X' not in pep)
+    # df = df[pep_does_not_contains_x]
 
-    df.to_csv('pmhc_class_1_crystal_structures.csv', index=None)
+    # df.to_csv('pmhc_class_1_crystal_structures.csv', index=None)
 
-    print(len(df))
+    # print(len(df))
 
-    final_pwms = {}
+    # final_pwms = {}
 
-    groups = df.groupby(['mhc_allele_final', 'peptide_length'])
+    # groups = df.groupby(['mhc_allele_final', 'peptide_length'])
 
-    for group, group_df in tqdm(groups, total=len(groups)):
-        allele, pep_length = group
+    # for group, group_df in tqdm(groups, total=len(groups)):
+    #     allele, pep_length = group
 
-        if allele not in final_pwms:
-            final_pwms[allele] = {}
-        if pep_length not in final_pwms[allele]:
-            final_pwms[allele][pep_length] = {}
+    #     if allele not in final_pwms:
+    #         final_pwms[allele] = {}
+    #     if pep_length not in final_pwms[allele]:
+    #         final_pwms[allele][pep_length] = {}
         
-        try:
-            mhc_motif_pwm = normalize_pwm(mhc_motif_pwms['class_I'][allele][pep_length])
-        except KeyError:
-            print(f'Warning: Could not find MHC motif PWM for {group}. Skipping group of size {len(group_df)}.')
-            continue
+    #     try:
+    #         mhc_motif_pwm = normalize_pwm(mhc_motif_pwms['class_I'][allele][pep_length])
+    #     except KeyError:
+    #         print(f'Warning: Could not find MHC motif PWM for {group}. Skipping group of size {len(group_df)}.')
+    #         continue
 
-        # now making hermes' pwm
-        pwms = []
-        rows_to_keep = []
-        for i_row, row in group_df.iterrows():
-            pdb = row['pdbid']
-            wt_pep = row['wt_peptide']
-            old_allele = row['mhc_allele']
-            try:
-                pwm = normalize_pwm(pd.read_csv(f'pwm_csv_files/mhc_crystal_hcnn_fixed_structure/hermes_py_000/{pdb}__{wt_pep}__{old_allele}.csv', index_col=0).values)
-            except FileNotFoundError:
-                print(f'Warning: {pdb}__{wt_pep}__{old_allele}.csv not found. Hermes likely failed on it.')
-                continue
+    #     # now making hermes' pwm
+    #     pwms = []
+    #     rows_to_keep = []
+    #     for i_row, row in group_df.iterrows():
+    #         pdb = row['pdbid']
+    #         wt_pep = row['wt_peptide']
+    #         old_allele = row['mhc_allele']
+    #         try:
+    #             pwm = normalize_pwm(pd.read_csv(f'pwm_csv_files/mhc_crystal_hcnn_fixed_structure/hermes_py_000/{pdb}__{wt_pep}__{old_allele}.csv', index_col=0).values)
+    #         except FileNotFoundError:
+    #             print(f'Warning: {pdb}__{wt_pep}__{old_allele}.csv not found. Hermes likely failed on it.')
+    #             continue
 
-            if pwm.shape[0] != pep_length:
-                print('Warning: shape mismatch in PWM, something likely wrong with structure or structure parsing.')
-                continue
-            pwms.append(pwm)
-            rows_to_keep.append(i_row)
+    #         if pwm.shape[0] != pep_length:
+    #             print('Warning: shape mismatch in PWM, something likely wrong with structure or structure parsing.')
+    #             continue
+    #         pwms.append(pwm)
+    #         rows_to_keep.append(i_row)
 
-        filtered_group_df = group_df.loc[np.array(rows_to_keep)]
+    #     filtered_group_df = group_df.loc[np.array(rows_to_keep)]
 
-        pdbs = filtered_group_df['pdbid'].values.tolist()
+    #     pdbs = filtered_group_df['pdbid'].values.tolist()
 
-        print(pdbs)
+    #     print(pdbs)
         
-        wt_pep_in_struc_pwm = make_pwm_from_sequences(filtered_group_df['wt_peptide'].values)
+    #     wt_pep_in_struc_pwm = make_pwm_from_sequences(filtered_group_df['wt_peptide'].values)
 
-        try:
-            hermes_pwm = np.mean(np.stack(pwms, axis=0), axis=0) # it's already normalized
-        except:
-            print(group)
-            print(len(pwms))
-            for pwm in pwms:
-                print('\t', pwm.shape)
-            raise
+    #     try:
+    #         hermes_pwm = np.mean(np.stack(pwms, axis=0), axis=0) # it's already normalized
+    #     except:
+    #         print(group)
+    #         print(len(pwms))
+    #         for pwm in pwms:
+    #             print('\t', pwm.shape)
+    #         raise
 
-        final_pwms[allele][pep_length] = {
-            'mhc_motif_pwm': mhc_motif_pwm,
-            'wt_pep_in_struc_pwm': wt_pep_in_struc_pwm,
-            'hermes_py_000_pwm': hermes_pwm,
-            'num_structures': len(filtered_group_df),
-            'pdbs': filtered_group_df['pdbid'].values.tolist()
-        }
+    #     final_pwms[allele][pep_length] = {
+    #         'mhc_motif_pwm': mhc_motif_pwm,
+    #         'wt_pep_in_struc_pwm': wt_pep_in_struc_pwm,
+    #         'hermes_py_000_pwm': hermes_pwm,
+    #         'num_structures': len(filtered_group_df),
+    #         'pdbs': filtered_group_df['pdbid'].values.tolist()
+    #     }
 
-    with gzip.open('pmhc_class_1_crystal_structures_pwms.pkl.gz', 'wb') as f:
-        pickle.dump(final_pwms, f)
+    # with gzip.open('pmhc_class_1_crystal_structures_pwms.pkl.gz', 'wb') as f:
+    #     pickle.dump(final_pwms, f)
     
 
-    exit(1)
+    # exit(1)
 
 
     ## make three barplots, in one figure, on top of each other
@@ -235,14 +235,14 @@ if __name__ == '__main__':
             wt_pep_in_struc_to_mhc_motif_rel_entropy_list.append(kl_divergence_of_pwms(wt_pep_in_struc_pwm, mhc_motif_pwm))
             hermes_py_000_to_mhc_motif_rel_entropy_list.append(kl_divergence_of_pwms(hermes_py_000_pwm, mhc_motif_pwm))
 
-            # plot pwms!
-            os.makedirs(f'pmhc_pwms/mhc_motif', exist_ok=True)
-            os.makedirs(f'pmhc_pwms/wt_pep_in_struc', exist_ok=True)
-            os.makedirs(f'pmhc_pwms/hermes_py_000', exist_ok=True)
+            # # plot pwms!
+            # os.makedirs(f'pmhc_pwms/mhc_motif', exist_ok=True)
+            # os.makedirs(f'pmhc_pwms/wt_pep_in_struc', exist_ok=True)
+            # os.makedirs(f'pmhc_pwms/hermes_py_000', exist_ok=True)
             
-            plot_pwm(mhc_motif_pwm, f'pmhc_pwms/mhc_motif/mhc_motif__{allele}__{pep_length}.png')
-            plot_pwm(wt_pep_in_struc_pwm, f'pmhc_pwms/wt_pep_in_struc/wt_pep_in_struc__{allele}__{pep_length}.png')
-            plot_pwm(hermes_py_000_pwm, f'pmhc_pwms/hermes_py_000/hermes_py_000__{allele}__{pep_length}.png')
+            # plot_pwm(mhc_motif_pwm, f'pmhc_pwms/mhc_motif/mhc_motif__{allele}__{pep_length}.png')
+            # plot_pwm(wt_pep_in_struc_pwm, f'pmhc_pwms/wt_pep_in_struc/wt_pep_in_struc__{allele}__{pep_length}.png')
+            # plot_pwm(hermes_py_000_pwm, f'pmhc_pwms/hermes_py_000/hermes_py_000__{allele}__{pep_length}.png')
 
 
     allele_and_length_list = np.array(allele_and_length_list)
@@ -296,21 +296,22 @@ if __name__ == '__main__':
     ax = axs[0]
     ax.bar(x, num_structures_list, width=global_bar_width, color='grey')
     ax.grid(axis='both', ls='--', alpha=0.5)
-    ax.set_ylabel('Number of\npMHC structures', fontsize=fontsize)
+    ax.set_ylabel('number of\npMHC structures', fontsize=fontsize)
     ax.tick_params(axis='y', labelsize=fontsize-2)
 
     # entropy difference from mhc motif pwm
     ax = axs[1]
 
     num_groups = len(allele_and_length_list)
+    peptide_lengths = np.array([int(x[1]) for x in allele_and_length_list])
     num_bars = 2
     bar_width = global_bar_width / num_bars  # Automatically spread bars within group
     x = np.arange(num_groups)  # Base x-locations
 
-    ax.set_ylabel('Relative entropy\nto MHC Motif PWM', fontsize=fontsize)
+    ax.set_ylabel('Kl-Divergence / L\nto MHC Motif PWM', fontsize=fontsize)
     entropy_differences = [
-        wt_pep_in_struc_to_mhc_motif_rel_entropy_list,
-        hermes_py_000_to_mhc_motif_rel_entropy_list
+        np.array(wt_pep_in_struc_to_mhc_motif_rel_entropy_list) / peptide_lengths,
+        np.array(hermes_py_000_to_mhc_motif_rel_entropy_list) / peptide_lengths
     ]
 
     colors = ['blue', 'orange']
@@ -328,14 +329,15 @@ if __name__ == '__main__':
     ax = axs[2]
 
     num_groups = len(allele_and_length_list)
+    peptide_lengths = np.array([int(x[1]) for x in allele_and_length_list])
     num_bars = 2
     bar_width = global_bar_width / num_bars  # Automatically spread bars within group
     x = np.arange(num_groups)  # Base x-locations
 
-    ax.set_ylabel('Entropy difference\nfrom MHC Motif PWM', fontsize=fontsize)
+    ax.set_ylabel('entropy difference / L\nfrom MHC Motif PWM', fontsize=fontsize)
     entropy_differences = [
-        wt_pep_in_struc_entropy_list - mhc_motif_entropy_list,
-        hermes_py_000_entropy_list - mhc_motif_entropy_list
+        (wt_pep_in_struc_entropy_list - mhc_motif_entropy_list) / peptide_lengths,
+        (hermes_py_000_entropy_list - mhc_motif_entropy_list) / peptide_lengths
     ]
 
     colors = ['blue', 'orange']
@@ -360,19 +362,20 @@ if __name__ == '__main__':
     ax = axs[3]
 
     num_groups = len(allele_and_length_list)
+    peptide_lengths = np.array([int(x[1]) for x in allele_and_length_list])
     num_bars = 3
     bar_width = global_bar_width / num_bars  # Automatically spread bars within group
     x = np.arange(num_groups)  # Base x-locations
 
-    ax.set_ylabel('Entropy', fontsize=fontsize)
+    ax.set_ylabel('entropy / L', fontsize=fontsize)
     entropies = [
-        wt_pep_in_struc_entropy_list,
-        hermes_py_000_entropy_list,
-        mhc_motif_entropy_list
+        wt_pep_in_struc_entropy_list / peptide_lengths,
+        hermes_py_000_entropy_list / peptide_lengths,
+        mhc_motif_entropy_list / peptide_lengths
     ]
 
     colors = ['blue', 'orange', 'green']
-    labels = ['PWM from WT peptides', 'PWM from HERMES-fixed', 'PWM from MHC Motif Atlas']
+    labels = ['PWM from peptides in structures', 'PWM from HERMES-fixed 0.00', 'PWM from MHC Motif Atlas']
 
     for i in range(num_bars):
         offset = (i - num_bars / 2) * bar_width + bar_width / 2

@@ -39,8 +39,8 @@ def load_and_align_structures(structure_paths, chain="A"):
         cmd.delete(f"structure_{i}_chain")
 
 
-allele = 'H2-Db'
-pep_length = 11
+allele = 'B0702'
+pep_length = 9
 
 
 # import os
