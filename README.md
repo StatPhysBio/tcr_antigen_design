@@ -24,8 +24,7 @@ Code for running HERMES-relaxed to score peptides can be found in `mutation_effe
 
 If you're only looking for our HERMES-made peptide designs with in-vitro T-cell activity measurements, you can find them all in `peptide_designs/All-designs.xlsx`.
 
-Scripts to generate peptides with different algorithms, benchmarking results (via TCRdock PAE), and post-in-vitro-experiment analysis can be found in `peptide_designs/nyeso`, `peptide_designs/ebv`, `peptide_designs/magea3_and_titin`. \
-Code for using HERMES-relaxed to design peptides can be found in `peptide_designs/src`. What is currently present is an older version of the code that is not well integrated with the HERMES repository, we will provide updated code soon.
+Scripts to generate peptides with different algorithms, benchmarking results (via TCRdock PAE), and post-in-vitro-experiment analysis can be found in `peptide_designs/nyeso`, `peptide_designs/ebv`, `peptide_designs/magea3_and_titin`.
 
 
 ## Quantifying the diversity of the TCR recognition landscape
@@ -36,4 +35,38 @@ We use the entropy of HERMES-fixed's predicted Position Weight Matrix of peptide
 Code and data can be found in `tcr_specificity`.
 
 
+
+## Generating peptides with HERMES-*fixed*
+
+**Install HERMES:** Clone and follow the installation steps of HERMES (https://github.com/StatPhysBio/hermes).
+
+**Sampling script:** You can use the script `sample_peptides_with_hermes_fixed.py` to generate peptides with HERMES-fixed. See the docstring below:
+```
+usage: sample_peptides_with_hermes_fixed.py [-h] -m MODEL_VERSION -p PDB_FILE -c PEPTIDE_CHAIN -o OUTPUT_FILE [-t TEMPERATURE] [-n NUM_SAMPLES] [-b BATCH_SIZE]
+
+Sample peptides with HERMES fixed structure
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -m MODEL_VERSION, --model_version MODEL_VERSION
+                        Name of HERMES model you want to use. Use `hermes_py_000` or `hermes_bp_000` for the model trained without added noise to the atoms, `hermes_py_050` or `hermes_bp_050` for the model trained with 0.50 Angstrom noise to the atoms. Models with `_py_` in the name use pyrosetta to parse protein structures and were the ones used in the paper, whereas models with `_bp_` in the name use biopython.
+  -p PDB_FILE, --pdb_file PDB_FILE
+                        Path to the PDB file containing the TCR-pMHC structure.
+  -c PEPTIDE_CHAIN, --peptide_chain PEPTIDE_CHAIN
+                        Chain identifier for the peptide in the PDB file.
+  -o OUTPUT_FILE, --output_file OUTPUT_FILE
+                        Path to the output file where sampled peptide sequences will be saved (one sequence per line).
+  -t TEMPERATURE, --temperature TEMPERATURE
+                        Temperature for sampling from the probability distribution (default: 1.0, lower is more conservative, higher is more diverse).
+  -n NUM_SAMPLES, --num_samples NUM_SAMPLES
+                        Number of peptide samples to generate (note that they are *not* guaranteed to be unique). Default: 200.
+  -b BATCH_SIZE, --batch_size BATCH_SIZE
+                        Batch size (number of sites) for running HERMES inference. Default: 32, no need to change this except for handling memory issues.
+```
+
+**Sampling function:** You can also directly call the function `sample_peptides_with_hermes_fixed` in `sample_peptides_with_hermes_fixed.py` from your own code, with the same arguments as above (except for the output file):
+```python
+from sample_peptides_with_hermes_fixed import sample_peptides_with_hermes_fixed
+sequences = sample_peptides_with_hermes_fixed(model_version, pdb_file, peptide_chain, temperature, num_samples, batch_size)
+```
 
