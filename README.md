@@ -40,7 +40,8 @@ Code and data can be found in `tcr_specificity`.
 
 **Install HERMES:** Clone and follow the installation steps of HERMES (https://github.com/StatPhysBio/hermes).
 
-**Sampling script:** You can use the script `sample_peptides_with_hermes_fixed.py` to generate peptides with HERMES-fixed. See the docstring below:
+**Sampling script:** You can use the script `sample_peptides_with_hermes_fixed.py` to generate peptides with HERMES-*fixed*. See the docstring below:
+
 ```
 usage: sample_peptides_with_hermes_fixed.py [-h] -m MODEL_VERSION -p PDB_FILE -c PEPTIDE_CHAIN -o OUTPUT_FILE [-t TEMPERATURE] [-n NUM_SAMPLES] [-b BATCH_SIZE]
 
@@ -55,7 +56,7 @@ optional arguments:
   -c PEPTIDE_CHAIN, --peptide_chain PEPTIDE_CHAIN
                         Chain identifier for the peptide in the PDB file.
   -o OUTPUT_FILE, --output_file OUTPUT_FILE
-                        Path to the output file where sampled peptide sequences will be saved (one sequence per line).
+                        Path to the output .txt file where sampled peptide sequences will be saved (one sequence per line).
   -t TEMPERATURE, --temperature TEMPERATURE
                         Temperature for sampling from the probability distribution (default: 1.0, lower is more conservative, higher is more diverse).
   -n NUM_SAMPLES, --num_samples NUM_SAMPLES
@@ -65,8 +66,57 @@ optional arguments:
 ```
 
 **Sampling function:** You can also directly call the function `sample_peptides_with_hermes_fixed` in `sample_peptides_with_hermes_fixed.py` from your own code, with the same arguments as above (except for the output file):
+
 ```python
 from sample_peptides_with_hermes_fixed import sample_peptides_with_hermes_fixed
 sequences = sample_peptides_with_hermes_fixed(model_version, pdb_file, peptide_chain, temperature, num_samples, batch_size)
 ```
 
+**Time:** This is very fast, taking only a handful of seconds even for a high number of sampled peptides.
+
+
+## Generating peptides with HERMES-*relaxed*
+
+**Install HERMES:** Clone and follow the installation steps of HERMES (https://github.com/StatPhysBio/hermes).
+
+**Sampling script (single peptide):** Use the script `sample_single_peptide_with_hermes_relaxed.py` to generate a *single* peptide with HERMES-*relaxed*. This iterates between HERMES-*fixed* sampling and pyrosetta mutations/relaxations within a simulated annealing loop. We emphasize that this script only samples a single peptide, and should be run multiple times with different outpout files to obtain multiple peptide samples. See the docstring below:
+
+```
+usage: sample_single_peptide_with_hermes_relaxed.py [-h] --hermes_dir HERMES_DIR -m MODEL_VERSION -p PDB_FILE -o OUTPUT_FILE -c PEPTIDE_CHAIN [--initial_sequence INITIAL_SEQUENCE] --schedule_name SCHEDULE_NAME [--iters ITERS] [--energy_to_use {pnE,pnlogp}]
+                                                    [--region_to_optimize_energy_of {peptide,pocket,complex}] [--dont_relax_peptide_backbone] [--save_metric_history] [--write_pdb] [--max_atoms MAX_ATOMS] [--peptide_acceptance] [--force_best_mutations]
+                                                    [--add_crystal_water] [--logging LOGGING] [--pyrosetta_logging PYROSETTA_LOGGING] [--rosetta_logging ROSETTA_LOGGING]
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --hermes_dir HERMES_DIR
+                        Path to HERMES directory containing the `trained_models` directory with the model you want to use for inference.
+  -m MODEL_VERSION, --model_version MODEL_VERSION
+                        Name of HERMES model you want to use. Use `hermes_py_000` or `hermes_bp_000` for the model trained without added noise to the atoms, `hermes_py_050` or `hermes_bp_050` for the model trained with 0.50 Angstrom noise to the atoms. Models with
+                        `_py_` in the name use pyrosetta to parse protein structures and were the ones used in the paper, whereas models with `_bp_` in the name use biopython.
+  -p PDB_FILE, --pdb_file PDB_FILE
+                        Path to the PDB file containing the TCR-pMHC structure.
+  -o OUTPUT_FILE, --output_file OUTPUT_FILE
+                        Path to the output .txt file where sampled peptide sequences will be saved (one sequence per line).
+  -c PEPTIDE_CHAIN, --peptide_chain PEPTIDE_CHAIN
+                        Chain identifier for the peptide in the PDB file.
+  --initial_sequence INITIAL_SEQUENCE
+                        Initial peptide sequence for annealing. Empty string for random sequence
+  --schedule_name SCHEDULE_NAME
+                        Annealing schedule JSON file name (without the .json extension) as found in `./temperature/schedule_files`
+  --iters ITERS         Number of simulated annealing iterations. Default: 100. NOTE: the schedules in this directory are designed for 100 iterations.
+  --energy_to_use {pnE,pnlogp}
+  --region_to_optimize_energy_of {peptide,pocket,complex}
+  --dont_relax_peptide_backbone
+  --save_metric_history
+                        Whether to save the metric history of the simulated annealing algorithm. It will be saved in a .npy file by the same name as `output_file`.
+  --write_pdb           Whether to save the relaxed PDB files with each peptide. They will be saved in a directory identified by the same name as `output_file` and suffix `__pdbs`.
+  --max_atoms MAX_ATOMS
+  --peptide_acceptance
+  --force_best_mutations
+  --add_crystal_water
+  --logging LOGGING
+  --pyrosetta_logging PYROSETTA_LOGGING
+  --rosetta_logging ROSETTA_LOGGING
+```
+
+**Time:** This is veeeery slow due to the pytorsetta relaxations. Each round of relaxations last approximately one minute. Multiply that by 100 iterations, and you have 1.5-2 hours to sample a single peptide. We recommend running this in paralle on many CPUs. Using GPUs to speed-up the HERMES' forward pass is unnecessary as that is *not* the bottleneck of this procedure.

@@ -62,7 +62,7 @@ if __name__ == "__main__":
                         help='Chain identifier for the peptide in the PDB file.')
 
     parser.add_argument('-o', '--output_file', type=str, required=True,
-                        help='Path to the output file where sampled peptide sequences will be saved (one sequence per line).')
+                        help='Path to the output .txt file where sampled peptide sequences will be saved (one sequence per line).')
 
     parser.add_argument('-t', '--temperature', type=float, default=1.0,
                             help='Temperature for sampling from the probability distribution (default: 1.0, lower is more conservative, higher is more diverse).')
