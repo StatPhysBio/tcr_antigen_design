@@ -77,7 +77,7 @@ sequences = sample_peptides_with_hermes_fixed(model_version, pdb_file, peptide_c
 
 ## Generating peptides with HERMES-*relaxed*
 
-**Install HERMES:** Clone and follow the installation steps of HERMES (https://github.com/StatPhysBio/hermes).
+**Install HERMES:** Clone and follow the installation steps of HERMES (https://github.com/StatPhysBio/hermes). You *must* include the installation of pyrosetta as well.
 
 **Sampling script (single peptide):** Use the script `sample_single_peptide_with_hermes_relaxed.py` to generate a *single* peptide with HERMES-*relaxed*. This iterates between HERMES-*fixed* sampling and pyrosetta mutations/relaxations within a simulated annealing loop. We emphasize that this script only samples a single peptide, and should be run multiple times with different outpout files to obtain multiple peptide samples. See the docstring below:
 
@@ -119,4 +119,4 @@ optional arguments:
   --rosetta_logging ROSETTA_LOGGING
 ```
 
-**Time:** This is veeeery slow due to the pytorsetta relaxations. Each round of relaxations last approximately one minute. Multiply that by 100 iterations, and you have 1.5-2 hours to sample a single peptide. We recommend running this in paralle on many CPUs. Using GPUs to speed-up the HERMES' forward pass is unnecessary as that is *not* the bottleneck of this procedure.
+**Time:** This is veeeery slow due to the pyrosetta relaxations. Each round of relaxations last approximately one minute. Multiply that by 100 iterations, and you have 1.5-2 hours to sample a single peptide. We recommend running this in paralle on many CPUs. Using GPUs to speed-up the HERMES' forward pass is unnecessary as that is *not* the bottleneck of this procedure.
